@@ -1,11 +1,10 @@
 package fr.uvsq.jnotes;
-
+import java.time.LocalDate;
 //System.out.println(new java.util.Date().getTime());
 public class Note {
 	private final String title;
-	
 	private final String author;
-	private final String date;
+	private final LocalDate date;
 	private final String project;
 	private final String context;
 	
@@ -13,7 +12,7 @@ public class Note {
 		//required parameters
 		private final String title;
 		// optional parameters initialize with default values
-		private String date="2019-01-01";
+		private LocalDate date=LocalDate.now();
 		private String author="Caumes Clément, Gonthier Maxime, Merimi Mehdi, Pho Sarah";
 		private String project="inf201";
 		private String context="work";
@@ -23,7 +22,7 @@ public class Note {
 		}
 
 		public Builder date(String date) {
-			this.date=date;
+			this.date=LocalDate.parse(date);;
 			return this;
 		}
 		
@@ -66,10 +65,12 @@ public class Note {
 		return author;
 	}
 	
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-	
+	private String getDateString() {
+		return ;
+	}
 	public String getProject() {
 		return project;
 	}

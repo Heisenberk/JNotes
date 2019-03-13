@@ -1,4 +1,5 @@
 package fr.uvsq.jnotes;
+import java.time.LocalDate;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -15,7 +16,7 @@ public class NoteTest {
     			.build();
     	 assertEquals(n.getTitle(), "Test1");
     	 assertEquals(n.getAuthor(), "Caumes Clément, Gonthier Maxime, Merimi Mehdi, Pho Sarah");
-    	 assertEquals(n.getDate(), "2019-01-01");
+    	 assertEquals(n.getDate(), LocalDate.now());
     	 assertEquals(n.getProject(), "inf201");
     	 assertEquals(n.getContext(), "work");
     }
@@ -28,7 +29,7 @@ public class NoteTest {
     			.build();
     	 assertEquals(n.getTitle(), "Test1");
     	 assertEquals(n.getAuthor(), "Lopes Stephane");
-    	 assertEquals(n.getDate(), "2019-01-01");
+    	 assertEquals(n.getDate(), LocalDate.now());
     	 assertEquals(n.getProject(), "inf201");
     	 assertEquals(n.getContext(), "work");
     }
