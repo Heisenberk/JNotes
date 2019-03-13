@@ -69,7 +69,7 @@ public class Note {
 		return date;
 	}
 	private String getDateString() {
-		return ;
+		return date.toString();
 	}
 	public String getProject() {
 		return project;
