@@ -1,6 +1,6 @@
 package fr.uvsq.jnotes.command;
 
-public class Delete {
+public class Delete implements Command {
 	private Function function;
 	
 	public Delete(Function function) {

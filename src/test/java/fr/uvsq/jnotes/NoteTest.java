@@ -9,6 +9,9 @@ import org.junit.Test;
  */
 public class NoteTest {
 
+	/**
+	 * Test unitaire 1 sur le constructeur de Note. 
+	 */
     @Test
     public void testConstructeur1(){
     	Note n = new Note	
@@ -21,6 +24,9 @@ public class NoteTest {
     	 assertEquals(n.getContext(), "work");
     }
     
+    /**
+     * Test unitaire 2 sur le constructeur de Note. 
+     */
     @Test
     public void testConstructeur2(){
     	Note n = new Note	

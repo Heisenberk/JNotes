@@ -1,6 +1,6 @@
 package fr.uvsq.jnotes.command;
 
-public class View {
+public class View implements Command {
 	private Function function;
 	
 	public View(Function function) {

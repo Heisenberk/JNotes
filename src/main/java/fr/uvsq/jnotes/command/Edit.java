@@ -1,6 +1,6 @@
 package fr.uvsq.jnotes.command;
 
-public class Edit {
+public class Edit implements Command {
 	private Function function;
 	
 	public Edit(Function function) {

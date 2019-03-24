@@ -1,6 +1,6 @@
 package fr.uvsq.jnotes.command;
 
-public class Search {
+public class Search implements Command{
 	private Function function;
 	
 	public Search(Function function) {
