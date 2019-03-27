@@ -5,7 +5,6 @@ import java.time.LocalDate;
  * Classe Note qui permet de générer une note. 
  * Cette classe utilise le pattern Builder car l'utilisateur 
  * peut créer des notes sans choisir certains paramètres. 
- * @author Clément Caumes & Mehdi Merimi
  */
 public class Note {
 	

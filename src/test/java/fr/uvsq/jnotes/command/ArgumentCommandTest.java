@@ -22,7 +22,7 @@ public class ArgumentCommandTest {
     @Test
     public void testListing(){
     	String args1[]= {"list"};
-    	String args2[]= {"l"};
+    	String args2[]= {"ls"};
     	ArgumentCommand a1 = new ArgumentCommand();
     	ArgumentCommand a2 = new ArgumentCommand();
     	EnumCommand test1=a1.detectCommand(args1);
