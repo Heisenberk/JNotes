@@ -18,6 +18,8 @@ public class ArgumentCommand {
 	 */
 	private Command command; 
 	
+	private CommandArg commandArg;
+	
 	/**
 	 * swit permet d'effectuer la commande. 
 	 */
@@ -87,8 +89,8 @@ public class ArgumentCommand {
 				 swit.storeAndExecute(command);
 			}
 			else if (detectArg==EnumCommand.VIEW) {
-				command = new View(function);
-				 swit.storeAndExecute(command);
+				commandArg = new View(function);
+				 swit.storeAndExecute(commandArg, args);
 			}
 			else if (detectArg==EnumCommand.SEARCH) {
 				command = new Search(function);

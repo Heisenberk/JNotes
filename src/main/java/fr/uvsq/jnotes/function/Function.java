@@ -36,10 +36,10 @@ public class Function {
 	                System.out.println("- "+liste[i]);
 	            }
 	        }
-	        if (liste.length==0) System.out.println("Aucune note trouvée2. ");
+	        if (liste.length==0) System.out.println("Aucune note trouvée. ");
 		}
 		else {
-			System.out.println("Aucune note trouvée1. ");
+			System.out.println("Aucune note trouvée. ");
 		}
 	}
 	
@@ -47,8 +47,30 @@ public class Function {
 		System.out.println("Suppression des notes");
 	}
 	
-	public void view() {
-		System.out.println("Note vue");
+	public void view(String[] args) throws Exception {
+		
+		// si on tape "jnotes view/v" sans autre argument
+		if (args.length<=1) throw new Exception(); //creer une exception personnelle ArgumentException
+		
+		try {
+			String absolutePath=null;
+			File fichier=new File(c.getPathStockage()+"notes/"+args[1]);
+			if(fichier.exists()) absolutePath=fichier.getAbsolutePath();
+			else throw new Exception("Fichier inexistant"); //A CHANGER
+			
+			System.out.println("Visualisation de la note AsciiDoctor "+absolutePath);
+			
+			Runtime runtime = Runtime.getRuntime();
+			runtime.exec("firefox "+absolutePath);
+		}
+		catch(IOException e) {
+			System.out.println(e); //A CHANGER
+		}
+		catch(Exception e) {
+			System.out.println(e); //A CHANGER
+		}
+		
+		
 	}
 	
 	public void search() {

@@ -10,7 +10,7 @@ public class ScannerCommand {
 	}
 	
 	public void afficheCommandes() {
-		System.out.println("Commandes de Jnotes");
+		System.out.println("Commandes de Jnotes: ");
 		System.out.println(" ");
 		System.out.println("- edit/e [nom de la note] : créer ou modifier une note. ");
 		System.out.println("- list/ls : lister les notes existantes. ");

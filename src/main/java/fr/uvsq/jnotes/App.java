@@ -21,7 +21,6 @@ enum App {
 	 * @param args arguments en ligne de commande. 
 	 */
 	public void run(String[] args){
-		System.out.println( "Hello JNotes!" );
         ArgumentCommand arg = new ArgumentCommand();
         arg.setArgument(args);
 	}
