@@ -43,8 +43,23 @@ public class Function {
 		}
 	}
 	
-	public void delete() {
-		System.out.println("Suppression des notes");
+	public void delete(String[] args) throws Exception{
+		// si on tape "jnotes delete/d" sans autre argument
+			if (args.length<=1) throw new Exception(); //creer une exception personnelle ArgumentException
+				
+				try {
+					String absolutePath=null;
+					File fichier=new File(c.getPathStockage()+"notes/"+args[1]);
+					if(fichier.exists()) absolutePath=fichier.getAbsolutePath();
+					else throw new Exception("Fichier inexistant"); //A CHANGER
+					
+					System.out.println("Suppression de la note AsciiDoctor "+absolutePath);
+					
+					fichier.delete();
+				}
+				catch(Exception e) {
+					System.out.println(e); //A CHANGER
+				}
 	}
 	
 	public void view(String[] args) throws Exception {

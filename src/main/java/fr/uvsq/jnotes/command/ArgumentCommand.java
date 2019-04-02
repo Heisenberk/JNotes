@@ -85,8 +85,8 @@ public class ArgumentCommand {
 				 swit.storeAndExecute(command);
 			}
 			else if (detectArg==EnumCommand.DELETE) {
-				command = new Delete(function);
-				 swit.storeAndExecute(command);
+				commandArg = new Delete(function);
+				 swit.storeAndExecute(commandArg, args);
 			}
 			else if (detectArg==EnumCommand.VIEW) {
 				commandArg = new View(function);
