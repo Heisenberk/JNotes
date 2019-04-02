@@ -5,6 +5,9 @@ import org.junit.Test;
 
 import fr.uvsq.jnotes.command.ArgumentCommand;
 
+/**
+ * Tests unitaires sur la classe ArgumentCommand
+ */
 public class ArgumentCommandTest {
 
     @Test
@@ -12,7 +15,6 @@ public class ArgumentCommandTest {
     	String args1[]= {"edit"};
     	String args2[]= {"e"};
     	ArgumentCommand a1 = new ArgumentCommand();
-    	ArgumentCommand a2 = new ArgumentCommand();
         EnumCommand test1=a1.detectCommand(args1);
         EnumCommand test2=a1.detectCommand(args2);
     	assertEquals(test1, EnumCommand.EDIT);
@@ -24,7 +26,7 @@ public class ArgumentCommandTest {
     	String args1[]= {"list"};
     	String args2[]= {"ls"};
     	ArgumentCommand a1 = new ArgumentCommand();
-    	ArgumentCommand a2 = new ArgumentCommand();
+    	//ArgumentCommand a2 = new ArgumentCommand();
     	EnumCommand test1=a1.detectCommand(args1);
     	EnumCommand test2=a1.detectCommand(args2);
     	assertEquals(test1, EnumCommand.LIST);
@@ -36,7 +38,7 @@ public class ArgumentCommandTest {
     	String args1[]= {"delete"};
     	String args2[]= {"d"};
     	ArgumentCommand a1 = new ArgumentCommand();
-    	ArgumentCommand a2 = new ArgumentCommand();
+    	//ArgumentCommand a2 = new ArgumentCommand();
     	EnumCommand test1=a1.detectCommand(args1);
     	EnumCommand test2=a1.detectCommand(args2);
     	assertEquals(test1, EnumCommand.DELETE);
@@ -48,7 +50,7 @@ public class ArgumentCommandTest {
     	String args1[]= {"view"};
     	String args2[]= {"v"};
     	ArgumentCommand a1 = new ArgumentCommand();
-    	ArgumentCommand a2 = new ArgumentCommand();
+    	//ArgumentCommand a2 = new ArgumentCommand();
     	EnumCommand test1=a1.detectCommand(args1);
     	EnumCommand test2=a1.detectCommand(args2);
     	assertEquals(test1, EnumCommand.VIEW);
@@ -60,7 +62,7 @@ public class ArgumentCommandTest {
     	String args1[]= {"search"};
     	String args2[]= {"s"};
     	ArgumentCommand a1 = new ArgumentCommand();
-    	ArgumentCommand a2 = new ArgumentCommand();
+    	//ArgumentCommand a2 = new ArgumentCommand();
     	EnumCommand test1=a1.detectCommand(args1);
     	EnumCommand test2=a1.detectCommand(args2);
     	assertEquals(test1, EnumCommand.SEARCH);

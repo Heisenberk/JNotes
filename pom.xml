@@ -7,7 +7,6 @@
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>maven</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -100,4 +99,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <name>Jnotes</name>
 </project>

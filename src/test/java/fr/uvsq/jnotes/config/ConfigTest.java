@@ -13,6 +13,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import exception.ConfigurationException;
+
 
 public class ConfigTest {
 	@Before
@@ -49,7 +51,7 @@ public class ConfigTest {
 		try {
 			c=new Config("config-test");
 		}
-		catch(IOException e) {
+		catch(ConfigurationException e) {
 			System.out.println("Erreur TestInit ConfigTest");
 		}
 		assertEquals(c.getPathStockage(), "./");
@@ -62,7 +64,7 @@ public class ConfigTest {
 		try {
 			c=new Config("config-test2");
 		}
-		catch(IOException e) {
+		catch(ConfigurationException e) {
 			System.out.println("Erreur TestInit ConfigTest");
 		}
 		assertEquals(c.getPathStockage(), "./");

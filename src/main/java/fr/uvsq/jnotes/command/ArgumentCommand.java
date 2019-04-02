@@ -1,5 +1,6 @@
 package fr.uvsq.jnotes.command;
 
+import exception.CommandeInconnuException;
 import fr.uvsq.jnotes.function.*;
 
 /**
@@ -14,10 +15,13 @@ public class ArgumentCommand {
 	private Function function;
 	
 	/**
-	 * command représente la commande choisie par l'utilisateur. 
+	 * command représente la commande sans argument choisie par l'utilisateur. 
 	 */
 	private Command command; 
 	
+	/**
+	 * command représente la commande avec argument choisie par l'utilisateur. 
+	 */
 	private CommandArg commandArg;
 	
 	/**
@@ -70,34 +74,39 @@ public class ArgumentCommand {
 	public void setArgument(String[] args) {
 		EnumCommand detectArg=detectCommand(args);
 		
+		// si l'utilisateur ne tape aucun argument. 
 		if (detectArg==EnumCommand.NO_COMMAND) {
 			ScannerCommand saisie = new ScannerCommand();
 			saisie.afficheCommandes();
 			saisie.saisie();
 		}
+		// si l'utilisateur tape un argument. 
 		else {
-			if (detectArg==EnumCommand.EDIT) {
-				command = new Edit(function);
-				 swit.storeAndExecute(command);
+			try {
+				if (detectArg==EnumCommand.EDIT) {
+					commandArg = new Edit(function);
+					 swit.storeAndExecute(commandArg, args);
+				}
+				else if (detectArg==EnumCommand.LIST) {
+					command = new Listing(function);
+					 swit.storeAndExecute(command);
+				}
+				else if (detectArg==EnumCommand.DELETE) {
+					commandArg = new Delete(function);
+					 swit.storeAndExecute(commandArg, args);
+				}
+				else if (detectArg==EnumCommand.VIEW) {
+					commandArg = new View(function);
+					 swit.storeAndExecute(commandArg, args);
+				}
+				else if (detectArg==EnumCommand.SEARCH) {
+					commandArg = new Search(function);
+					 swit.storeAndExecute(commandArg, args);
+				}
+				else throw new CommandeInconnuException();
 			}
-			else if (detectArg==EnumCommand.LIST) {
-				command = new Listing(function);
-				 swit.storeAndExecute(command);
-			}
-			else if (detectArg==EnumCommand.DELETE) {
-				command = new Delete(function);
-				 swit.storeAndExecute(command);
-			}
-			else if (detectArg==EnumCommand.VIEW) {
-				commandArg = new View(function);
-				 swit.storeAndExecute(commandArg, args);
-			}
-			else if (detectArg==EnumCommand.SEARCH) {
-				command = new Search(function);
-				 swit.storeAndExecute(command);
-			}
-			else {
-				System.out.println("message non reconnu");
+			catch(CommandeInconnuException e) {
+				System.out.println(e.getMessage());
 			}
 		}
 	}

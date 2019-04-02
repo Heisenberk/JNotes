@@ -1,9 +1,6 @@
 package fr.uvsq.jnotes;
 
-import java.io.IOException;
-
 import fr.uvsq.jnotes.command.*;
-import fr.uvsq.jnotes.config.*;
 
 /**
  * Enumération représentant le main de l'application. 
