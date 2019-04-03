@@ -1,7 +1,7 @@
 package fr.uvsq.jnotes.function;
 
-import exception.ParamException;
 import fr.uvsq.jnotes.command.CommandArg;
+import fr.uvsq.jnotes.exception.*;
 
 /**
  * Classe qui permet de rechercher un element dans toutes les notes. 

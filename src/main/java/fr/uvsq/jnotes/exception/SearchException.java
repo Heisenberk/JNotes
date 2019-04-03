@@ -1,4 +1,4 @@
-package exception;
+package fr.uvsq.jnotes.exception;
 
 /**
  * Classe SearchException qui est une exception lorsque la commande est inconnu pour l'application.

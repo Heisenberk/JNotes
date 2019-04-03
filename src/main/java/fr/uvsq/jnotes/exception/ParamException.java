@@ -1,4 +1,4 @@
-package exception;
+package fr.uvsq.jnotes.exception;
 
 /**
  * Classe ParamException.

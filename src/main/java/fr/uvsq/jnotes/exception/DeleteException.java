@@ -1,4 +1,4 @@
-package exception;
+package fr.uvsq.jnotes.exception;
 
 /**
  * Classe DeleteException.
@@ -16,6 +16,6 @@ public class DeleteException extends RuntimeException{
      * Accesseur du message a afficher.
      */
     public String getMessage() {
-    	return "Impossible de lister les notes. ";
+    	return "Impossible de supprimer une note. ";
     }
 }

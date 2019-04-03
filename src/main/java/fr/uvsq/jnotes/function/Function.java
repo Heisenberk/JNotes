@@ -5,16 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import exception.ConfigurationException;
-import exception.DeleteException;
-import exception.EditException;
-import exception.ParamException;
-import exception.ViewException;
+import fr.uvsq.jnotes.exception.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
 
-import fr.uvsq.jnotes.Note;
+import fr.uvsq.jnotes.note.Note;
 import fr.uvsq.jnotes.config.Config;
 
 public class Function {
@@ -30,6 +26,14 @@ public class Function {
 		
 	}
 	
+	public Function(Config c) {
+		this.c=c;
+	}
+	
+	public Config getConfig() {
+		return c;
+	}
+	
 	public void edit(String[] args) throws EditException, IOException, InterruptedException{
 		
 		// si on tape "jnotes edit/e" sans autre argument
@@ -37,7 +41,7 @@ public class Function {
 		
 		// si le fichier existe
 		File f1=new File(c.getPathStockage()+"notes/"+args[1]);
-		if (f1.exists() && !f1.isDirectory()) {
+		if  (f1.exists() && !f1.isDirectory()) {
 			String commande_fichier_existant="xterm -e "+c.getNameAppExtern()+" "+c.getPathStockage()+"notes/"+args[1];
 			Process p1=Runtime.getRuntime().exec(commande_fichier_existant);
 			p1.waitFor();
@@ -80,43 +84,52 @@ public class Function {
 		
 	}
 	
-	public void listing() {
-		
+	public String listingString() {
+		String s="";
 		File dossier=new File(c.getPathStockage()+"notes/");
 		if (dossier.exists() && dossier.isDirectory()){
 			// lire les fichiers contenus dans le dossier 
 	        String liste[] = dossier.list();      
 	 
 	        if (liste != null) {  
-	        	System.out.println("Listing des notes : ");
+	        	s+="Listing des notes : "+"\n";
 	            for (int i = 0; i < liste.length; i++) {
-	                System.out.println("- "+liste[i]);
+	                s+="- "+liste[i]+"\n";
 	            }
 	        }
-	        if (liste.length==0) System.out.println("Aucune note trouvée. ");
+	        if (liste.length==0) return "Aucune note trouvée. "+"\n";
 		}
 		else {
-			System.out.println("Aucune note trouvée. ");
+			 return "Aucune note trouvée. "+"\n";
 		}
+		return s;
+	}
+	
+	public void listing() {
+		System.out.println(listingString());
+	}
+	
+	public String deleteString(String[] args) throws DeleteException{
+		String s="";
+		// si on tape "jnotes delete/d" sans autre argument
+		if (args.length<=1) throw new DeleteException(); 
+						
+		File fichier=new File(c.getPathStockage()+"notes/"+args[1]);
+		if(fichier.exists()) {
+			s+="Suppression de la note AsciiDoctor "+c.getPathStockage()+"notes/"+args[1]+"\n";
+		}
+		else throw new DeleteException();
+							
+		fichier.delete();
+		return s;
 	}
 	
 	public void delete(String[] args) throws DeleteException{
-		// si on tape "jnotes delete/d" sans autre argument
-		if (args.length<=1) throw new DeleteException(); //creer une exception personnelle ArgumentException
-				
-		try {
-			String absolutePath=null;
-			File fichier=new File(c.getPathStockage()+"notes/"+args[1]);
-			if(fichier.exists()) absolutePath=fichier.getAbsolutePath();
-			else throw new Exception("Fichier inexistant"); //A CHANGER
-					
-			System.out.println("Suppression de la note AsciiDoctor "+absolutePath);
-					
-			fichier.delete();
-		}
-		catch(Exception e) {
-			throw new DeleteException();
-		}
+		System.out.println(deleteString(args));
+	}
+	
+	public String findPathView(String args) {
+		return c.getPathStockage()+"notes/"+args;
 	}
 	
 	public void view(String[] args) throws ViewException {
@@ -126,7 +139,7 @@ public class Function {
 		
 		try {
 			String absolutePath=null;
-			File fichier=new File(c.getPathStockage()+"notes/"+args[1]);
+			File fichier=new File(findPathView(args[1]));
 			if(fichier.exists()) absolutePath=fichier.getAbsolutePath();
 			else throw new ViewException();
 			
@@ -158,7 +171,6 @@ public class Function {
 		else if (args.length>=3) {
 			// si on tape "jnotes param/p path [chemin]"
 			if (args[1].equals("path")) {
-				System.out.println("coucou");
 				Path outPath = Paths.get("config/config-jnotes");
 				try(
 						BufferedWriter out = Files.newBufferedWriter(outPath)
@@ -167,6 +179,7 @@ public class Function {
 					out.newLine();
 					out.write(c.getNameAppExtern());
 					System.out.println("Chemin du dossier contenant les notes JNotes modifié : "+args[2]);
+					c.setPathStockage(args[2]);
 				}
 				catch (IOException e) {
 					throw new ParamException();
@@ -181,6 +194,7 @@ public class Function {
 					out.write(c.getPathStockage());
 					out.newLine();
 					out.write(args[2]);
+					c.setNameAppExtern(args[2]);
 				}
 				catch (IOException e) {
 					throw new ParamException();

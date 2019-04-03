@@ -1,7 +1,7 @@
 package fr.uvsq.jnotes.function;
 
-import exception.DeleteException;
 import fr.uvsq.jnotes.command.CommandArg;
+import fr.uvsq.jnotes.exception.DeleteException;
 
 /**
  * Classe qui permet de supprimer une note. 

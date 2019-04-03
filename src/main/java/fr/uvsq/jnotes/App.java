@@ -1,6 +1,8 @@
 package fr.uvsq.jnotes;
 
+
 import fr.uvsq.jnotes.command.*;
+import fr.uvsq.jnotes.function.Function;
 
 /**
  * Enumération représentant le main de l'application. 
@@ -20,6 +22,9 @@ enum App {
 	public void run(String[] args){
         ArgumentCommand arg = new ArgumentCommand();
         arg.setArgument(args);
+		
+		
+		
 	}
 
 	/**

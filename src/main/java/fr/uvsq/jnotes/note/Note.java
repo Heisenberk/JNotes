@@ -1,4 +1,4 @@
-package fr.uvsq.jnotes;
+package fr.uvsq.jnotes.note;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

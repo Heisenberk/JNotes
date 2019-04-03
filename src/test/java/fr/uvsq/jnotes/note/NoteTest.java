@@ -1,5 +1,5 @@
+package fr.uvsq.jnotes.note;
 
-package fr.uvsq.jnotes;
 import java.time.LocalDate;
 
 import static org.junit.Assert.*;

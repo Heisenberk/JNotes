@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import exception.ConfigurationException;
+import fr.uvsq.jnotes.exception.ConfigurationException;
 
 /**
  * Classe Config qui va lire le fichier de configuration. 
@@ -38,6 +38,11 @@ public class Config {
 	 */
 	public Config(String pathFile)  throws ConfigurationException  {
 		init(pathFile);
+	}
+	
+	public Config(String pathStockage, String nameAppExtern) {
+		this.pathStockage=pathStockage;
+		this.nameAppExtern=nameAppExtern;
 	}
 	
 	/**
@@ -83,6 +88,14 @@ public class Config {
 	 */
 	public String getNameAppExtern() {
 		return nameAppExtern;
+	}
+	
+	public void setPathStockage(String pathStockage) {
+		this.pathStockage=pathStockage;
+	}
+	
+	public void setNameAppExtern(String nameAppExtern) {
+		this.nameAppExtern=nameAppExtern;
 	}
 	
 

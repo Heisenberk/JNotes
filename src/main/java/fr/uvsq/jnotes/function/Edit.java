@@ -1,7 +1,7 @@
 package fr.uvsq.jnotes.function;
 
-import exception.EditException;
 import fr.uvsq.jnotes.command.CommandArg;
+import fr.uvsq.jnotes.exception.EditException;
 
 /**
  * Classe qui permet d'éditer une note. 

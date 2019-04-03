@@ -1,6 +1,6 @@
 package fr.uvsq.jnotes.command;
 
-import exception.CommandeInconnuException;
+import fr.uvsq.jnotes.exception.*;
 import fr.uvsq.jnotes.function.*;
 
 /**
