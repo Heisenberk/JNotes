@@ -1,6 +1,10 @@
 package fr.uvsq.jnotes.command;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import fr.uvsq.jnotes.exception.SaisieException;
+
 
 /**
  * Classe ScannerCommand qui va lire les commandes de l'utilisateur qui n'a pas mis d'arguments au départ. 
@@ -8,16 +12,9 @@ import java.util.Scanner;
 public class ScannerCommand {
 	
 	/**
-	 * Scanner permettant d'interpréter les commandes de l'utilisateur. 
-	 */
-	private Scanner scanner;
-	
-	/**
 	 * Constructeur de ScannerCommand qui initialise le scanner. 
 	 */
-	public ScannerCommand() {
-		this.scanner = new Scanner(System.in);
-	}
+	public ScannerCommand() {}
 	
 	/**
 	 * Methode qui affiche les différentes commandes de l'application. 
@@ -33,12 +30,36 @@ public class ScannerCommand {
 		System.out.println("- param/p : visualiser les paramètres de configuration (application d'édition de note et le chemin du dossier des notes). ");
 		System.out.println("- param/p path [chemin] : modifier les paramètres de configuration (chemin du dossier des notes). ");
 		System.out.println("- param/p app [nom de l'application externe] : modifier les paramètres de configuration (app : application d'édition de note). ");
+		System.out.println("- quit : quitter l'interpréteur de JNotes. \n");
 	}
 	
 	/**
 	 * Méthode saisie qui va interpréter les commandes de l'utilisateur qui n'a pas mis d'arguments au départ. 
 	 */
-	public void saisie() {
-		// A remplir comme CalculatriceRPN
+	public void saisie() throws SaisieException {
+		boolean arret = false;
+		String commande;
+		
+		while (arret == false) {
+			commande="";
+			try {
+				
+				System.out.print(">");
+				BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+				commande=in.readLine();
+			    String[] args = commande.split(" ", -1); 
+			    
+			    if (args[0].equals("quit")) arret=true;
+			    else {
+			    	ArgumentCommand arg = new ArgumentCommand();
+			        arg.setArgument(args);
+			    } 
+			}
+			catch(Exception e) {
+				throw new SaisieException();
+			}
+			
+			
+		}
 	}
 }

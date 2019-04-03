@@ -139,6 +139,7 @@ public class Note {
 		project = builder.project;
 		context = builder.context;
 	}
+
 	
 	/**
 	 * Accesseur du titre. 

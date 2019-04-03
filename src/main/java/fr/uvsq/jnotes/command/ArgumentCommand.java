@@ -81,7 +81,13 @@ public class ArgumentCommand {
 		if (detectArg==EnumCommand.NO_COMMAND) {
 			ScannerCommand saisie = new ScannerCommand();
 			saisie.afficheCommandes();
-			saisie.saisie();
+			try {
+				saisie.saisie();
+			}
+			catch(SaisieException e) {
+				System.out.println(e.getMessage());
+			}
+			
 		}
 		// si l'utilisateur tape un argument. 
 		else {

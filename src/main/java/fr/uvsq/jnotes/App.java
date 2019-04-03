@@ -24,7 +24,6 @@ enum App {
         arg.setArgument(args);
 		
 		
-		
 	}
 
 	/**
