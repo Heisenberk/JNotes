@@ -1,4 +1,4 @@
-package fr.uvsq.jnotes.exception;
+package exception;
 
 /**
  * Classe ConfigurationException qui est une exception lorsque la lecture du fichier de configuration rencontre un probleme.

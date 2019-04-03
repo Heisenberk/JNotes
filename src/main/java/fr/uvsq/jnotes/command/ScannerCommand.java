@@ -30,6 +30,9 @@ public class ScannerCommand {
 		System.out.println("- delete/d [nom de la note]: supprimer une note. ");
 		System.out.println("- view/v [nom de la note]: voir une note. ");
 		System.out.println("- search/s [mot a rechercher] : rechercher dans les notes d'un mot clé. ");	
+		System.out.println("- param/p : visualiser les paramètres de configuration (application d'édition de note et le chemin du dossier des notes). ");
+		System.out.println("- param/p path [chemin] : modifier les paramètres de configuration (chemin du dossier des notes). ");
+		System.out.println("- param/p app [nom de l'application externe] : modifier les paramètres de configuration (app : application d'édition de note). ");
 	}
 	
 	/**

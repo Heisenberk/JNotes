@@ -1,4 +1,5 @@
-package fr.uvsq.jnotes.exception;
+package exception;
+
 /**
  * Classe CommandeInconnuException qui est une exception lorsque la commande est inconnu pour l'application.
  */

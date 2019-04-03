@@ -1,12 +1,12 @@
 package fr.uvsq.jnotes.function;
 
-import exception.SearchException;
+import exception.ParamException;
 import fr.uvsq.jnotes.command.CommandArg;
 
 /**
  * Classe qui permet de rechercher un element dans toutes les notes. 
  */
-public class Search implements CommandArg{
+public class Param implements CommandArg{
 	
 	/**
 	 * function representant ce qui va appeler la commande. 
@@ -17,7 +17,7 @@ public class Search implements CommandArg{
 	 * Constructeur de Search.
 	 * @param function
 	 */
-	public Search(Function function) {
+	public Param(Function function) {
 		this.function = function;
 	}
 	
@@ -26,9 +26,9 @@ public class Search implements CommandArg{
 	 */
 	public void execute(String[] args) {
 		try {
-			function.search(args);
+			function.param(args);
 		}
-		catch(SearchException e) {
+		catch(ParamException e) {
 			System.out.println(e.getMessage());
 		}
 	}

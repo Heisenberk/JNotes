@@ -63,6 +63,9 @@ public class ArgumentCommand {
 			else if ((sargs.equals("search"))||(sargs.equals("s"))) {
 				return EnumCommand.SEARCH;
 			}
+			else if ((sargs.equals("param"))||(sargs.equals("p"))) {
+				return EnumCommand.PARAM;
+			}
 			return EnumCommand.COMMAND_INVALIDE;
 		}
 	}
@@ -102,6 +105,10 @@ public class ArgumentCommand {
 				else if (detectArg==EnumCommand.SEARCH) {
 					commandArg = new Search(function);
 					 swit.storeAndExecute(commandArg, args);
+				}
+				else if (detectArg ==EnumCommand.PARAM) {
+					commandArg=new Param(function);
+					swit.storeAndExecute(commandArg, args);
 				}
 				else throw new CommandeInconnuException();
 			}
