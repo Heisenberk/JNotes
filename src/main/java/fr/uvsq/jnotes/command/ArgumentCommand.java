@@ -1,5 +1,6 @@
 package fr.uvsq.jnotes.command;
 
+import fr.uvsq.jnotes.exception.*;
 import fr.uvsq.jnotes.function.*;
 
 /**
@@ -14,10 +15,13 @@ public class ArgumentCommand {
 	private Function function;
 	
 	/**
-	 * command représente la commande choisie par l'utilisateur. 
+	 * command représente la commande sans argument choisie par l'utilisateur. 
 	 */
 	private Command command; 
 	
+	/**
+	 * command représente la commande avec argument choisie par l'utilisateur. 
+	 */
 	private CommandArg commandArg;
 	
 	/**
@@ -59,6 +63,9 @@ public class ArgumentCommand {
 			else if ((sargs.equals("search"))||(sargs.equals("s"))) {
 				return EnumCommand.SEARCH;
 			}
+			else if ((sargs.equals("param"))||(sargs.equals("p"))) {
+				return EnumCommand.PARAM;
+			}
 			return EnumCommand.COMMAND_INVALIDE;
 		}
 	}
@@ -70,34 +77,43 @@ public class ArgumentCommand {
 	public void setArgument(String[] args) {
 		EnumCommand detectArg=detectCommand(args);
 		
+		// si l'utilisateur ne tape aucun argument. 
 		if (detectArg==EnumCommand.NO_COMMAND) {
 			ScannerCommand saisie = new ScannerCommand();
 			saisie.afficheCommandes();
 			saisie.saisie();
 		}
+		// si l'utilisateur tape un argument. 
 		else {
-			if (detectArg==EnumCommand.EDIT) {
-				command = new Edit(function);
-				 swit.storeAndExecute(command);
+			try {
+				if (detectArg==EnumCommand.EDIT) {
+					commandArg = new Edit(function);
+					 swit.storeAndExecute(commandArg, args);
+				}
+				else if (detectArg==EnumCommand.LIST) {
+					command = new Listing(function);
+					 swit.storeAndExecute(command);
+				}
+				else if (detectArg==EnumCommand.DELETE) {
+					commandArg = new Delete(function);
+					 swit.storeAndExecute(commandArg, args);
+				}
+				else if (detectArg==EnumCommand.VIEW) {
+					commandArg = new View(function);
+					 swit.storeAndExecute(commandArg, args);
+				}
+				else if (detectArg==EnumCommand.SEARCH) {
+					commandArg = new Search(function);
+					 swit.storeAndExecute(commandArg, args);
+				}
+				else if (detectArg ==EnumCommand.PARAM) {
+					commandArg=new Param(function);
+					swit.storeAndExecute(commandArg, args);
+				}
+				else throw new CommandeInconnuException();
 			}
-			else if (detectArg==EnumCommand.LIST) {
-				command = new Listing(function);
-				 swit.storeAndExecute(command);
-			}
-			else if (detectArg==EnumCommand.DELETE) {
-				commandArg = new Delete(function);
-				 swit.storeAndExecute(commandArg, args);
-			}
-			else if (detectArg==EnumCommand.VIEW) {
-				commandArg = new View(function);
-				 swit.storeAndExecute(commandArg, args);
-			}
-			else if (detectArg==EnumCommand.SEARCH) {
-				command = new Search(function);
-				 swit.storeAndExecute(command);
-			}
-			else {
-				System.out.println("message non reconnu");
+			catch(CommandeInconnuException e) {
+				System.out.println(e.getMessage());
 			}
 		}
 	}

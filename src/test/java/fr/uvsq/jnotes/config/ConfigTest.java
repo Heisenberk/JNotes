@@ -13,10 +13,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import fr.uvsq.jnotes.exception.ConfigurationException;
 
+/**
+ * Tests unitaires sur la classe Config.
+ */
 public class ConfigTest {
+	
+	/**
+	 * Initialisation d'un premier fichier test de configuration. 
+	 */
 	@Before
-	public void initialize1(){
+	public void initialize(){
 		Path outPath = Paths.get("config-test");
 		try (BufferedWriter out = Files.newBufferedWriter(outPath);){
 			out.write("./");
@@ -29,55 +37,29 @@ public class ConfigTest {
 		}
 	}
 	
-	@Before
-	public void initialize2(){
-		Path outPath = Paths.get("config-test2");
-		try (BufferedWriter out = Files.newBufferedWriter(outPath);){
-			out.write(".");
-			out.newLine();
-			out.write("nano");
-			out.newLine();
-		}
-		catch(IOException e) {
-			System.out.println("Erreur Before ConfigTest");
-		}
-	}
 	
+	/**
+	 * Test sur la bonne lecture du fichier de configuration. 
+	 */
 	@Test
 	public void testInit(){
 		Config c=null;
 		try {
 			c=new Config("config-test");
 		}
-		catch(IOException e) {
+		catch(ConfigurationException e) {
 			System.out.println("Erreur TestInit ConfigTest");
 		}
 		assertEquals(c.getPathStockage(), "./");
 		assertEquals(c.getNameAppExtern(), "nano");
 	}
 	
-	@Test
-	public void testInit2(){
-		Config c=null;
-		try {
-			c=new Config("config-test2");
-		}
-		catch(IOException e) {
-			System.out.println("Erreur TestInit ConfigTest");
-		}
-		assertEquals(c.getPathStockage(), "./");
-		assertEquals(c.getNameAppExtern(), "nano");
-	}
-	
+	/**
+	 * Suppression du fichier test de configuration. 
+	 */
 	@After
-	public void finalize1() {
+	public void finalize() {
 		 File f=new File("config-test");
-	     f.delete();
-	}
-	
-	@After
-	public void finalize2() {
-		 File f=new File("config-test2");
 	     f.delete();
 	}
 

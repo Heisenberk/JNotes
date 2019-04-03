@@ -1,12 +1,12 @@
 package fr.uvsq.jnotes.function;
 
 import fr.uvsq.jnotes.command.CommandArg;
-import fr.uvsq.jnotes.exception.DeleteException;
+import fr.uvsq.jnotes.exception.*;
 
 /**
- * Classe qui permet de supprimer une note. 
+ * Classe qui permet de rechercher un element dans toutes les notes. 
  */
-public class Delete implements CommandArg {
+public class Param implements CommandArg{
 	
 	/**
 	 * function representant ce qui va appeler la commande. 
@@ -14,10 +14,10 @@ public class Delete implements CommandArg {
 	private Function function;
 	
 	/**
-	 * Constructeur de Delete.
+	 * Constructeur de Search.
 	 * @param function
 	 */
-	public Delete(Function function) {
+	public Param(Function function) {
 		this.function = function;
 	}
 	
@@ -26,9 +26,9 @@ public class Delete implements CommandArg {
 	 */
 	public void execute(String[] args) {
 		try {
-			function.delete(args);
+			function.param(args);
 		}
-		catch(DeleteException e) {
+		catch(ParamException e) {
 			System.out.println(e.getMessage());
 		}
 	}

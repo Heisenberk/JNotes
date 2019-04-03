@@ -6,25 +6,24 @@ package fr.uvsq.jnotes.command;
  */
 public class Switch {
 
-	/**
-	 * Liste des commandes possibles. 
-	 */
-   //private List<Command> history = new ArrayList<Command>();
-
    /**
     * Constructeur de Switch
     */
    public Switch() {}
 
    /**
-    * Exécute la commande demandé. 
+    * Exécute la commande sans argument demandé. 
     * @param cmd à réaliser. 
     */
    public void storeAndExecute(Command cmd) {
-      //this.history.add(cmd); // optional 
       cmd.execute();        
    }
    
+   /**
+    * Exécute la commande avec argument demandé. 
+    * @param cmd commande à réaliser. 
+    * @param args arguments de la commande. 
+    */
    public void storeAndExecute(CommandArg cmd, String[] args) {
 	   cmd.execute(args);
    }

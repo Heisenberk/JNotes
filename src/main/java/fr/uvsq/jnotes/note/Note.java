@@ -1,5 +1,9 @@
-package fr.uvsq.jnotes;
+package fr.uvsq.jnotes.note;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Classe Note qui permet de générer une note. 
@@ -49,15 +53,14 @@ public class Note {
 		private LocalDate date=LocalDate.now();
 		
 		/**
-		 * Auteur paramètre optionnel de Note qui est l'ensemble de l'équipe du projet 
-		 * par défaut. 
+		 * Auteur paramètre optionnel de Note qui est un auteur inconnu. 
 		 */
-		private String author="Caumes Clément, Gonthier Maxime, Merimi Mehdi, Pho Sarah";
+		private String author="Auteur inconnu";
 		
 		/**
-		 * Projet paramètre optionnel de Note qui est "inf201" par défaut. 
+		 * Projet paramètre optionnel de Note qui est "projet" par défaut. 
 		 */
-		private String project="inf201";
+		private String project="projet";
 		
 		/**
 		 * Contexte paramètre optionnel de Note qui est "work" par défaut. 
@@ -162,14 +165,6 @@ public class Note {
 	}
 	
 	/**
-	 * Accesseur de la date de la note (String).
-	 * @return String représentant la date de la note. 
-	 */
-	private String getDateString() {
-		return date.toString();
-	}
-	
-	/**
 	 * Accesseur du projet. 
 	 * @return String représentant le projet de la note. 
 	 */
@@ -187,8 +182,18 @@ public class Note {
 	
 	/**
 	 * Méthode qui va créer la note à partir des paramètres de celle-ci. 
+	 * @throws IOException 
 	 */
-	public void create() {
-		// a remplir
+	public void create(BufferedWriter out) throws IOException {
+		out.write("= "+ title);
+		out.newLine();
+		out.write(author);
+		out.newLine();
+		out.write(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
+		out.newLine();
+		out.write(":context: "+context);
+		out.newLine();
+		out.write(":project: "+project);
+		out.newLine();
 	}
 }
