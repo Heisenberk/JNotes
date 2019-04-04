@@ -13,9 +13,16 @@ import java.io.File;
 import fr.uvsq.jnotes.note.Note;
 import fr.uvsq.jnotes.config.Config;
 
+/**
+ * Classe qui va être appellée par toutes les fonctionnalitées de l'application : edit, delete, search, listing, parma et view. 
+ * Elle contient toutes les méthodes nécessaires au bon fonctionement des ces fonctionalitées.
+ */
 public class Function {
 	Config c;
 	
+	/**
+	 * Constructeur vide de Function.
+	 */
 	public Function() {
 		try {
 			c=new Config();
@@ -26,6 +33,10 @@ public class Function {
 		
 	}
 	
+	/**
+	 * Constructeur de Function.
+	 * @param Config
+	 */
 	public Function(Config c) {
 		this.c=c;
 	}
@@ -34,6 +45,11 @@ public class Function {
 		return c;
 	}
 	
+	/**
+	 * Méthode de Edit. 
+	 * Si le fichier n'existe pas il est créer. 
+	 * Le process attend que l'utilisateur ai finis d'éditer la note.
+	 */
 	public void edit(String[] args) throws EditException, IOException, InterruptedException{
 		
 		// si on tape "jnotes edit/e" sans autre argument
@@ -84,6 +100,10 @@ public class Function {
 		
 	}
 	
+	/**
+	 * Méthodes créant une liste contenant l'ensemble des notes présente dans le dossier.
+	 * @return string s
+	 */
 	public String listingString() {
 		String s="";
 		File dossier=new File(c.getPathStockage()+"notes/");
@@ -105,10 +125,17 @@ public class Function {
 		return s;
 	}
 	
+	/**
+	 * Méthode affichant le string produit par listingString.
+	 */
 	public void listing() {
 		System.out.println(listingString());
 	}
 	
+	/**
+	 * Méthodes créant une liste contenant le chemin et le nom de la note supprimée
+	 * @return string s
+	 */
 	public String deleteString(String[] args) throws DeleteException{
 		String s="";
 		// si on tape "jnotes delete/d" sans autre argument
@@ -124,14 +151,24 @@ public class Function {
 		return s;
 	}
 	
+	/**
+	 * Méthode affichant le string produit par deleteString.
+	 */
 	public void delete(String[] args) throws DeleteException{
 		System.out.println(deleteString(args));
 	}
 	
+	/**
+	 * Méthode affichant le chemin d'une note.
+	 */
 	public String findPathView(String args) {
 		return c.getPathStockage()+"notes/"+args;
 	}
 	
+	/**
+	 * Méthode de View. 
+	 * Affiche la note sur firefox
+	 */
 	public void view(String[] args) throws ViewException {
 		
 		// si on tape "jnotes view/v" sans autre argument
@@ -157,11 +194,18 @@ public class Function {
 		
 	}
 	
+	/**
+	 * Méthode de Search. 
+	 * Permet une recherche par mot clé.
+	 */
 	public void search(String args[]) {
 		// A FAIRE PAR SARAH
 		
 	}
 	
+	/**
+	 * Méthode de Param. 
+	 */
 	public void param(String args[]) throws ParamException{
 		// si on tape "jnotes param/p" sans autre argument
 		if (args.length<=1) {
