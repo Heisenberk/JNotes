@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.9.4)  4 APR 2019 17:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.9.4)  4 APR 2019 23:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -781,7 +781,7 @@ Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
 \c@LT@chunks=\count119
 \LT@p@ftn=\toks34
 )
-No file ManuelUtilisateur.aux.
+(./ManuelUtilisateur.aux)
 \openout1 = `ManuelUtilisateur.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
@@ -798,6 +798,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 20.
+
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
@@ -950,30 +951,236 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-No file ManuelUtilisateur.toc.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./ManuelUtilisateur.toc
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 4.
+)
 \tf@toc=\write3
 \openout3 = `ManuelUtilisateur.toc'.
 
-[2] [1
+ [2]
+<Captures/test.png, id=14, 1260.71pt x 548.0475pt>
+File: Captures/test.png Graphic file (type png)
+<use Captures/test.png>
+Package pdftex.def Info: Captures/test.png  used on input line 38. on input lin
+e 38.
+Package pdftex.def Info: Requested size: 504.27507pt x 219.2151pt on input line
+ 38.
 
-] (./ManuelUtilisateur.aux) ) 
+Underfull \hbox (badness 10000) in paragraph at lines 36--40
+
+ []
+
+
+Overfull \hbox (33.425pt too wide) in paragraph at lines 36--40
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 36--40
+
+ []
+
+<Captures/mvnpackage.png, id=16, 1256.695pt x 976.64874pt>
+File: Captures/mvnpackage.png Graphic file (type png)
+<use Captures/mvnpackage.png>
+Package pdftex.def Info: Captures/mvnpackage.png  used on input line 42. on inp
+ut line 42.
+Package pdftex.def Info: Requested size: 502.6691pt x 390.65257pt on input line
+ 42.
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--44
+
+ []
+
+
+Overfull \hbox (33.425pt too wide) in paragraph at lines 40--44
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--44
+
+ []
+
+[1
+
+ <./Captures/test.png>]
+<Captures/ecranacceuil.png, id=22, 1264.725pt x 239.89626pt>
+File: Captures/ecranacceuil.png Graphic file (type png)
+<use Captures/ecranacceuil.png>
+Package pdftex.def Info: Captures/ecranacceuil.png  used on input line 46. on i
+nput line 46.
+Package pdftex.def Info: Requested size: 505.88104pt x 95.95679pt on input line
+ 46.
+
+Underfull \hbox (badness 10000) in paragraph at lines 44--48
+
+ []
+
+
+Overfull \hbox (33.425pt too wide) in paragraph at lines 44--48
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 44--48
+
+ []
+
+<Captures/edit.png, id=23, 485.815pt x 344.28625pt>
+File: Captures/edit.png Graphic file (type png)
+<use Captures/edit.png>
+Package pdftex.def Info: Captures/edit.png  used on input line 54. on input lin
+e 54.
+Package pdftex.def Info: Requested size: 437.22946pt x 309.85475pt on input lin
+e 54.
+
+Underfull \hbox (badness 10000) in paragraph at lines 51--56
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 51--56
+
+ []
+
+[2 <./Captures/mvnpackage.png> <./Captures/ecranacceuil.png>]
+<Captures/list.png, id=31, 233.87375pt x 130.4875pt>
+File: Captures/list.png Graphic file (type png)
+<use Captures/list.png>
+Package pdftex.def Info: Captures/list.png  used on input line 59. on input lin
+e 59.
+Package pdftex.def Info: Requested size: 210.4844pt x 117.43765pt on input line
+ 59.
+
+Underfull \hbox (badness 10000) in paragraph at lines 57--61
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 57--61
+
+ []
+
+<Captures/delete.png, id=32, 548.0475pt x 36.135pt>
+File: Captures/delete.png Graphic file (type png)
+<use Captures/delete.png>
+Package pdftex.def Info: Captures/delete.png  used on input line 64. on input l
+ine 64.
+Package pdftex.def Info: Requested size: 493.23819pt x 32.52116pt on input line
+ 64.
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--66
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--66
+
+ []
+
+<Captures/view.png, id=33, 517.935pt x 304.13625pt>
+File: Captures/view.png Graphic file (type png)
+<use Captures/view.png>
+Package pdftex.def Info: Captures/view.png  used on input line 69. on input lin
+e 69.
+Package pdftex.def Info: Requested size: 466.13718pt x 273.72008pt on input lin
+e 69.
+
+Underfull \hbox (badness 10000) in paragraph at lines 67--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 67--71
+
+ []
+
+[3 <./Captures/edit.png> <./Captures/list.png> <./Captures/delete.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 72--76
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--76
+
+ []
+
+<Captures/param.png, id=40, 584.1825pt x 57.21375pt>
+File: Captures/param.png Graphic file (type png)
+<use Captures/param.png>
+Package pdftex.def Info: Captures/param.png  used on input line 79. on input li
+ne 79.
+Package pdftex.def Info: Requested size: 525.75938pt x 51.49188pt on input line
+ 79.
+
+Underfull \hbox (badness 10000) in paragraph at lines 77--81
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 77--81
+
+ []
+
+<Captures/parampath.png, id=41, 669.50125pt x 104.39pt>
+File: Captures/parampath.png Graphic file (type png)
+<use Captures/parampath.png>
+Package pdftex.def Info: Captures/parampath.png  used on input line 84. on inpu
+t line 84.
+Package pdftex.def Info: Requested size: 401.70384pt x 62.63446pt on input line
+ 84.
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--86
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--86
+
+ []
+
+[4 <./Captures/view.png> <./Captures/param.png>]
+<Captures/paramapp.png, id=47, 731.73375pt x 102.3825pt>
+File: Captures/paramapp.png Graphic file (type png)
+<use Captures/paramapp.png>
+Package pdftex.def Info: Captures/paramapp.png  used on input line 89. on input
+ line 89.
+Package pdftex.def Info: Requested size: 439.04364pt x 61.42996pt on input line
+ 89.
+
+Underfull \hbox (badness 10000) in paragraph at lines 87--91
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 87--91
+
+ []
+
+[5 <./Captures/parampath.png> <./Captures/paramapp.png>]
+(./ManuelUtilisateur.aux) ) 
 Here is how much of TeX's memory you used:
- 5901 strings out of 494829
- 81277 string characters out of 6178001
- 142569 words of memory out of 5000000
- 9090 multiletter control sequences out of 15000+600000
- 37983 words of font info for 39 fonts, out of 8000000 for 9000
+ 5966 strings out of 494829
+ 82595 string characters out of 6178001
+ 143569 words of memory out of 5000000
+ 9137 multiletter control sequences out of 15000+600000
+ 44991 words of font info for 45 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  41i,7n,30p,284b,423s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</u
-sr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/p
-ublic/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/shar
-e/texmf/fonts/type1/public/lm/lmr17.pfb>
-Output written on ManuelUtilisateur.pdf (3 pages, 101916 bytes).
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr
+/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips
+/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/te
+xmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lm
+bx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/f
+onts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pf
+b></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/typ
+e1/public/lm/lmsy10.pfb>
+Output written on ManuelUtilisateur.pdf (7 pages, 459426 bytes).
 PDF statistics:
- 31 PDF objects out of 1000 (max. 8388607)
- 21 compressed objects within 1 object stream
+ 83 PDF objects out of 1000 (max. 8388607)
+ 46 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

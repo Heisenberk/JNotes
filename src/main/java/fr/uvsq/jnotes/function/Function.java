@@ -205,6 +205,8 @@ public class Function {
 	
 	/**
 	 * Méthode de Param. 
+	 * Elle permet de visualiser les paramètres de configurations.
+	 * C'est à dire l'application du dossier des notes et le chemin du dossier des notes.
 	 */
 	public void param(String args[]) throws ParamException{
 		// si on tape "jnotes param/p" sans autre argument
