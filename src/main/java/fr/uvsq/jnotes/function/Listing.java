@@ -1,11 +1,11 @@
 package fr.uvsq.jnotes.function;
 
-import fr.uvsq.jnotes.command.Command;
+import fr.uvsq.jnotes.command.ICommand;
 
 /**
  * Classe qui permet de supprimer une note. 
  */
-public class Listing implements Command {
+public class Listing implements ICommand {
 	
 	/**
 	 * function representant ce qui va appeler la commande. 
@@ -25,5 +25,13 @@ public class Listing implements Command {
 	 */
 	public void execute() {
 		function.listing();
+	}
+
+	/**
+	 * Donne à la commande les arguments auxquelles elle devra répondre;
+	 * Ne sert à rien dans ce cas là;
+	 */
+	public ICommand setArgument(String[] args) {
+		return null;
 	}
 }

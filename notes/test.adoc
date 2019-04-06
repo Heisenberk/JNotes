@@ -1,5 +1,3 @@
-
-
 = AsciiDoc Article Title
 Firstname Lastname <author@asciidoctor.org>
 1.0, July 29, 2014, Asciidoctor 1.5 article template

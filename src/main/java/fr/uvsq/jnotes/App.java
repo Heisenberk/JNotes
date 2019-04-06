@@ -20,7 +20,7 @@ enum App {
 	 * @param args arguments en ligne de commande. 
 	 */
 	public void run(String[] args){
-        ArgumentCommand arg = new ArgumentCommand();
+        Interpretor arg = new Interpretor();
         arg.setArgument(args);
 		
 		

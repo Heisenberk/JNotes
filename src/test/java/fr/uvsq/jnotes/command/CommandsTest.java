@@ -3,12 +3,12 @@ package fr.uvsq.jnotes.command;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import fr.uvsq.jnotes.command.ArgumentCommand;
+import fr.uvsq.jnotes.command.Interpretor;
 
 /**
- * Tests unitaires sur la classe ArgumentCommand
+ * Tests unitaires sur la classe Interpretor
  */
-public class ArgumentCommandTest {
+public class CommandsTest {
 
 	/**
 	 * Test sur l'appel à commande Edit.
@@ -17,7 +17,7 @@ public class ArgumentCommandTest {
     public void testEdit(){
     	String args1[]= {"edit"};
     	String args2[]= {"e"};
-    	ArgumentCommand a1 = new ArgumentCommand();
+    	Interpretor a1 = new Interpretor();
         EnumCommand test1=a1.detectCommand(args1);
         EnumCommand test2=a1.detectCommand(args2);
     	assertEquals(test1, EnumCommand.EDIT);
@@ -31,7 +31,7 @@ public class ArgumentCommandTest {
     public void testListing(){
     	String args1[]= {"list"};
     	String args2[]= {"ls"};
-    	ArgumentCommand a1 = new ArgumentCommand();
+    	Interpretor a1 = new Interpretor();
     	EnumCommand test1=a1.detectCommand(args1);
     	EnumCommand test2=a1.detectCommand(args2);
     	assertEquals(test1, EnumCommand.LIST);
@@ -45,7 +45,7 @@ public class ArgumentCommandTest {
     public void testDelete(){
     	String args1[]= {"delete"};
     	String args2[]= {"d"};
-    	ArgumentCommand a1 = new ArgumentCommand();
+    	Interpretor a1 = new Interpretor();
     	EnumCommand test1=a1.detectCommand(args1);
     	EnumCommand test2=a1.detectCommand(args2);
     	assertEquals(test1, EnumCommand.DELETE);
@@ -59,7 +59,7 @@ public class ArgumentCommandTest {
     public void testView(){
     	String args1[]= {"view"};
     	String args2[]= {"v"};
-    	ArgumentCommand a1 = new ArgumentCommand();
+    	Interpretor a1 = new Interpretor();
     	EnumCommand test1=a1.detectCommand(args1);
     	EnumCommand test2=a1.detectCommand(args2);
     	assertEquals(test1, EnumCommand.VIEW);
@@ -73,7 +73,7 @@ public class ArgumentCommandTest {
     public void testSearch(){
     	String args1[]= {"search"};
     	String args2[]= {"s"};
-    	ArgumentCommand a1 = new ArgumentCommand();
+    	Interpretor a1 = new Interpretor();
     	EnumCommand test1=a1.detectCommand(args1);
     	EnumCommand test2=a1.detectCommand(args2);
     	assertEquals(test1, EnumCommand.SEARCH);
@@ -86,7 +86,7 @@ public class ArgumentCommandTest {
     @Test
     public void testInvalide(){
     	String args1[]= {"invalide"};
-    	ArgumentCommand a1 = new ArgumentCommand();
+    	Interpretor a1 = new Interpretor();
     	EnumCommand test1=a1.detectCommand(args1);
     	assertEquals(test1, EnumCommand.COMMAND_INVALIDE);
     }
@@ -97,7 +97,7 @@ public class ArgumentCommandTest {
     @Test
     public void testSansArg(){
     	String args1[]= {};
-    	ArgumentCommand a1 = new ArgumentCommand();
+    	Interpretor a1 = new Interpretor();
     	EnumCommand test1=a1.detectCommand(args1);
     	assertEquals(test1, EnumCommand.NO_COMMAND);
     }
