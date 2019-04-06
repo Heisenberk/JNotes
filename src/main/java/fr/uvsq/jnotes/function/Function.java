@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Observable;
+import java.util.Observer;
 
 import fr.uvsq.jnotes.exception.*;
 
@@ -13,8 +15,10 @@ import java.io.File;
 import fr.uvsq.jnotes.note.Note;
 import fr.uvsq.jnotes.config.Config;
 
-public class Function {
-	Config c;
+public class Function extends Observable {
+	private Config c;
+	
+	//private Observer index;
 	
 	public Function() {
 		try {
@@ -81,7 +85,8 @@ public class Function {
 			System.out.println("Edition de la nouvelle note "+c.getPathStockage()+"notes/"+name);
 					
 		}
-		
+		setChanged(); //notification pour modifier l'index
+		notifyObservers();
 	}
 	
 	public String listingString() {
@@ -126,6 +131,8 @@ public class Function {
 	
 	public void delete(String[] args) throws DeleteException{
 		System.out.println(deleteString(args));
+		setChanged(); //notification pour la modification de l'index
+		notifyObservers();
 	}
 	
 	public String findPathView(String args) {
@@ -180,6 +187,8 @@ public class Function {
 					out.write(c.getNameAppExtern());
 					System.out.println("Chemin du dossier contenant les notes JNotes modifié : "+args[2]);
 					c.setPathStockage(args[2]);
+					setChanged(); //notification pour la modification de l'index
+					notifyObservers();
 				}
 				catch (IOException e) {
 					throw new ParamException();
