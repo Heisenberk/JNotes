@@ -1,8 +1,9 @@
 package fr.uvsq.jnotes;
 
-
 import fr.uvsq.jnotes.command.*;
 import fr.uvsq.jnotes.function.Function;
+import fr.uvsq.jnotes.function.Index;
+import fr.uvsq.jnotes.note.Note;
 
 /**
  * Enumération représentant le main de l'application. 
@@ -22,8 +23,13 @@ enum App {
 	public void run(String[] args){
         ArgumentCommand arg = new ArgumentCommand();
         arg.setArgument(args);
-		
-		
+		/*Index i = new Index();
+		Note n =i.readNote("target/note_indexTest.adoc");
+		System.out.println("Title:<"+n.getTitle()+">");
+		System.out.println("author:<"+n.getAuthor()+">");
+		System.out.println("date:<"+n.getDate()+">");
+		System.out.println("context:<"+n.getContext()+">");
+		System.out.println("project:<"+n.getProject()+">");*/
 	}
 
 	/**

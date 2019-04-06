@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Classe Note qui permet de générer une note. 
@@ -42,6 +43,7 @@ public class Note {
 	 * @author Clément Caumes & Mehdi Merimi
 	 */
 	public static class Builder{
+
 		/**
 		 * Titre paramètre obligatoire de Note.
 		 */
@@ -60,7 +62,7 @@ public class Note {
 		/**
 		 * Projet paramètre optionnel de Note qui est "projet" par défaut. 
 		 */
-		private String project="projet";
+		private String project="project";
 		
 		/**
 		 * Contexte paramètre optionnel de Note qui est "work" par défaut. 
@@ -190,7 +192,7 @@ public class Note {
 		out.newLine();
 		out.write(author);
 		out.newLine();
-		out.write(date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
+		out.write(date.format(DateTimeFormatter.ofPattern("dd/mm/yyyy")));
 		out.newLine();
 		out.write(":context: "+context);
 		out.newLine();

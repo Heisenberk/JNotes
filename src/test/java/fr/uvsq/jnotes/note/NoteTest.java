@@ -21,7 +21,7 @@ public class NoteTest {
     	 assertEquals(n.getTitle(), "Test1");
     	 assertEquals(n.getAuthor(), "Auteur inconnu");
     	 assertEquals(n.getDate(), LocalDate.now());
-    	 assertEquals(n.getProject(), "projet");
+    	 assertEquals(n.getProject(), "project");
     	 assertEquals(n.getContext(), "work");
     }
     
@@ -34,10 +34,11 @@ public class NoteTest {
     			.Builder("Test1")
     			.author("Lopes Stephane")
     			.build();
+    	
     	 assertEquals(n.getTitle(), "Test1");
     	 assertEquals(n.getAuthor(), "Lopes Stephane");
     	 assertEquals(n.getDate(), LocalDate.now());
-    	 assertEquals(n.getProject(), "projet");
+    	 assertEquals(n.getProject(), "project");
     	 assertEquals(n.getContext(), "work");
     }
 
