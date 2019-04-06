@@ -12,10 +12,7 @@ public class SearchException extends RuntimeException{
         super("Impossible de rechercher un élément dans les notes. ");
     }
     
-    /**
-     * Accesseur du message a afficher.
-     */
-    public String getMessage() {
-    	return "Impossible de rechercher un élément dans les notes. ";
+    public SearchException(String message){
+        super("Erreur dans la recherche : "+message);
     }
 }

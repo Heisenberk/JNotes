@@ -2,17 +2,9 @@ package fr.uvsq.jnotes.function;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +14,6 @@ import fr.uvsq.jnotes.function.Function;
 
 public class FunctionTest {
 	private Config c;
-	
 	@Before
 	public void initialize(){
 		c = new Config("target/notes-test/", "nano");
@@ -128,7 +119,7 @@ public class FunctionTest {
 			PrintWriter out=new PrintWriter(new FileWriter(file));
 			Function f = new Function(c);
 			String[] args= {"view", "test.adoc"};
-			assertEquals(f.findPathView(args[1]), "target/notes-test/notes/test.adoc");
+			assertEquals(f.path(args[1]), "target/notes-test/notes/test.adoc");
 			f.delete(args);
 			dossier.delete();
 		}

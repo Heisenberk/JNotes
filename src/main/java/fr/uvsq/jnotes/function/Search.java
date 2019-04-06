@@ -1,13 +1,16 @@
 package fr.uvsq.jnotes.function;
 
-import fr.uvsq.jnotes.command.CommandArg;
+import fr.uvsq.jnotes.command.ICommand;
 import fr.uvsq.jnotes.exception.*;
 
 /**
  * Classe qui permet de rechercher un element dans toutes les notes. 
  */
-public class Search implements CommandArg{
-	
+public class Search implements ICommand{
+	/**
+	 * arguments entrés par l'utilisateur
+	 */
+	private String[]args;
 	/**
 	 * function representant ce qui va appeler la commande. 
 	 */
@@ -24,12 +27,18 @@ public class Search implements CommandArg{
 	/**
 	 * Execute la commande. 
 	 */
-	public void execute(String[] args) {
+	public void execute() {
 		try {
-			function.search(args);
+			function.search(this.args);
 		}
 		catch(SearchException e) {
-			System.out.println(e.getMessage());
+			System.out.println(/*e*/e.getMessage());
 		}
+	}
+	
+
+	public ICommand setArgument(String[] args) {
+		this.args = args;
+		return this;
 	}
 }
