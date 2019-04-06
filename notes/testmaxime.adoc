@@ -1,7 +1,0 @@
-= testmaxime
-Maxime-Clement-Sarah-Mehdi
-04 avril 2019
-:context: work
-:project: projet
-
-Test pour manuel utilisateur

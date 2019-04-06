@@ -1,6 +1,8 @@
 package fr.uvsq.jnotes.function;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,11 +10,20 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import fr.uvsq.jnotes.config.Config;
 import fr.uvsq.jnotes.exception.IndexException;
+import fr.uvsq.jnotes.exception.ParamException;
+import fr.uvsq.jnotes.note.ComparatorContext;
+import fr.uvsq.jnotes.note.ComparatorDate;
+import fr.uvsq.jnotes.note.ComparatorProject;
 import fr.uvsq.jnotes.note.Note;
 
 public class Index implements Observer{
@@ -57,11 +68,104 @@ public class Index implements Observer{
 		return n;
 	}
 
+	public String[] getListNotes(Config c) {
+		File dossier=new File(c.getPathStockage()+"notes/");
+		if (dossier.exists() && dossier.isDirectory()){
+			String[] s=dossier.list();
+			for (int i=0;i<s.length; i++) {
+				s[i]=c.getPathStockage()+"notes/"+s[i];
+			}
+	        return s;
+		}
+		else return null;
+	}
+	
+	/*public void writeAllNotes(String path, List<Note> listeNotes) {
+		Path outPath=Paths.get(path);
+		
+	}*/
+	
+	private List<String> getAffichage(List<String> lines, List<Note> listeNotes, String[] nameNotes){
+		lines.add("[options=\"header\",width=\"60%\",align=\"center\",cols=\"^,^,^,^,^\"]");
+		lines.add("|====================================");
+		lines.add("| Titre | Auteur | Date | Contexte | Projet");
+		Note temp;
+		for (int i=0; i<nameNotes.length; i++) {
+			temp=listeNotes.get(i);
+			lines.add("| "+temp.getTitle()+" | "+temp.getAuthor()+" | "+temp.getDate()+" | "+temp.getContext()+" | "+temp.getProject());
+		}
+		lines.add("|====================================");
+		return lines;
+	}
+	
+	public void makeIndex(Config c) {
+		String[] nameNotes = getListNotes(c);
+		List<Note> listeNotes=new ArrayList<Note>();
+		
+		// lecture et stockage des notes
+		for (int i=0; i<nameNotes.length; i++) {
+			listeNotes.add(readNote(nameNotes[i]));
+		}
+		
+		// tri des notes selon le titre
+		Collections.sort(listeNotes);
+		
+		// ecriture de index.adoc
+		List <String> lines=new ArrayList<String>();
+		lines.add("= Index");
+		lines.add("JNotes");
+		LocalDate localDate = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String date = localDate.format(formatter);
+		lines.add(date);
+		lines.add(":context: notes");
+		lines.add(":project: jnotes");
+		lines.add(" ");
+		//Note temp;
+		
+		// ecriture de la liste integrale des notes
+		lines.add("== Liste integrale des notes");
+		getAffichage(lines, listeNotes, nameNotes);
+		
+		// ecriture de la liste des notes par contexte
+		lines.add("== Liste de notes regroupées par contexte");
+		Collections.sort(listeNotes, new ComparatorContext());
+		getAffichage(lines, listeNotes, nameNotes);
+		
+		//ecriture de la liste des notes par projet
+		lines.add("== Liste de notes regroupées par projet");
+		Collections.sort(listeNotes, new ComparatorProject());
+		getAffichage(lines, listeNotes, nameNotes);
+		
+		// ecriture de la liste des notes par mois
+		lines.add("== Liste de notes regroupées par mois");
+		Collections.sort(listeNotes, new ComparatorDate());
+		getAffichage(lines, listeNotes, nameNotes);
+		
+		
+		lines.add(" ");
+		Path outPath = Paths.get("config/index.adoc");
+		try(
+				BufferedWriter out = Files.newBufferedWriter(outPath)
+			){
+			
+			for(int i=0;i<lines.size();i++) {
+				out.write(lines.get(i));
+				out.newLine();
+			}
+		}
+		catch (IOException e) {
+			throw new ParamException();
+		}
+		
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o instanceof Function){       
 			Function f = (Function) o;
 			System.out.println("Modification de l'index effectuee. ");
+			makeIndex(f.getConfig());
 			// faire la lecture et l'analyse des notes
         } 
 		

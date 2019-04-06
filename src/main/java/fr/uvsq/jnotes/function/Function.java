@@ -135,6 +135,9 @@ public class Function extends Observable {
 	 */
 	public void listing() {
 		System.out.println(listingString());
+		// A ENLEVER 
+		setChanged(); //notification pour la modification de l'index
+		notifyObservers();
 	}
 	
 	/**

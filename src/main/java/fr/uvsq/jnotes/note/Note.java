@@ -1,17 +1,23 @@
 package fr.uvsq.jnotes.note;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
+import fr.uvsq.jnotes.exception.IndexException;
 
 /**
  * Classe Note qui permet de générer une note. 
  * Cette classe utilise le pattern Builder car l'utilisateur 
  * peut créer des notes sans choisir certains paramètres. 
  */
-public class Note {
+public class Note implements Comparable{
 	
 	/**
 	 * Titre de la note. 
@@ -192,11 +198,19 @@ public class Note {
 		out.newLine();
 		out.write(author);
 		out.newLine();
-		out.write(date.format(DateTimeFormatter.ofPattern("dd/mm/yyyy")));
+		out.write(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		out.newLine();
 		out.write(":context: "+context);
 		out.newLine();
 		out.write(":project: "+project);
 		out.newLine();
 	}
+
+
+	@Override
+	public int compareTo(Object o) {
+		Note n=(Note)o;
+		return this.title.compareTo(n.getTitle());
+	}
+
 }
