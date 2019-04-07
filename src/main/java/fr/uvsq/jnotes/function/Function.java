@@ -118,12 +118,13 @@ public class Function {
 		String s="";
 		// si on tape "jnotes delete/d" sans autre argument
 		if (args.length<=1) throw new DeleteException(); 
-						
+	
 		File fichier=new File(c.getPathStockage()+"notes/"+args[1]);
+		String note = c.getPathStockage()+"notes/"+args[1];
 		if(fichier.exists()) {
-			s+="Suppression de la note AsciiDoctor "+c.getPathStockage()+"notes/"+args[1]+"\n";
+			s+="Suppression de la note AsciiDoctor "+ note +"\n";
 		}
-		else throw new DeleteException();
+		else throw new DeleteException("Impossible de supprimer la note " + note);
 							
 		fichier.delete();
 		return s;

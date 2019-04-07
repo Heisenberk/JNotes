@@ -12,10 +12,8 @@ public class DeleteException extends RuntimeException{
         super("Impossible de supprimer une note. ");
     }
     
-    /**
-     * Accesseur du message a afficher.
-     */
-    public String getMessage() {
-    	return "Impossible de supprimer une note. ";
-    }
+    public DeleteException(String string) {
+		super(string);
+	}
+
 }

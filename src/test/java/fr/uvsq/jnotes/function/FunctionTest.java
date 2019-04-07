@@ -2,9 +2,17 @@ package fr.uvsq.jnotes.function;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,8 +22,9 @@ import fr.uvsq.jnotes.function.Function;
 
 public class FunctionTest {
 	private Config c;
+	
 	@Before
-	public void initialize(){
+	public void initialize() {
 		c = new Config("target/notes-test/", "nano");
 	}
 	
@@ -44,18 +53,20 @@ public class FunctionTest {
 	 * Test pour le listing avec le dossier vide. 
 	 */
 	@Test
-	public void testListingNote() {		
-		try {
-			File dossier =new File("target/notes-test/notes");
-			dossier.mkdir();
-			File file = new File("target/notes-test/notes/test.adoc");
-			PrintWriter out=new PrintWriter(new FileWriter(file));
+	public void testListingNote() {	
+		File dossier =new File("target/notes-test/notes");
+		dossier.mkdir();
+		File file = new File("target/notes-test/notes/test.adoc");
+		try(PrintWriter out=new PrintWriter(new FileWriter(file))) {
 			Function f = new Function(c);
 			assertEquals(f.listingString(), "Listing des notes : \n- test.adoc\n");
 			file.delete();
 			dossier.delete();
 		}
-		catch(Exception e) {}
+		catch(Exception e) {
+			System.out.println("ListingNote");
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -76,18 +87,20 @@ public class FunctionTest {
 	 */
 	@Test
 	public void testDeleteNote() {
-		try {
-			File dossier =new File("target/notes-test/notes");
-			dossier.mkdir();
-			File file = new File("target/notes-test/notes/test.adoc");
-			PrintWriter out=new PrintWriter(new FileWriter(file));
+		File dossier =new File("target/notes-test/notes");
+		dossier.mkdir();
+		File file = new File("target/notes-test/notes/test.adoc");
+		try(PrintWriter out=new PrintWriter(new FileWriter(file))) {
+			for(String s : dossier.list()) System.out.println(s);
 			Function f = new Function(c);
 			String[] args= {"delete", "test.adoc"};
 			assertEquals(f.deleteString(args), "Suppression de la note AsciiDoctor target/notes-test/notes/test.adoc\n");
-			f.delete(args);
 			dossier.delete();
 		}
-		catch(Exception e) {}
+		catch(Exception e) {
+			System.out.println("DeleteNote");
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -112,18 +125,20 @@ public class FunctionTest {
 	
 	@Test
 	public void testViewNote() {
-		try {
-			File dossier =new File("target/notes-test/notes");
-			dossier.mkdir();
-			File file = new File("target/notes-test/notes/test.adoc");
-			PrintWriter out=new PrintWriter(new FileWriter(file));
+		File dossier =new File("target/notes-test/notes");
+		dossier.mkdir();
+		File file = new File("target/notes-test/notes/test.adoc");
+		try(PrintWriter out=new PrintWriter(new FileWriter(file))) {
 			Function f = new Function(c);
 			String[] args= {"view", "test.adoc"};
 			assertEquals(f.path(args[1]), "target/notes-test/notes/test.adoc");
 			f.delete(args);
 			dossier.delete();
 		}
-		catch(Exception e) {}
+		catch(Exception e) {
+			System.out.println("Error in viewnote : ");
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
