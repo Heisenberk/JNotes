@@ -17,7 +17,7 @@ import fr.uvsq.jnotes.function.Function;
 
 public class SearchTest {
 	private Config c;
-	private File dir1;
+	//private File dir1;
 	private File dir2;
 	File f1;
 	File f2;
@@ -25,8 +25,8 @@ public class SearchTest {
 	@Before
 	public void initialize(){
 		c = new Config("target/notes-test/", "nano");
-		dir1 = new File("target/notes-test/");
-		dir1.mkdir();
+		//dir1 = new File("target/notes-test/");
+		//dir1.mkdir();
 		dir2 = new File("target/notes-test/notes/");
 		dir2.mkdir();
 
@@ -49,7 +49,10 @@ public class SearchTest {
 			fw.append("sarah pho\n");
 			fw.append("7 décembre 1995\n");
 			fw.close();
-		} catch (IOException e1) { }
+		} catch (IOException e) { 
+			System.out.println("init");
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -99,13 +102,17 @@ public class SearchTest {
 			fw.append("* test search 1\n");
 			fw.append("* test search 2\n");
 			fw.close();
-		} catch (IOException e) { }
+		} catch (IOException e) { 
+			System.out.println("search1");
+			e.printStackTrace();
+		}
 		Function f = new Function(c);
 		String[] args = {"search", "test", "search", "2"};
 		List<String> strings = null;
 		try{
 			strings = f.search(args);
-		}catch(SearchException e2){}
+		}catch(SearchException e){
+		}
 		assertEquals(2, strings.size());
 	}
 	/**
@@ -124,13 +131,16 @@ public class SearchTest {
 			fw.append("* test search 1\n");
 			fw.append("* test search 2\n");
 			fw.close();
-		} catch (IOException e1) { }
+		} catch (IOException e) { 
+			System.out.println("search2");
+			e.printStackTrace();
+		}
 		Function f = new Function(c);
 		String[] args = {"search", "test", "search", "2"};
 		List<String> strings = null;
 		try{
 			strings = f.search(args);
-		}catch(SearchException e2){}
+		}catch(SearchException e){}
 		assertFalse(strings.contains("test_search1.adoc"));
 	}
 	
@@ -147,12 +157,16 @@ public class SearchTest {
 			fw = new FileWriter(f2, true);
 			fw.append(":context: work\n* test search 2\n");
 			fw.close();
-		} catch (IOException e1) { }
+		} catch (IOException e) { 
+			System.out.println("tag1");
+			e.printStackTrace();
+		}
 		Function f = new Function(c);
 		List<String> strings = null;
 		try{
 			strings = f.search(args);
-		}catch(SearchException e2){}
+		}catch(SearchException e){
+		}
 		assertEquals(2, strings.size());
 	}
 	
@@ -169,12 +183,16 @@ public class SearchTest {
 			fw = new FileWriter(f2, true);
 			fw.append(":context: work\n*:project: p1\n*test search 2\n");
 			fw.close();
-		} catch (IOException e1) { }
+		} catch (IOException e) {
+			System.out.println("tag2");
+			e.printStackTrace();
+		}
 		Function f = new Function(c);
 		List<String> strings = null;
 		try{
 			strings = f.search(args);
-		}catch(SearchException e2){}
+		}catch(SearchException e){
+		}
 		assertEquals(1, strings.size());
 	}
 	
@@ -191,12 +209,16 @@ public class SearchTest {
 			fw = new FileWriter(f2, true);
 			fw.append(":context: work\n*test search 2\n");
 			fw.close();
-		} catch (IOException e1) { }
+		} catch (IOException e) { 
+			System.out.println("tag3");
+			e.printStackTrace();
+		}
 		Function f = new Function(c);
 		List<String> strings = null;
 		try{
 			strings = f.search(args);
-		}catch(SearchException e2){}
+		}catch(SearchException e){
+		}
 		assertEquals(1, strings.size());
 	}
 	
@@ -211,12 +233,16 @@ public class SearchTest {
 			FileWriter fw = new FileWriter(f1, true);
 			fw.append("*test\n:context: work\n");
 			fw.close();
-		} catch (IOException e1) { }
+		} catch (IOException e) { 
+			System.out.println("tagstops");
+			e.printStackTrace();
+		}
 		Function f = new Function(c);
 		List<String> strings = null;
 		try{
 			strings = f.search(args);
-		}catch(SearchException e2){}
+		}catch(SearchException e){
+		}
 		assertEquals(1, strings.size());
 	}
 	
@@ -229,10 +255,12 @@ public class SearchTest {
 		try {
 			FileWriter fw = new FileWriter(f1, true);
 			fw.append(":context: work\ntest search 1\n");
-			fw.close();
 			fw.append("*test\n:context: work\n");
 			fw.close();
-		} catch (IOException e1) { }
+		} catch (IOException e) { 
+			System.out.println("tagserrorinargs");
+			e.printStackTrace();
+		}
 		Function f = new Function(c);
 		List<String> strings = null;
 		strings = f.search(args);
@@ -250,22 +278,28 @@ public class SearchTest {
 			FileWriter fw = new FileWriter(f1, true);
 			fw.append(":context: \ntest search 1\n");
 			fw.close();
-		} catch (IOException e1) { }
+		} catch (IOException e) { 
+			System.out.println("tagserrorinnote");
+			e.printStackTrace();
+		}
 		Function f = new Function(c);
 		List<String> strings = null;
 		try{
 			strings = f.search(args);
-		}catch(SearchException e2){}
+		}catch(SearchException e){
+		}
 		
 		assertEquals(0, strings.size());
 	}
 	
 	@After
 	public void end(){
-		f1.delete();
-		f2.delete();
-		f3.delete();
-		dir2.delete();
-		dir1.delete();
+		System.out.println("suppression de " + f1.getAbsolutePath() + " " + ((f1.delete())?"réussie":"échouée"));
+		System.out.println("suppression de " + f2.getAbsolutePath() + " " + ((f2.delete())?"réussie":"échouée"));
+
+		System.out.println("suppression de " + f3.getAbsolutePath() + " " + ((f3.delete())?"réussie":"échouée"));
+
+		System.out.println("suppression de " + dir2.getAbsolutePath() + " " + ((dir2.delete())?"réussie":"échouée"));
+		//System.out.println("suppression de " + dir1.getAbsolutePath() + " " + ((dir1.delete())?"réussie":"échouée"));
 	}
 }
