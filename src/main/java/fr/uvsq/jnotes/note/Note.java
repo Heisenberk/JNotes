@@ -89,7 +89,8 @@ public class Note implements Comparable{
 		 * @return Builder avec date initialisé.
 		 */
 		public Builder date(String date) {
-			this.date=LocalDate.parse(date);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			this.date=LocalDate.parse(date, formatter);
 			return this;
 		}
 		

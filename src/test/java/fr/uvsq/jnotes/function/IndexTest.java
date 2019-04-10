@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.junit.After;
 import org.junit.Before;
@@ -58,7 +59,7 @@ public class IndexTest {
 		Note n =i.readNote("target/note_indexTest.adoc");
 		assertEquals(n.getTitle(), "Reunion CDS");
 		assertEquals(n.getAuthor(), "Stephane Lopes");
-		assertEquals(n.getDate(), LocalDate.now());
+		assertEquals("22/02/2018", n.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		assertEquals(n.getContext(), "work");
 		assertEquals(n.getProject(), "cds");
 	}

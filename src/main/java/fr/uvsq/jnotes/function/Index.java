@@ -43,6 +43,7 @@ public class Index implements Observer{
 			
 			line=in.readLine(); //lecture de la date
 			date=line;
+
 			
 			while((line=in.readLine())!=null) {
 				if (line.length()>=10) {
@@ -62,6 +63,7 @@ public class Index implements Observer{
 		Note n = new Note	
     			.Builder(title)
     			.author(author)
+    			.date(date)
     			.context(context)
     			.project(project)
     			.build();
@@ -85,7 +87,7 @@ public class Index implements Observer{
 		
 	}*/
 	
-	private List<String> getAffichage(List<String> lines, List<Note> listeNotes, String[] nameNotes){
+	private List<String> getAffichageGlobal(List<String> lines, List<Note> listeNotes, String[] nameNotes){
 		lines.add("[options=\"header\",width=\"60%\",align=\"center\",cols=\"^,^,^,^,^\"]");
 		lines.add("|====================================");
 		lines.add("| Titre | Auteur | Date | Contexte | Projet");
@@ -98,6 +100,53 @@ public class Index implements Observer{
 		return lines;
 	}
 	
+	private List<String> getAffichageContext(List<String> lines, List<Note> listeNotes, String[] nameNotes){
+		lines.add("[options=\"header\",width=\"60%\",align=\"center\",cols=\"^,^,^,^,^\"]");
+		lines.add("|====================================");
+		lines.add("| Titre | Auteur | Date | Contexte | Projet");
+		Note temp; String contextTemp=null; 
+		for (int i=0; i<nameNotes.length; i++) {
+			temp=listeNotes.get(i);
+			if (contextTemp!=null) {
+				if (!(contextTemp.equals(temp.getContext()))) {
+					lines.add(" ");
+					lines.add("|====================================");
+					lines.add("[options=\"header\",width=\"60%\",align=\"center\",cols=\"^,^,^,^,^\"]");
+					lines.add("|====================================");
+					lines.add("| Titre | Auteur | Date | Contexte | Projet");
+				}
+			}
+			lines.add("| "+temp.getTitle()+" | "+temp.getAuthor()+" | "+temp.getDate()+" | "+temp.getContext()+" | "+temp.getProject());
+			contextTemp=temp.getContext();
+		}
+		lines.add("|====================================");
+		return lines;
+	}
+	
+	private List<String> getAffichageProject(List<String> lines, List<Note> listeNotes, String[] nameNotes){
+		lines.add("[options=\"header\",width=\"60%\",align=\"center\",cols=\"^,^,^,^,^\"]");
+		lines.add("|====================================");
+		lines.add("| Titre | Auteur | Date | Contexte | Projet");
+		Note temp; String contextProject=null; 
+		for (int i=0; i<nameNotes.length; i++) {
+			temp=listeNotes.get(i);
+			if (contextProject!=null) {
+				if (!(contextProject.equals(temp.getProject()))) {
+					lines.add(" ");
+					lines.add("|====================================");
+					lines.add("[options=\"header\",width=\"60%\",align=\"center\",cols=\"^,^,^,^,^\"]");
+					lines.add("|====================================");
+					lines.add("| Titre | Auteur | Date | Contexte | Projet");
+				}
+			}
+			lines.add("| "+temp.getTitle()+" | "+temp.getAuthor()+" | "+temp.getDate()+" | "+temp.getContext()+" | "+temp.getProject());
+			contextProject=temp.getProject();
+		}
+		lines.add("|====================================");
+		return lines;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public void makeIndex(Config c) {
 		String[] nameNotes = getListNotes(c);
 		List<Note> listeNotes=new ArrayList<Note>();
@@ -121,29 +170,35 @@ public class Index implements Observer{
 		lines.add(":context: notes");
 		lines.add(":project: jnotes");
 		lines.add(" ");
-		//Note temp;
 		
-		// ecriture de la liste integrale des notes
-		lines.add("== Liste integrale des notes");
-		getAffichage(lines, listeNotes, nameNotes);
+		// si il n'y a aucune note
+		if (listeNotes.isEmpty()) {
+			lines.add("Aucune note gérée par JNotes. ");
+		}
+		// si il y a au moins une note
+		else {
+			// ecriture de la liste integrale des notes
+			lines.add("== Liste intégrale des notes");
+			getAffichageGlobal(lines, listeNotes, nameNotes);
+			
+			// ecriture de la liste des notes par contexte
+			lines.add("== Liste de notes regroupées par contexte");
+			Collections.sort(listeNotes, new ComparatorContext());
+			getAffichageContext(lines, listeNotes, nameNotes);
+			
+			//ecriture de la liste des notes par projet
+			lines.add("== Liste de notes regroupées par projet");
+			Collections.sort(listeNotes, new ComparatorProject());
+			getAffichageProject(lines, listeNotes, nameNotes);
+			
+			// ecriture de la liste des notes par mois
+			lines.add("== Liste de notes triées par mois");
+			Collections.sort(listeNotes, new ComparatorDate());
+			getAffichageGlobal(lines, listeNotes, nameNotes);
+			
+			lines.add(" ");
+		}
 		
-		// ecriture de la liste des notes par contexte
-		lines.add("== Liste de notes regroupées par contexte");
-		Collections.sort(listeNotes, new ComparatorContext());
-		getAffichage(lines, listeNotes, nameNotes);
-		
-		//ecriture de la liste des notes par projet
-		lines.add("== Liste de notes regroupées par projet");
-		Collections.sort(listeNotes, new ComparatorProject());
-		getAffichage(lines, listeNotes, nameNotes);
-		
-		// ecriture de la liste des notes par mois
-		lines.add("== Liste de notes regroupées par mois");
-		Collections.sort(listeNotes, new ComparatorDate());
-		getAffichage(lines, listeNotes, nameNotes);
-		
-		
-		lines.add(" ");
 		Path outPath = Paths.get("config/index.adoc");
 		try(
 				BufferedWriter out = Files.newBufferedWriter(outPath)
