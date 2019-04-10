@@ -5,7 +5,7 @@ import java.util.List;
 
 import fr.uvsq.jnotes.command.*;
 import fr.uvsq.jnotes.function.Function;
-import fr.uvsq.jnotes.function.Index;
+import fr.uvsq.jnotes.function.Update;
 import fr.uvsq.jnotes.note.Note;
 
 /**

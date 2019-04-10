@@ -140,6 +140,21 @@ public class Function extends Observable {
 		notifyObservers();
 	}
 	
+	public void index() {
+		try {
+			
+			Process p=Runtime.getRuntime().exec("firefox config/index.adoc");
+			p.waitFor();
+			System.out.println("Visualisation de l'index JNotes ");
+		}
+		catch(IOException e) {
+			throw new ViewException();
+		}
+		catch(Exception e) {
+			throw new ViewException();
+		}
+	}
+	
 	/**
 	 * Méthodes créant une liste contenant le chemin et le nom de la note supprimée
 	 * @return string s

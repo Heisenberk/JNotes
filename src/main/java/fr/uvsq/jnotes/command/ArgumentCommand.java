@@ -24,7 +24,7 @@ public class ArgumentCommand {
 	 */
 	private CommandArg commandArg;
 	
-	private Index index;
+	private Update update;
 	
 	/**
 	 * swit permet d'effectuer la commande. 
@@ -37,8 +37,8 @@ public class ArgumentCommand {
 	public ArgumentCommand() {
 		function = new Function();
 		swit = new Switch();
-		index = new Index();
-		function.addObserver(index);
+		update = new Update();
+		function.addObserver(update);
 	}
 	
 	/**
