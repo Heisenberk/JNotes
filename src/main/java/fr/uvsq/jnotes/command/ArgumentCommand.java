@@ -70,6 +70,9 @@ public class ArgumentCommand {
 			else if ((sargs.equals("param"))||(sargs.equals("p"))) {
 				return EnumCommand.PARAM;
 			}
+			else if ((sargs.equals("index"))||(sargs.equals("i"))) {
+				return EnumCommand.INDEX;
+			} 
 			return EnumCommand.COMMAND_INVALIDE;
 		}
 	}
@@ -119,6 +122,10 @@ public class ArgumentCommand {
 				else if (detectArg ==EnumCommand.PARAM) {
 					commandArg=new Param(function);
 					swit.storeAndExecute(commandArg, args);
+				}
+				else if (detectArg ==EnumCommand.INDEX) {
+					command=new Index(function);
+					swit.storeAndExecute(command);
 				}
 				else throw new CommandeInconnuException();
 			}

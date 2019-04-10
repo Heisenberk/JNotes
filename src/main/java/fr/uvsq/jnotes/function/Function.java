@@ -135,9 +135,7 @@ public class Function extends Observable {
 	 */
 	public void listing() {
 		System.out.println(listingString());
-		// A ENLEVER 
-		setChanged(); //notification pour la modification de l'index
-		notifyObservers();
+
 	}
 	
 	public void index() {
@@ -148,10 +146,10 @@ public class Function extends Observable {
 			System.out.println("Visualisation de l'index JNotes ");
 		}
 		catch(IOException e) {
-			throw new ViewException();
+			throw new IndexException();
 		}
 		catch(Exception e) {
-			throw new ViewException();
+			throw new IndexException();
 		}
 	}
 	
@@ -268,11 +266,14 @@ public class Function extends Observable {
 					out.newLine();
 					out.write(args[2]);
 					c.setNameAppExtern(args[2]);
+					System.out.println("Application utilisée pour l'édition des notes JNotes modifiée : "+args[2]);
+					setChanged(); //notification pour la modification de l'index
+					notifyObservers();
 				}
 				catch (IOException e) {
 					throw new ParamException();
 				}
-				System.out.println("Application utilisée pour l'édition des notes JNotes modifiée : "+args[2]);
+				
 			}
 		}
 		else throw new ParamException();

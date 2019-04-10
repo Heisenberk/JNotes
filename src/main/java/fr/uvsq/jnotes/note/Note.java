@@ -10,8 +10,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-import fr.uvsq.jnotes.exception.IndexException;
-
 /**
  * Classe Note qui permet de générer une note. 
  * Cette classe utilise le pattern Builder car l'utilisateur 

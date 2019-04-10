@@ -1,21 +1,21 @@
 package fr.uvsq.jnotes.exception;
 
 /**
- * Classe IndexException.
+ * Classe EditException.
  */
 public class IndexException extends RuntimeException{
 	
 	/**
-     * Constructeur de DeleteException.
+     * Constructeur de EditException.
      */
     public IndexException(){
-        super("Impossible de generer correctement index.adoc. ");
+        super("Impossible de visualiser l'index JNotes. ");
     }
     
     /**
      * Accesseur du message a afficher.
      */
     public String getMessage() {
-    	return "Impossible de generer correctement index.adoc. ";
+    	return "Impossible de visualiser l'index JNotes. ";
     }
 }

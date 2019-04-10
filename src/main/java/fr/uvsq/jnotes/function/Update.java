@@ -19,8 +19,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import fr.uvsq.jnotes.config.Config;
-import fr.uvsq.jnotes.exception.IndexException;
 import fr.uvsq.jnotes.exception.ParamException;
+import fr.uvsq.jnotes.exception.UpdateException;
 import fr.uvsq.jnotes.note.ComparatorContext;
 import fr.uvsq.jnotes.note.ComparatorDate;
 import fr.uvsq.jnotes.note.ComparatorProject;
@@ -58,7 +58,7 @@ public class Update implements Observer{
 			}
 		}
 		catch(Exception e) {
-			throw new IndexException();
+			throw new UpdateException();
 		}
 		Note n = new Note	
     			.Builder(title)
