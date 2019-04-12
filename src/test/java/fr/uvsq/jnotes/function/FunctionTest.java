@@ -2,9 +2,17 @@ package fr.uvsq.jnotes.function;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,9 +22,10 @@ import fr.uvsq.jnotes.function.Function;
 
 public class FunctionTest {
 	private Config c;
+	
 	@Before
 	public void initialize(){
-		c = new Config("target/functiontest-test/", "nano");
+		c = new Config("target/notes-test/", "nano");
 	}
 	
 	/**
@@ -25,7 +34,7 @@ public class FunctionTest {
 	@Test
 	public void testListingPathInconnu() {
 		Function f = new Function(c);
-		assertEquals(f.listingString(), "Aucune note trouvée. "+"\n");
+		assertEquals(f.listingString(), "Aucune note trouvÃ©e. "+"\n");
 	}
 	
 	/**
@@ -33,10 +42,10 @@ public class FunctionTest {
 	 */
 	@Test
 	public void testListingDossierVide() {
-		File file =new File("target/functiontest-test/");
+		File file =new File("target/notes-test/");
 		file.mkdir();
 		Function f = new Function(c);
-		assertEquals(f.listingString(), "Aucune note trouvée. "+"\n");
+		assertEquals(f.listingString(), "Aucune note trouvÃ©e. "+"\n");
 		file.delete();
 	}
 	
@@ -46,9 +55,9 @@ public class FunctionTest {
 	@Test
 	public void testListingNote() {		
 		try {
-			File dossier =new File("target/functiontest-test/notes");
+			File dossier =new File("target/notes-test/notes");
 			dossier.mkdir();
-			File file = new File("target/functiontest-test/notes/test.adoc");
+			File file = new File("target/notes-test/notes/test.adoc");
 			PrintWriter out=new PrintWriter(new FileWriter(file));
 			Function f = new Function(c);
 			assertEquals(f.listingString(), "Listing des notes : \n- test.adoc\n");
@@ -58,12 +67,89 @@ public class FunctionTest {
 		catch(Exception e) {}
 	}
 	
+	@Test (expected=ArgumentException.class)
+	public void testSearchSansArgument() {		
+		String[] args= {"search"};
+		Function f = new Function(c);
+		f.search(args);
+	}
+	
+	// si le dossier n'est pas suppr cela influe sur le resultat
+	@Test 
+	public void testSearchSansNote() {		
+		String[] args= {"search"};
+		Function f = new Function(c);
+		String s=f.searchFile(args);
+		assertEquals(s,"Aucune note trouvÃ©e. "+"\n" );
+	}
+	
+	@Test
+	public void testSearchAucunResultat() {
+		File dossier =new File("target/notes-test/search1/notes/");
+		dossier.mkdir();
+		File file = new File("target/notes-test/search1/notes/test_search1.adoc");
+		try {
+			PrintWriter out=new PrintWriter(new FileWriter(file));
+			out.println("=test recherche1");
+			out.println("sarah pho");
+			out.println("7 dÃ©cembre 1995");
+			out.println("* test search 1\n");
+			out.close();
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+
+		String[] args= {"search", "valeur_inconnue"};
+		Function fu = new Function(c);
+		c.setPathStockage("target/notes-test/search1/");
+		String s=fu.searchFile(args);
+		//assertEquals(s, "Aucune note ne contient cette recherche. \n");
+		file.delete();
+		dossier.delete();
+	}
+	
+	@Test
+	public void testSearchValue() {
+		File dossier =new File("target/notes-test/search2/notes/");
+		dossier.mkdir();
+		File file1 = new File("target/notes-test/search2/notes/test_search2.adoc");
+		File file2 = new File("target/notes-test/search2/notes/test_search2.adoc");
+		try {
+			PrintWriter out1=new PrintWriter(new FileWriter(file1));
+			out1.println("=test recherche1");
+			out1.println("sarah pho");
+			out1.println("7 dÃ©cembre 1995");
+			out1.println("* test search 1\n");
+			out1.close();
+			PrintWriter out2=new PrintWriter(new FileWriter(file2));
+			out2.println("=test recherche2");
+			out2.println("sarah pho");
+			out2.println("7 dÃ©cembre 1995");
+			out2.println("* test search 2\n");
+			out2.close();
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+
+		// la recherche correspond a search "sarah pho" donc on cherche ces deux mots successifs dans les notes
+		String[] args= {"search", "\"sarah pho\""};
+		Function fu = new Function(c);
+		c.setPathStockage("target/notes-test/search1/");
+		String s=fu.searchFile(args);
+		// FAIRE UN ASSERT ICI
+		file1.delete();
+		file2.delete();
+		dossier.delete();
+	}
+	
 	/**
 	 * Test pour le delete avec une note inexistante. 
 	 */
 	@Test (expected=DeleteException.class)
 	public void testDeleteInconnu() {		
-		File dossier =new File("target/functiontest-test/notes");
+		File dossier =new File("target/notes-test/notes");
 		dossier.mkdir();
 		Function f = new Function(c);
 		String[] args= {"delete", "inconnu.adoc"};
@@ -77,9 +163,9 @@ public class FunctionTest {
 	@Test
 	public void testDeleteNote() {
 		try {
-			File dossier =new File("target/functiontest-test//notes");
+			File dossier =new File("target/notes-test/notes");
 			dossier.mkdir();
-			File file = new File("target/functiontest-test//notes/test.adoc");
+			File file = new File("target/notes-test/notes/test.adoc");
 			PrintWriter out=new PrintWriter(new FileWriter(file));
 			Function f = new Function(c);
 			String[] args= {"delete", "test.adoc"};
@@ -90,9 +176,6 @@ public class FunctionTest {
 		catch(Exception e) {}
 	}
 	
-	/**
-	 * 
-	 */
 	@Test (expected=ViewException.class)
 	public void testViewSansDossier() {
 		String[] args= {"view", "fichier_inconnu.adoc"};
@@ -102,7 +185,7 @@ public class FunctionTest {
 	
 	@Test (expected=ViewException.class)
 	public void testViewNoteInconnu() {
-		File dossier =new File("target/functiontest-test/notes");
+		File dossier =new File("target/notes-test/notes");
 		dossier.mkdir();
 		String[] args= {"view", "fichier_inconnu.adoc"};
 		Function f = new Function(c);
@@ -110,21 +193,21 @@ public class FunctionTest {
 		dossier.delete();
 	}
 	
-	/*@Test
+	@Test
 	public void testViewNote() {
 		try {
-			File dossier =new File("target/functiontest-test/notes");
+			File dossier =new File("target/notes-test/notes");
 			dossier.mkdir();
-			File file = new File("target/functiontest-test/notes/test.adoc");
+			File file = new File("target/notes-test/notes/test.adoc");
 			PrintWriter out=new PrintWriter(new FileWriter(file));
 			Function f = new Function(c);
 			String[] args= {"view", "test.adoc"};
-			assertEquals(f.path(args[1]), "target/functiontest-test/notes/test.adoc");
+			assertEquals(f.findPathView(args[1]), "target/notes-test/notes/test.adoc");
 			f.delete(args);
 			dossier.delete();
 		}
 		catch(Exception e) {}
-	}*/
+	}
 	
 	@Test
 	public void testParam() {

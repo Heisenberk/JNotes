@@ -9,6 +9,7 @@ import java.util.Observer;
 
 import fr.uvsq.jnotes.exception.*;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 
@@ -16,8 +17,8 @@ import fr.uvsq.jnotes.note.Note;
 import fr.uvsq.jnotes.config.Config;
 
 /**
- * Classe qui va être appellée par toutes les fonctionnalitées de l'application : edit, delete, search, listing, parma et view. 
- * Elle contient toutes les méthodes nécessaires au bon fonctionement des ces fonctionalitées.
+ * Classe qui va Ãªtre appellÃ©e par toutes les fonctionnalitÃ©es de l'application : edit, delete, search, listing, parma et view. 
+ * Elle contient toutes les mÃ©thodes nÃ©cessaires au bon fonctionement des ces fonctionalitÃ©es.
  */
 public class Function extends Observable {
 	private Config c;
@@ -50,9 +51,9 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * Méthode de Edit. 
-	 * Si le fichier n'existe pas il est créer. 
-	 * Le process attend que l'utilisateur ai finis d'éditer la note.
+	 * MÃ©thode de Edit. 
+	 * Si le fichier n'existe pas il est crÃ©er. 
+	 * Le process attend que l'utilisateur ai finis d'Ã©diter la note.
 	 */
 	public void edit(String[] args) throws EditException, IOException, InterruptedException{
 		
@@ -106,7 +107,7 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * Méthodes créant une liste contenant l'ensemble des notes présente dans le dossier.
+	 * MÃ©thodes crÃ©ant une liste contenant l'ensemble des notes prÃ©sente dans le dossier.
 	 * @return string s
 	 */
 	public String listingString() {
@@ -122,16 +123,16 @@ public class Function extends Observable {
 	                s+="- "+liste[i]+"\n";
 	            }
 	        }
-	        if (liste.length==0) return "Aucune note trouvée. "+"\n";
+	        if (liste.length==0) return "Aucune note trouvÃ©e. "+"\n";
 		}
 		else {
-			 return "Aucune note trouvée. "+"\n";
+			 return "Aucune note trouvÃ©e. "+"\n";
 		}
 		return s;
 	}
 	
 	/**
-	 * Méthode affichant le string produit par listingString.
+	 * MÃ©thode affichant le string produit par listingString.
 	 */
 	public void listing() {
 		System.out.println(listingString());
@@ -154,7 +155,7 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * Méthodes créant une liste contenant le chemin et le nom de la note supprimée
+	 * MÃ©thodes crÃ©ant une liste contenant le chemin et le nom de la note supprimÃ©e
 	 * @return string s
 	 */
 	public String deleteString(String[] args) throws DeleteException{
@@ -173,7 +174,7 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * Méthode affichant le string produit par deleteString.
+	 * MÃ©thode affichant le string produit par deleteString.
 	 */
 	public void delete(String[] args) throws DeleteException{
 		System.out.println(deleteString(args));
@@ -182,14 +183,14 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * Méthode affichant le chemin d'une note.
+	 * MÃ©thode affichant le chemin d'une note.
 	 */
 	public String findPathView(String args) {
 		return c.getPathStockage()+"notes/"+args;
 	}
 	
 	/**
-	 * Méthode de View. 
+	 * MÃ©thode de View. 
 	 * Affiche la note sur firefox
 	 */
 	public void view(String[] args) throws ViewException {
@@ -217,25 +218,79 @@ public class Function extends Observable {
 		
 	}
 	
+	// exemple search ":project: test" test2
+		public String searchFile(String args[]) throws SearchException {
+			
+			File dossier=new File(c.getPathStockage()+"notes/");
+			 String s="";
+			if (dossier.exists() && dossier.isDirectory()){
+				// lire les fichiers contenus dans le dossier 
+		        String liste[] = dossier.list();      
+		       
+		        if (liste != null) {  
+		        	for (int i=0;i<liste.length;i++) {
+		        		boolean test=false;
+		        		Path inPath = Paths.get(c.getPathStockage()+"notes/"+liste[i]);
+		        		try(
+		        				BufferedReader in = Files.newBufferedReader(inPath);
+		        		){
+		        			String line; int nbLine=1; 
+		        			while((line=in.readLine())!=null) {
+		        				for(int j=1;j<args.length;j++) {
+
+		        					 if (line.contains(args[j])==true){
+		        						s+="La note "+liste[i]+" contient \""+args[j]+"\" a la ligne "+nbLine+".\n";
+		        						test=true;
+		        					}
+		        				}
+		        				nbLine+=1;
+		        			}
+		        		} catch (Exception e) {
+							throw new SearchException();
+						}
+		        		if (test==false) {
+		        			s="Aucune note ne contient cette recherche. \n";
+		        			return s;
+		        		}
+		        	}
+		        	
+		        }
+		        if (liste.length==0) return "Aucune note trouvÃ©e. "+"\n";
+			}
+			else {
+				 return "Aucune note trouvÃ©e. "+"\n";
+			}
+			return s;
+			
+		}
+	
 	/**
-	 * Méthode de Search. 
-	 * Permet une recherche par mot clé.
+	 * MÃ©thode de Search. 
+	 * Permet une recherche par mot clÃ©.
 	 */
-	public void search(String args[]) {
-		// A FAIRE PAR SARAH
+	// exemple search ":project: test" test2
+	public void search(String args[]) throws SearchException{
+		if (args.length==1) throw new ArgumentException();
+		try {
+			String s=searchFile(args);
+			System.out.println(s);
+		}
+		catch(SearchException e) {
+			throw e;
+		}
 		
 	}
 	
 	/**
-	 * Méthode de Param. 
-	 * Elle permet de visualiser les paramètres de configurations.
-	 * C'est à dire l'application du dossier des notes et le chemin du dossier des notes.
+	 * MÃ©thode de Param. 
+	 * Elle permet de visualiser les paramÃ¨tres de configurations.
+	 * C'est Ã  dire l'application du dossier des notes et le chemin du dossier des notes.
 	 */
 	public void param(String args[]) throws ParamException{
 		// si on tape "jnotes param/p" sans autre argument
 		if (args.length<=1) {
 			System.out.println("- Chemin du dossier contenant les notes JNotes : "+c.getPathStockage());
-			System.out.println("- Application permettant d'éditer les notes JNotes : "+c.getNameAppExtern());
+			System.out.println("- Application permettant d'Ã©diter les notes JNotes : "+c.getNameAppExtern());
 		}
 		else if (args.length>=3) {
 			// si on tape "jnotes param/p path [chemin]"
@@ -247,7 +302,7 @@ public class Function extends Observable {
 					out.write(args[2]);
 					out.newLine();
 					out.write(c.getNameAppExtern());
-					System.out.println("Chemin du dossier contenant les notes JNotes modifié : "+args[2]);
+					System.out.println("Chemin du dossier contenant les notes JNotes modifiÃ© : "+args[2]);
 					c.setPathStockage(args[2]);
 					setChanged(); //notification pour la modification de l'index
 					notifyObservers();
@@ -266,7 +321,7 @@ public class Function extends Observable {
 					out.newLine();
 					out.write(args[2]);
 					c.setNameAppExtern(args[2]);
-					System.out.println("Application utilisée pour l'édition des notes JNotes modifiée : "+args[2]);
+					System.out.println("Application utilisÃ©e pour l'Ã©dition des notes JNotes modifiÃ©e : "+args[2]);
 					setChanged(); //notification pour la modification de l'index
 					notifyObservers();
 				}
