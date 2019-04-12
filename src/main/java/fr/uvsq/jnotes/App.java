@@ -24,38 +24,9 @@ enum App {
 	 * @param args arguments en ligne de commande. 
 	 */
 	public void run(String[] args){
-        ArgumentCommand arg = new ArgumentCommand();
+        Interpretor arg = new Interpretor();
         arg.setArgument(args);
-		
-		
-		/*List<Integer> list=new ArrayList<Integer>();
-		list.add(1);list.add(3);list.add(1);list.add(4);list.add(1);list.add(3);list.add(3);list.add(1);list.add(2);
-		List <Integer> sublist=new ArrayList<Integer>();
-		//sublist=null;
-		List <Integer> cpy = new ArrayList<Integer>();
-		for (int u=0; u<list.size(); u++) {
-			cpy.add(list.get(u));
-		}
-		System.out.println("SIZE:"+cpy.size());
-		int val;
-		System.out.println(list);
-		while(cpy.isEmpty()==false) {
-			//sublist=null;
-			val=cpy.get(0);
-			sublist.add(val);
-			System.out.println(val);
-			cpy.remove(0);
-			System.out.println("SIZE:"+cpy.size());
-			for(int j=0;j<cpy.size();j++) {
-				if (cpy.get(j)==val) {
-					sublist.add(cpy.get(j));
-					cpy.remove(j);
-				}
-			}
-			System.out.println("SUBLIST:"+sublist);
-			System.out.println("LIST:"+cpy);
-		}*/
-		
+			
 	}
 
 	/**

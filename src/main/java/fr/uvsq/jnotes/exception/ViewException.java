@@ -12,10 +12,7 @@ public class ViewException extends RuntimeException{
         super("Impossible de visualiser la note. ");
     }
     
-    /**
-     * Accesseur du message a afficher.
-     */
-    public String getMessage() {
-    	return "Impossible de visualiser la note. ";
-    }
+    public ViewException(String string) {
+    	super("Impossible de visualiser la note : " + string);
+	}
 }

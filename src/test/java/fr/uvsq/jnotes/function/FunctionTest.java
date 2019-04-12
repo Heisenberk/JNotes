@@ -2,17 +2,9 @@ package fr.uvsq.jnotes.function;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,10 +14,9 @@ import fr.uvsq.jnotes.function.Function;
 
 public class FunctionTest {
 	private Config c;
-	
 	@Before
 	public void initialize(){
-		c = new Config("target/notes-test/", "nano");
+		c = new Config("target/functiontest-test/", "nano");
 	}
 	
 	/**
@@ -42,7 +33,7 @@ public class FunctionTest {
 	 */
 	@Test
 	public void testListingDossierVide() {
-		File file =new File("target/notes-test/");
+		File file =new File("target/functiontest-test/");
 		file.mkdir();
 		Function f = new Function(c);
 		assertEquals(f.listingString(), "Aucune note trouvée. "+"\n");
@@ -55,9 +46,9 @@ public class FunctionTest {
 	@Test
 	public void testListingNote() {		
 		try {
-			File dossier =new File("target/notes-test/notes");
+			File dossier =new File("target/functiontest-test/notes");
 			dossier.mkdir();
-			File file = new File("target/notes-test/notes/test.adoc");
+			File file = new File("target/functiontest-test/notes/test.adoc");
 			PrintWriter out=new PrintWriter(new FileWriter(file));
 			Function f = new Function(c);
 			assertEquals(f.listingString(), "Listing des notes : \n- test.adoc\n");
@@ -72,7 +63,7 @@ public class FunctionTest {
 	 */
 	@Test (expected=DeleteException.class)
 	public void testDeleteInconnu() {		
-		File dossier =new File("target/notes-test/notes");
+		File dossier =new File("target/functiontest-test/notes");
 		dossier.mkdir();
 		Function f = new Function(c);
 		String[] args= {"delete", "inconnu.adoc"};
@@ -86,9 +77,9 @@ public class FunctionTest {
 	@Test
 	public void testDeleteNote() {
 		try {
-			File dossier =new File("target/notes-test/notes");
+			File dossier =new File("target/functiontest-test//notes");
 			dossier.mkdir();
-			File file = new File("target/notes-test/notes/test.adoc");
+			File file = new File("target/functiontest-test//notes/test.adoc");
 			PrintWriter out=new PrintWriter(new FileWriter(file));
 			Function f = new Function(c);
 			String[] args= {"delete", "test.adoc"};
@@ -111,7 +102,7 @@ public class FunctionTest {
 	
 	@Test (expected=ViewException.class)
 	public void testViewNoteInconnu() {
-		File dossier =new File("target/notes-test/notes");
+		File dossier =new File("target/functiontest-test/notes");
 		dossier.mkdir();
 		String[] args= {"view", "fichier_inconnu.adoc"};
 		Function f = new Function(c);
@@ -119,21 +110,21 @@ public class FunctionTest {
 		dossier.delete();
 	}
 	
-	@Test
+	/*@Test
 	public void testViewNote() {
 		try {
-			File dossier =new File("target/notes-test/notes");
+			File dossier =new File("target/functiontest-test/notes");
 			dossier.mkdir();
-			File file = new File("target/notes-test/notes/test.adoc");
+			File file = new File("target/functiontest-test/notes/test.adoc");
 			PrintWriter out=new PrintWriter(new FileWriter(file));
 			Function f = new Function(c);
 			String[] args= {"view", "test.adoc"};
-			assertEquals(f.findPathView(args[1]), "target/notes-test/notes/test.adoc");
+			assertEquals(f.path(args[1]), "target/functiontest-test/notes/test.adoc");
 			f.delete(args);
 			dossier.delete();
 		}
 		catch(Exception e) {}
-	}
+	}*/
 	
 	@Test
 	public void testParam() {

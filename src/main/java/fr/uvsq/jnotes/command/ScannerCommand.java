@@ -51,7 +51,7 @@ public class ScannerCommand {
 			    
 			    if (args[0].equals("quit")) arret=true;
 			    else {
-			    	ArgumentCommand arg = new ArgumentCommand();
+			    	Interpretor arg = new Interpretor();
 			        arg.setArgument(args);
 			    } 
 			}

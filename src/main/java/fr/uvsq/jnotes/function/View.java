@@ -1,34 +1,40 @@
 package fr.uvsq.jnotes.function;
 
-import fr.uvsq.jnotes.command.CommandArg;
+import fr.uvsq.jnotes.command.ICommand;
 
-/**
- * Classe qui permet de voir une note a l'aide d'une application externe (firefox ici).
- */
-public class View implements CommandArg {
+public class View implements ICommand {
+	
+	/**
+	 * arguments entrés par l'utilisateur
+	 */
+	private String[]args;
 	
 	/**
 	 * function representant ce qui va appeler la commande. 
 	 */
 	private Function function;
 	
-	/**
-	 * Constructeur de View.
-	 * @param function
-	 */
 	public View(Function function) {
 		this.function = function;
 	}
-	
+
 	/**
-	 * Execute la commande et affiche un message d'erreur en cas d'exception. 
+	 * Execute la commande. 
 	 */
-	public void execute(String[] args) {
+	public void execute() {
 		try {
-			function.view(args);
+			function.view(this.args);
 		}
 		catch(Exception e) {
-			System.out.println("ERREUR"); //A MODIFIER AVEC UNE EXCEPTION PERSO
+			System.out.println(e.getMessage()); //A MODIFIER AVEC UNE EXCEPTION PERSO
 		}
+	}
+
+	/**
+	 * Donne à la commande les arguments auxquelles elle devra répondre;
+	 */
+	public ICommand setArgument(String[] args) {
+		this.args = args;
+		return this;
 	}
 }

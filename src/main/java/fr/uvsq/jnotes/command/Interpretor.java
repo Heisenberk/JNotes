@@ -2,12 +2,17 @@ package fr.uvsq.jnotes.command;
 
 import fr.uvsq.jnotes.exception.*;
 import fr.uvsq.jnotes.function.*;
-
+/**
+ * Enumeration regroupant toutes les commandes possibles de l'application. 
+ */
+enum EnumCommand {
+	NO_COMMAND ,EDIT, LIST, DELETE, VIEW, SEARCH, PARAM, INDEX, COMMAND_INVALIDE;
+}
 /**
  * Classe permettant de transformer la demande de l'utilisateur en commande. 
  * Nécessaire pour le pattern Command. 
  */
-public class ArgumentCommand {
+public class Interpretor {
 	
 	/**
 	 * function représente les étapes à effectuer pour la commande en question. 
@@ -15,28 +20,17 @@ public class ArgumentCommand {
 	private Function function;
 	
 	/**
-	 * command représente la commande sans argument choisie par l'utilisateur. 
+	 * command représente la commande choisie par l'utilisateur. 
 	 */
-	private Command command; 
-	
-	/**
-	 * command représente la commande avec argument choisie par l'utilisateur. 
-	 */
-	private CommandArg commandArg;
+	private ICommand command; 
 	
 	private Update update;
 	
 	/**
-	 * swit permet d'effectuer la commande. 
-	 */
-	private Switch swit;
-	
-	/**
 	 * Constructeur de ArgumentCommand. 
 	 */
-	public ArgumentCommand() {
+	public Interpretor() {
 		function = new Function();
-		swit = new Switch();
 		update = new Update();
 		function.addObserver(update);
 	}
@@ -100,32 +94,32 @@ public class ArgumentCommand {
 		else {
 			try {
 				if (detectArg==EnumCommand.EDIT) {
-					commandArg = new Edit(function);
-					 swit.storeAndExecute(commandArg, args);
+					command = new Edit(function).setArgument(args);
+					 storeAndExecute(command);
 				}
 				else if (detectArg==EnumCommand.LIST) {
 					command = new Listing(function);
-					 swit.storeAndExecute(command);
+					 storeAndExecute(command);
 				}
 				else if (detectArg==EnumCommand.DELETE) {
-					commandArg = new Delete(function);
-					 swit.storeAndExecute(commandArg, args);
+					command = new Delete(function).setArgument(args);
+					 storeAndExecute(command);
 				}
 				else if (detectArg==EnumCommand.VIEW) {
-					commandArg = new View(function);
-					 swit.storeAndExecute(commandArg, args);
+					command = new View(function).setArgument(args);
+					 storeAndExecute(command);
 				}
 				else if (detectArg==EnumCommand.SEARCH) {
-					commandArg = new Search(function);
-					 swit.storeAndExecute(commandArg, args);
+					command = new Search(function).setArgument(args);
+					 storeAndExecute(command);
 				}
 				else if (detectArg ==EnumCommand.PARAM) {
-					commandArg=new Param(function);
-					swit.storeAndExecute(commandArg, args);
+					command=new Param(function).setArgument(args);
+					storeAndExecute(command);
 				}
 				else if (detectArg ==EnumCommand.INDEX) {
 					command=new Index(function);
-					swit.storeAndExecute(command);
+					storeAndExecute(command);
 				}
 				else throw new CommandeInconnuException();
 			}
@@ -134,4 +128,11 @@ public class ArgumentCommand {
 			}
 		}
 	}
+	   /**
+	    * Exécute la commande sans argument demandé. 
+	    * @param cmd à réaliser. 
+	    */
+	   public void storeAndExecute(ICommand cmd) {
+	      cmd.execute();        
+	   }
 }

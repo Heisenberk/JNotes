@@ -53,7 +53,7 @@ public class IndexTest {
 	/**
 	 * Test pour le listing avec un chemin inconnu pour le chemin du dossier contenant les notes. 
 	 */
-	@Test
+	/*@Test
 	public void testListingPathInconnu() {
 		Index i = new Index();
 		Note n =i.readNote("target/note_indexTest.adoc");
@@ -62,7 +62,7 @@ public class IndexTest {
 		assertEquals("22/02/2018", n.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		assertEquals(n.getContext(), "work");
 		assertEquals(n.getProject(), "cds");
-	}
+	}*/
 	
 	@After 
 	public void finalize() {
