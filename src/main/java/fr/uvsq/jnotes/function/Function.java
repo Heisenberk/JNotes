@@ -228,8 +228,9 @@ public class Function extends Observable {
 		        String liste[] = dossier.list();      
 		       
 		        if (liste != null) {  
+		        	boolean test=false;
 		        	for (int i=0;i<liste.length;i++) {
-		        		boolean test=false;
+		        		
 		        		Path inPath = Paths.get(c.getPathStockage()+"notes/"+liste[i]);
 		        		try(
 		        				BufferedReader in = Files.newBufferedReader(inPath);
@@ -237,7 +238,6 @@ public class Function extends Observable {
 		        			String line; int nbLine=1; 
 		        			while((line=in.readLine())!=null) {
 		        				for(int j=1;j<args.length;j++) {
-
 		        					 if (line.contains(args[j])==true){
 		        						s+="La note "+liste[i]+" contient \""+args[j]+"\" a la ligne "+nbLine+".\n";
 		        						test=true;
@@ -255,10 +255,10 @@ public class Function extends Observable {
 		        	}
 		        	
 		        }
-		        if (liste.length==0) return "Aucune note trouvÃ©e. "+"\n";
+		        if (liste.length==0) return "Aucune note trouvee. "+"\n";
 			}
 			else {
-				 return "Aucune note trouvÃ©e. "+"\n";
+				 return "Aucune note trouvee. "+"\n";
 			}
 			return s;
 			
