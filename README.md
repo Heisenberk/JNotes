@@ -16,7 +16,7 @@ Ce guide a été conçu pour faciliter l'utilisation de l'application.
 Lancement de l'application
 --
 
-$mvn$ $test$ lance l'ensemble des tests junit.
+mvn test lance l'ensemble des tests junit.
 	  
 	    		
 ![alternativetext](report/manuel_utilisateur/Captures/test.png)
