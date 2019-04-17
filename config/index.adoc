@@ -1,6 +1,6 @@
 = Index
 JNotes
-08/04/2019
+17/04/2019
 :context: notes
 :project: jnotes
  
@@ -13,6 +13,8 @@ JNotes
 | Test B | Sarah Pho | 2018-02-22 | AMIS | gr 2
 | Test C | Clement Caumes | 2018-01-02 | SeCReTs | gr 3
 | Test D | Maxime Gonthier | 2018-02-23 | AMIS | gr 1
+| gg | Auteur inconnu | 2019-04-12 | work | project
+| test soutenance | Clement Caumes | 2019-04-12 | work | project
 |====================================
 == Liste de notes regroupées par contexte
 [options="header",width="60%",align="center",cols="^,^,^,^,^"]
@@ -33,6 +35,8 @@ JNotes
 |====================================
 | Titre | Auteur | Date | Contexte | Projet
 | Exemple | Stephane Lopes | 2018-01-10 | work | projet
+| gg | Auteur inconnu | 2019-04-12 | work | project
+| test soutenance | Clement Caumes | 2019-04-12 | work | project
 |====================================
 == Liste de notes regroupées par projet
 [options="header",width="60%",align="center",cols="^,^,^,^,^"]
@@ -57,6 +61,13 @@ JNotes
 [options="header",width="60%",align="center",cols="^,^,^,^,^"]
 |====================================
 | Titre | Auteur | Date | Contexte | Projet
+| gg | Auteur inconnu | 2019-04-12 | work | project
+| test soutenance | Clement Caumes | 2019-04-12 | work | project
+ 
+|====================================
+[options="header",width="60%",align="center",cols="^,^,^,^,^"]
+|====================================
+| Titre | Auteur | Date | Contexte | Projet
 | Exemple | Stephane Lopes | 2018-01-10 | work | projet
 |====================================
 == Liste de notes triées par mois
@@ -67,6 +78,8 @@ JNotes
 | Exemple | Stephane Lopes | 2018-01-10 | work | projet
 | Test B | Sarah Pho | 2018-02-22 | AMIS | gr 2
 | Test D | Maxime Gonthier | 2018-02-23 | AMIS | gr 1
+| gg | Auteur inconnu | 2019-04-12 | work | project
+| test soutenance | Clement Caumes | 2019-04-12 | work | project
 | Test A | Mehdi Merimi | 2019-12-29 | SeCReTs | gr 3
 |====================================
  
