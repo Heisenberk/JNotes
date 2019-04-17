@@ -23,7 +23,6 @@ import fr.uvsq.jnotes.config.Config;
 public class Function extends Observable {
 	private Config c;
 	
-	//private Observer index;
 	
 	/**
 	 * Constructeur vide de Function.

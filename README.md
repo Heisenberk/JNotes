@@ -1,10 +1,11 @@
-Manuel utilisateur  
+*Ce markdown contient un manuel utilisateur suivi d'un manuel technique*
+
+Manuel utilisateur JNotes
 ==
 Auteurs : Clément Caumes - Mehdi Merimi - Sarah Ngoc-Mai Pho - Maxime Gonthier  
 --
 
-JNotes  
-	
+
 Introduction
 --
 
@@ -59,7 +60,14 @@ View
 En tapant view [nom de la note] ou v [nom de la note] la note est ouverte dans firefox.
   
     
-![alternativetext](report/manuel_utilisateur/Captures/view.png)
+![alternativetext](report/manuel_utilisateur/Captures/view2.png)
+
+L'index est également consultable. Il est possible de le trier, par contexte par exemple.
+
+![alternativetext](report/manuel_utilisateur/Captures/index_part1.png)
+
+
+![alternativetext](report/manuel_utilisateur/Captures/index_part2.png)
 
 Search
 --
@@ -98,3 +106,39 @@ Quit
 Taper quit permet de quitter l'application.
 		
 
+
+Manuel technique JNotes
+==
+
+Introduction
+--
+
+Ce manuel a pour objectif de décrire les pattern utilisés lors de l'implémentation de ce projet.
+Plus précisement nous allons expliciter les raisons de leurs utilisation.
+
+Singleton
+--
+
+Le singleton est utilisé dans App.java.
+Le main est unique, ainsi l'utilisation du pattern singleton permet de facilement créer cette unicité.
+
+Observer
+--
+
+Function.java utilise le pattern observer.
+L'objectif est de modifier l'index directement lors de la création ou la suppresion d'une note.
+Ainsi lorsqu'une note change d'état, l'index en est averti et il se met automatiquement a jour.
+
+Command
+--
+
+Le pattern command est utilisé dans ICommand.java, Interpretor.java et ScannerCommand.java
+
+Builder
+--
+
+Note.java utilise le pattern builder.  
+Une note est déterminé par son titre mais sa date, l'auteur, le projet et le contexte sont optionels.
+Ainsi le pattern builder permet d'implémenter ces attributs sous la forme d'options facilement.
+De plus il y a de nombreux paramètres, ainsi le pattern builder permet d'éviter une multiplication du nombre de 
+paramètres utilisés.
