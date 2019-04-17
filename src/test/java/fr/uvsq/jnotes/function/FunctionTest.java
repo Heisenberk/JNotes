@@ -80,19 +80,21 @@ public class FunctionTest {
 		String[] args= {"search"};
 		Function f = new Function(c);
 		String s=f.searchFile(args);
-		assertEquals(s,"Aucune note trouvÃ©e. "+"\n" );
+		assertEquals(s,"Aucune note trouvee. "+"\n" );
 	}
 	
 	@Test
 	public void testSearchAucunResultat() {
-		File dossier =new File("target/notes-test/search1/notes/");
-		dossier.mkdir();
-		File file = new File("target/notes-test/search1/notes/test_search1.adoc");
+		File dossier1 =new File("target/notes-test-search1/");
+		dossier1.mkdir();
+		File dossier2 =new File("target/notes-test-search1/notes");
+		dossier2.mkdir();
+		File file = new File("target/notes-test-search1/notes/testsearch1.adoc");
 		try {
 			PrintWriter out=new PrintWriter(new FileWriter(file));
 			out.println("=test recherche1");
 			out.println("sarah pho");
-			out.println("7 dÃ©cembre 1995");
+			out.println("7 decembre 1995");
 			out.println("* test search 1\n");
 			out.close();
 		}
@@ -102,46 +104,91 @@ public class FunctionTest {
 
 		String[] args= {"search", "valeur_inconnue"};
 		Function fu = new Function(c);
-		c.setPathStockage("target/notes-test/search1/");
+		c.setPathStockage("target/notes-test-search1/");
 		String s=fu.searchFile(args);
-		//assertEquals(s, "Aucune note ne contient cette recherche. \n");
+		assertEquals(s, "Aucune note ne contient cette recherche. \n");
 		file.delete();
-		dossier.delete();
+		dossier2.delete();
+		dossier1.delete();
 	}
+	
 	
 	@Test
 	public void testSearchValue() {
-		File dossier =new File("target/notes-test/search2/notes/");
-		dossier.mkdir();
-		File file1 = new File("target/notes-test/search2/notes/test_search2.adoc");
-		File file2 = new File("target/notes-test/search2/notes/test_search2.adoc");
+		File dossier1 =new File("target/notes-test-search2/");
+		dossier1.mkdir();
+		File dossier2 =new File("target/notes-test-search2/notes");
+		dossier2.mkdir();
+		File file1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+		File file2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
 		try {
 			PrintWriter out1=new PrintWriter(new FileWriter(file1));
 			out1.println("=test recherche1");
 			out1.println("sarah pho");
-			out1.println("7 dÃ©cembre 1995");
+			out1.println(":project: test");
+			out1.println("7 decembre 1995");
 			out1.println("* test search 1\n");
 			out1.close();
 			PrintWriter out2=new PrintWriter(new FileWriter(file2));
 			out2.println("=test recherche2");
 			out2.println("sarah pho");
-			out2.println("7 dÃ©cembre 1995");
+			out2.println("7 decembre 1995");
 			out2.println("* test search 2\n");
 			out2.close();
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
-
-		// la recherche correspond a search "sarah pho" donc on cherche ces deux mots successifs dans les notes
-		String[] args= {"search", "\"sarah pho\""};
+		
+		// search ":project: test"
+		String[] args= {"search", ":project: test"};
 		Function fu = new Function(c);
-		c.setPathStockage("target/notes-test/search1/");
+		c.setPathStockage("target/notes-test-search2/");
 		String s=fu.searchFile(args);
-		// FAIRE UN ASSERT ICI
+		assertEquals(s, "La note testsearch1.adoc contient \":project: test\" a la ligne 3.\n");
 		file1.delete();
 		file2.delete();
-		dossier.delete();
+		dossier2.delete();
+		dossier1.delete();
+	}
+	
+	@Test
+	public void testSearch2Values() {
+		File dossier1 =new File("target/notes-test-search2/");
+		dossier1.mkdir();
+		File dossier2 =new File("target/notes-test-search2/notes");
+		dossier2.mkdir();
+		File file1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+		File file2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
+		try {
+			PrintWriter out1=new PrintWriter(new FileWriter(file1));
+			out1.println("=test recherche1");
+			out1.println("sarah pho");
+			out1.println(":project: test");
+			out1.println("7 decembre 1995");
+			out1.println("* test search 1\n");
+			out1.close();
+			PrintWriter out2=new PrintWriter(new FileWriter(file2));
+			out2.println("=test recherche2");
+			out2.println("sarah pho");
+			out2.println("7 decembre 1995");
+			out2.println("* test search 2\n");
+			out2.close();
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+		
+		// search "test search"
+		String[] args= {"search", "test search"};
+		Function fu = new Function(c);
+		c.setPathStockage("target/notes-test-search2/");
+		String s=fu.searchFile(args);
+		assertEquals(s, "La note testsearch1.adoc contient \"test search\" a la ligne 5.\nLa note testsearch2.adoc contient \"test search\" a la ligne 4.\n");
+		file1.delete();
+		file2.delete();
+		dossier2.delete();
+		dossier1.delete();
 	}
 	
 	/**
