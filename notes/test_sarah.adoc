@@ -1,6 +1,0 @@
-=test sarah
-Auteur inconnu
-7 avril 2019
-:context: work
-:project: projet2
-
