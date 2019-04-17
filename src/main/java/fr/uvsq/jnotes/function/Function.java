@@ -17,8 +17,8 @@ import fr.uvsq.jnotes.note.Note;
 import fr.uvsq.jnotes.config.Config;
 
 /**
- * Classe qui va Ãªtre appellÃ©e par toutes les fonctionnalitÃ©es de l'application : edit, delete, search, listing, parma et view. 
- * Elle contient toutes les mÃ©thodes nÃ©cessaires au bon fonctionement des ces fonctionalitÃ©es.
+ * Classe qui va etre appelle par toutes les fonctionnalitees de l'application : edit, delete, search, listing, param et view. 
+ * Elle contient toutes les methodes necessaires au bon fonctionement des ces fonctionalitees.
  */
 public class Function extends Observable {
 	private Config c;
@@ -51,9 +51,9 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * MÃ©thode de Edit. 
-	 * Si le fichier n'existe pas il est crÃ©er. 
-	 * Le process attend que l'utilisateur ai finis d'Ã©diter la note.
+	 * Methode de Edit. 
+	 * Si le fichier n'existe pas il est creer. 
+	 * Le process attend que l'utilisateur ait fini d'editer la note.
 	 */
 	public void edit(String[] args) throws EditException, IOException, InterruptedException{
 		
@@ -107,7 +107,7 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * MÃ©thodes crÃ©ant une liste contenant l'ensemble des notes prÃ©sente dans le dossier.
+	 * Methodes creant une liste contenant l'ensemble des notes presente dans le dossier.
 	 * @return string s
 	 */
 	public String listingString() {
@@ -132,7 +132,7 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * MÃ©thode affichant le string produit par listingString.
+	 * Methode affichant le string produit par listingString.
 	 */
 	public void listing() {
 		System.out.println(listingString());
@@ -155,7 +155,7 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * MÃ©thodes crÃ©ant une liste contenant le chemin et le nom de la note supprimÃ©e
+	 * Methodes creant une liste contenant le chemin et le nom de la note supprime
 	 * @return string s
 	 */
 	public String deleteString(String[] args) throws DeleteException{
@@ -174,7 +174,7 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * MÃ©thode affichant le string produit par deleteString.
+	 * Methode affichant le string produit par deleteString.
 	 */
 	public void delete(String[] args) throws DeleteException{
 		System.out.println(deleteString(args));
@@ -183,14 +183,14 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * MÃ©thode affichant le chemin d'une note.
+	 * Methode affichant le chemin d'une note.
 	 */
 	public String findPathView(String args) {
 		return c.getPathStockage()+"notes/"+args;
 	}
 	
 	/**
-	 * MÃ©thode de View. 
+	 * Methode de View. 
 	 * Affiche la note sur firefox
 	 */
 	public void view(String[] args) throws ViewException {
@@ -218,6 +218,12 @@ public class Function extends Observable {
 		
 	}
 	
+	/**
+	 * Methode de Search. 
+	 * @param un string contenant ce que recherche l'utilisateur
+	 * @return le string indiquant si la recherche est présente dans une des notes ou non.
+	 * Si oui le string indique l'emplacement du mot recherche
+	 */
 	// exemple search ":project: test" test2
 		public String searchFile(String args[]) throws SearchException {
 			
@@ -265,8 +271,8 @@ public class Function extends Observable {
 		}
 	
 	/**
-	 * MÃ©thode de Search. 
-	 * Permet une recherche par mot clÃ©.
+	 * Methode de Search. 
+	 * Permet une recherche par mot cle.
 	 */
 	// exemple search ":project: test" test2
 	public void search(String args[]) throws SearchException{
@@ -282,9 +288,9 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * MÃ©thode de Param. 
-	 * Elle permet de visualiser les paramÃ¨tres de configurations.
-	 * C'est Ã  dire l'application du dossier des notes et le chemin du dossier des notes.
+	 * Methode de Param. 
+	 * Elle permet de visualiser les parametres de configurations.
+	 * C'est a dire l'application du dossier des notes et le chemin du dossier des notes.
 	 */
 	public void param(String args[]) throws ParamException{
 		// si on tape "jnotes param/p" sans autre argument
