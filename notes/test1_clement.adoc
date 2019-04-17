@@ -1,5 +1,0 @@
-= Test C
-Clement Caumes
-02/01/2018
-:context: SeCreTs
-:project: gr 3

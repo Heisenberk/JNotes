@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -42,6 +43,14 @@ public class Update implements Observer{
 			author=line;
 			
 			line=in.readLine(); //lecture de la date
+			
+			try{
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				LocalDate dateTemp=LocalDate.parse(line, formatter);
+			}
+			catch(DateTimeParseException e){
+				line="01/01/2000";
+			}
 			date=line;
 
 			
@@ -66,7 +75,8 @@ public class Update implements Observer{
     			.date(date)
     			.context(context)
     			.project(project)
-    			.build();
+    			.build();	
+    	
 		return n;
 	}
 

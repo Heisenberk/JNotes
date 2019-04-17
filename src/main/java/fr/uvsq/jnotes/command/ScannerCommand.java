@@ -30,6 +30,7 @@ public class ScannerCommand {
 		System.out.println("- param/p : visualiser les paramètres de configuration (application d'edition de note et le chemin du dossier des notes). ");
 		System.out.println("- param/p path [chemin] : modifier les paramètres de configuration (chemin du dossier des notes). ");
 		System.out.println("- param/p app [nom de l'application externe] : modifier les parametres de configuration (app : application d'edition de note). ");
+		System.out.println("- index : afficher l'index des notes. ");
 		System.out.println("- quit : quitter l'interpreteur de JNotes. \n");
 	}
 	

@@ -71,7 +71,6 @@ public class Function extends Observable {
 		// si le fichier n'existe pas
 		else {
 			//convertit "ma premiere note" en "ma_premiere_note.adoc"
-			System.out.println("Fichier non existant");
 			String absolutePath1=null;
 			String name=""; String nameWithout="";
 			for(int i=1;i<args.length;i++) {
