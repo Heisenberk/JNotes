@@ -25,7 +25,7 @@ enum App {
 	 */
 	public void run(String[] args){
         Interpretor arg = new Interpretor();
-        arg.setArgument(args);
+        arg.detectCommand(args);
 			
 	}
 

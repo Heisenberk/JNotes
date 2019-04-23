@@ -12,10 +12,4 @@ public class EditException extends RuntimeException{
         super("Impossible d'éditer une note. ");
     }
     
-    /**
-     * Accesseur du message a afficher.
-     */
-    public String getMessage() {
-    	return "Impossible de lister les notes. ";
-    }
 }
