@@ -67,20 +67,19 @@ public class CommandsTest {
     	assertEquals(test2, EnumCommand.VIEW);
     }
     
-//    /**
-//     * Test sur l'appel à la commande Search.
-//     */
-//    
-//    @Test(expected=ArgumentException.class)
-//    public void testSearch(){
-//    	String args1[]= {"search"};
-//    	String args2[]= {"s"};
-//    	Interpretor a1 = new Interpretor();
-//    	EnumCommand test1=a1.detectCommand(args1);
-//    	EnumCommand test2=a1.detectCommand(args2);
-//    	assertEquals(test1, EnumCommand.SEARCH);
-//    	assertEquals(test2, EnumCommand.SEARCH);
-//    }
+    /**
+     * Test sur l'appel à la commande Search.
+     */
+    
+    public void testSearch(){
+    	String args1[]= {"search"};
+    	String args2[]= {"s"};
+    	Interpretor a1 = new Interpretor();
+    	EnumCommand test1=a1.detectCommand(args1);
+    	EnumCommand test2=a1.detectCommand(args2);
+    	assertEquals(test1, EnumCommand.SEARCH);
+    	assertEquals(test2, EnumCommand.SEARCH);
+    }
     
     /**
      * Test sur un appel a une commande inconnue. 
@@ -93,15 +92,15 @@ public class CommandsTest {
     	assertEquals(test1, EnumCommand.COMMAND_INVALIDE);
     }
     
-//    /**
-//     * Test sur un appel a aucune commande. 
-//     */
-//    @Test
-//    public void testSansArg(){
-//    	String args1[]= {};
-//    	Interpretor a1 = new Interpretor();
-//    	EnumCommand test1=a1.detectCommand(args1);
-//    	assertEquals(test1, EnumCommand.NO_COMMAND);
-//    }
+    /**
+     * Test sur un appel a aucune commande. 
+     */
+    /*@Test
+    public void testSansArg(){
+		String args1[]= {};
+    	Interpretor a1 = new Interpretor();
+    	EnumCommand test1=a1.detectCommand(args1);
+    	assertEquals(test1, EnumCommand.NO_COMMAND);
+    }*/
     
 }
