@@ -11,11 +11,4 @@ public class UpdateException extends RuntimeException{
     public UpdateException(){
         super("Impossible de generer correctement index.adoc. ");
     }
-    
-    /**
-     * Accesseur du message a afficher.
-     */
-    public String getMessage() {
-    	return "Impossible de generer correctement index.adoc. ";
-    }
 }

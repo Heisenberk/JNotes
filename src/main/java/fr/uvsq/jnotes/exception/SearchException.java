@@ -13,6 +13,6 @@ public class SearchException extends RuntimeException{
     }
     
     public SearchException(String message){
-        super("Erreur dans la recherche : "+message);
+        super("Erreur dans la recherche : " + message);
     }
 }

@@ -3,7 +3,7 @@ package fr.uvsq.jnotes.function;
 import fr.uvsq.jnotes.command.ICommand;
 
 /**
- * Classe qui permet de supprimer une note. 
+ * Classe qui permet d'indexer une note. 
  */
 public class Index implements ICommand {
 	

@@ -30,18 +30,16 @@ import fr.uvsq.jnotes.note.Note;
 public class Update implements Observer{
 	
 	public Note readNote(String path){
-		String line, sub, title="", author="", date="", context="work", project="project";
+		String line, sub, title = "", author = "", date = "", context = "work", project = "project";
 		Path inPath = Paths.get(path);
-		try (
-			BufferedReader in = Files.newBufferedReader(inPath);
-		){
+		try (BufferedReader in = Files.newBufferedReader(inPath)) {
 			
-			line=in.readLine(); // lecture du titre
-			if (line.charAt(0)=='=') title=line.substring(2);
-			
+			line = in.readLine(); // lecture du titre
+			if (line.charAt(0) == '=') title = line.substring(2);
 			line=in.readLine(); //lecture de l'auteur
 			author=line;
 			
+//<<<<<<< HEAD
 			line=in.readLine(); //lecture de la date
 			
 			try{
@@ -54,9 +52,9 @@ public class Update implements Observer{
 			date=line;
 
 			
-			while((line=in.readLine())!=null) {
-				if (line.length()>=10) {
-					sub=line.substring(0, 10);
+			while ((line = in.readLine()) != null) {
+				if (line.length() >= 10) {
+					sub = line.substring(0, 10);
 					if (sub.equals(":context: ")) {
 						context=line.substring(10);
 					}
@@ -82,29 +80,30 @@ public class Update implements Observer{
 
 	public String[] getListNotes(Config c) {
 		File dossier=new File(c.getPathStockage()+"notes/");
+		String[] s = null;
 		if (dossier.exists() && dossier.isDirectory()){
-			String[] s=dossier.list();
+			s = dossier.list();
 			for (int i=0;i<s.length; i++) {
 				s[i]=c.getPathStockage()+"notes/"+s[i];
 			}
-	        return s;
 		}
-		else return null;
+		return s;
 	}
 	
 	/*public void writeAllNotes(String path, List<Note> listeNotes) {
 		Path outPath=Paths.get(path);
 		
 	}*/
-	
+	//affiche les differents champs d'une note
 	private List<String> getAffichageGlobal(List<String> lines, List<Note> listeNotes, String[] nameNotes){
 		lines.add("[options=\"header\",width=\"60%\",align=\"center\",cols=\"^,^,^,^,^\"]");
 		lines.add("|====================================");
 		lines.add("| Titre | Auteur | Date | Contexte | Projet");
 		Note temp;
-		for (int i=0; i<nameNotes.length; i++) {
-			temp=listeNotes.get(i);
-			lines.add("| "+temp.getTitle()+" | "+temp.getAuthor()+" | "+temp.getDate()+" | "+temp.getContext()+" | "+temp.getProject());
+		for (int i = 0 ; i < nameNotes.length ; i++) {
+			temp = listeNotes.get(i);
+			lines.add(	"| "+temp.getTitle() + " | "+temp.getAuthor() + " | "+temp.getDate() + 
+						" | "+temp.getContext()+" | " + temp.getProject());
 		}
 		lines.add("|====================================");
 		return lines;
@@ -114,10 +113,11 @@ public class Update implements Observer{
 		lines.add("[options=\"header\",width=\"60%\",align=\"center\",cols=\"^,^,^,^,^\"]");
 		lines.add("|====================================");
 		lines.add("| Titre | Auteur | Date | Contexte | Projet");
-		Note temp; String contextTemp=null; 
-		for (int i=0; i<nameNotes.length; i++) {
-			temp=listeNotes.get(i);
-			if (contextTemp!=null) {
+		Note temp; 
+		String contextTemp=null; 
+		for (int i = 0; i < nameNotes.length ; i++) {
+			temp = listeNotes.get(i);
+			if (contextTemp != null) {
 				if (!(contextTemp.equals(temp.getContext()))) {
 					lines.add(" ");
 					lines.add("|====================================");
@@ -157,12 +157,12 @@ public class Update implements Observer{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void makeIndex(Config c) {
-		String[] nameNotes = getListNotes(c);
-		List<Note> listeNotes=new ArrayList<Note>();
+	public void makeIndex(Config configuration) {
+		String[] nameNotes = getListNotes(configuration);
+		List<Note> listeNotes = new ArrayList<Note>();
 		
 		// lecture et stockage des notes
-		for (int i=0; i<nameNotes.length; i++) {
+		for (int i = 0 ; i < nameNotes.length ; i++) {
 			listeNotes.add(readNote(nameNotes[i]));
 		}
 		
@@ -170,7 +170,7 @@ public class Update implements Observer{
 		Collections.sort(listeNotes);
 		
 		// ecriture de index.adoc
-		List <String> lines=new ArrayList<String>();
+		List <String> lines = new ArrayList<String>();
 		lines.add("= Index");
 		lines.add("JNotes");
 		LocalDate localDate = LocalDate.now();

@@ -11,11 +11,4 @@ public class ParamException extends RuntimeException{
     public ParamException(){
         super("Impossible d'interagir avec le fichier de configuration de l'application. ");
     }
-    
-    /**
-     * Accesseur du message a afficher.
-     */
-    public String getMessage() {
-    	return "Impossible d'interagir avec le fichier de configuration de l'application. ";
-    }
 }

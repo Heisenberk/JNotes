@@ -31,7 +31,7 @@ public class Search implements ICommand{
 		try {
 			function.search(this.args);
 		}
-		catch(SearchException e) {
+		catch(SearchException | ArgumentException e) {
 			System.out.println(/*e*/e.getMessage());
 		}
 	}

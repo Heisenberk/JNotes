@@ -8,10 +8,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import fr.uvsq.jnotes.exception.*;
+import fr.uvsq.jnotes.index.Searcher;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+
+import org.apache.lucene.queryParser.ParseException;
 
 import fr.uvsq.jnotes.note.Note;
 import fr.uvsq.jnotes.config.Config;
@@ -60,43 +64,47 @@ public class Function extends Observable {
 		if (args.length<=1) throw new EditException(); 
 		
 		// si le fichier existe
-		File f1=new File(c.getPathStockage()+"notes/"+args[1]);
-		if  (f1.exists() && !f1.isDirectory()) {
-			String commande_fichier_existant="xterm -e "+c.getNameAppExtern()+" "+c.getPathStockage()+"notes/"+args[1];
-			Process p1=Runtime.getRuntime().exec(commande_fichier_existant);
-			p1.waitFor();
+		File file = new File(c.getPathStockage() + "notes/" + args[1]);
+		if  (file.exists() && !file.isDirectory()) {
+			String prompt = "xterm -e " + c.getNameAppExtern() + " " + 
+							c.getPathStockage() + "notes/" + args[1];
+			Process process = Runtime.getRuntime().exec(prompt);
+			process.waitFor();
 			System.out.println("Edition de la nouvelle note "+c.getPathStockage()+"notes/"+args[1]);
 		}
-			
 		// si le fichier n'existe pas
 		else {
 			//convertit "ma premiere note" en "ma_premiere_note.adoc"
+/*<<<<<<< HEAD
 			String absolutePath1=null;
 			String name=""; String nameWithout="";
 			for(int i=1;i<args.length;i++) {
 				if (i!=1) name+="_";
 				if (i!=1) nameWithout+=" ";
+=======
+			System.out.println("Fichier non existant");*/
+			String name = "";
+			for(int i = 1 ; i < args.length ; i++) {
+				if (i != 1) 
+					name += " ";
+//>>>>>>> lucene
 				name+=args[i];
-				nameWithout+=args[i];
 			}
-			name+=".adoc";
-			Note note=new Note
-					.Builder(nameWithout)
-					.build();
-				
-			Path outPath=Paths.get(c.getPathStockage()+"notes/"+name);
-			try(
-				BufferedWriter out = Files.newBufferedWriter(outPath)
-			){
+			System.out.println("Initialisation de la note " + name +".");
+			//initialisation de la nouvelle note
+			Note note=new Note.Builder(name).build();
+			name = name.replace(" ", "_");
+			name += ".adoc";
+			System.out.println("Création du fichier " + name + " dans "+ c.getPathStockage() +".");
+			String outPath = c.getPathStockage()+"notes/"+name;
+			System.out.println("out path : " + outPath);
+			try (BufferedWriter out = new BufferedWriter(new FileWriter(outPath))) {
 				note.create(out);
 			}
-			catch(Exception e) {
-				System.out.println("erreur"); //ACHANGER
-			}
-				
-			String commande_fichier_inexistant="xterm -e "+c.getNameAppExtern()+" "+c.getPathStockage()+"notes/"+name;
-			Process p2=Runtime.getRuntime().exec(commande_fichier_inexistant);
-			p2.waitFor();
+			String prompt = "xterm -e " + c.getNameAppExtern() + " " + 
+							c.getPathStockage() + "notes/" + name;
+			Process process = Runtime.getRuntime().exec(prompt);
+			process.waitFor();
 			System.out.println("Edition de la nouvelle note "+c.getPathStockage()+"notes/"+name);
 					
 		}
@@ -194,17 +202,17 @@ public class Function extends Observable {
 	public void view(String[] args) throws ViewException {
 		
 		// si on tape "jnotes view/v" sans autre argument
-		if (args.length<=1) throw new ViewException(); //creer une exception personnelle ArgumentException
-		
+		if (args.length <= 1) throw new ViewException(); //creer une exception personnelle ArgumentException
 		try {
 			String absolutePath=null;
-			File fichier=new File(findPathView(args[1]));
-			if(fichier.exists()) absolutePath=fichier.getAbsolutePath();
-			else throw new ViewException();
-			
-			Process p=Runtime.getRuntime().exec("firefox "+absolutePath);
-			p.waitFor();
-			System.out.println("Visualisation de la note AsciiDoctor "+absolutePath);
+			File fichier = new File(findPathView(args[1]));
+			if (fichier.exists()) 
+				absolutePath = fichier.getAbsolutePath();
+			else 
+				throw new ViewException();
+			Process process = Runtime.getRuntime().exec("firefox " + absolutePath);
+			process.waitFor();
+			System.out.println("Visualisation de la note AsciiDoctor " + absolutePath);
 		}
 		catch(IOException e) {
 			throw new ViewException();
@@ -270,19 +278,16 @@ public class Function extends Observable {
 	
 	/**
 	 * Methode de Search. 
-	 * Permet une recherche par mot cle.
+	 * Permet une recherche par mot cle, date, auteur, titre etc
 	 */
-	// exemple search ":project: test" test2
-	public void search(String args[]) throws SearchException{
+	
+	public void search(String args[]) throws SearchException {
 		if (args.length==1) throw new ArgumentException();
 		try {
-			String s=searchFile(args);
-			System.out.println(s);
+				Searcher.search(c.getPathIndex(), args);
+		} catch (Exception e) {
+			throw new SearchException(e.getMessage());
 		}
-		catch(SearchException e) {
-			throw e;
-		}
-		
 	}
 	
 	/**
@@ -300,9 +305,7 @@ public class Function extends Observable {
 			// si on tape "jnotes param/p path [chemin]"
 			if (args[1].equals("path")) {
 				Path outPath = Paths.get("config/config-jnotes");
-				try(
-						BufferedWriter out = Files.newBufferedWriter(outPath)
-					){
+				try (BufferedWriter out = Files.newBufferedWriter(outPath)) {
 					out.write(args[2]);
 					out.newLine();
 					out.write(c.getNameAppExtern());

@@ -12,11 +12,4 @@ public class SaisieException extends RuntimeException{
     public SaisieException(){
         super("Impossible de saisir les commandes dans l'interpréteur. ");
     }
-    
-    /**
-     * Accesseur du message a afficher.
-     */
-    public String getMessage() {
-    	return "Impossible de saisir les commandes dans l'interpréteur. ";
-    }
 }
