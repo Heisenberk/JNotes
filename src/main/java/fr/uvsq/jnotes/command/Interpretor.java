@@ -34,98 +34,60 @@ public class Interpretor {
 		update = new Update();
 		function.addObserver(update);
 	}
-	
-	/**
-	 * Permet d'interpréter ce que veut l'utilisateur et renvoie la commande demandée. 
-	 * @param args tapés en ligne de commande. 
-	 * @return renvoie la commande à effectuer.
-	 */
-	public EnumCommand detectCommand(String[] args) {
-		if (args.length==0) {
-			return EnumCommand.NO_COMMAND;
-		}
-		else {
-			String sargs=args[0];
-			if ((sargs.equals("edit"))||(sargs.equals("e"))) {
-				return EnumCommand.EDIT;
-			}
-			else if ((sargs.equals("list"))||(sargs.equals("ls"))) {
-				return EnumCommand.LIST;
-			}
-			else if ((sargs.equals("delete"))||(sargs.equals("d"))) {
-				return EnumCommand.DELETE;
-			}
-			else if ((sargs.equals("view"))||(sargs.equals("v"))) {
-				return EnumCommand.VIEW;
-			}
-			else if ((sargs.equals("search"))||(sargs.equals("s"))) {
-				return EnumCommand.SEARCH;
-			}
-			else if ((sargs.equals("param"))||(sargs.equals("p"))) {
-				return EnumCommand.PARAM;
-			}
-			else if ((sargs.equals("index"))||(sargs.equals("i"))) {
-				return EnumCommand.INDEX;
-			} 
-			return EnumCommand.COMMAND_INVALIDE;
-		}
-	}
-	
-	/**
-	 * Permet d'interpréter ce que veut l'utilisateur et effectue la commande demandée.
-	 * @param args tapés en ligne de commande. 
-	 */
-	public void setArgument(String[] args) {
-		EnumCommand detectArg=detectCommand(args);
 		
-		// si l'utilisateur ne tape aucun argument. 
-		if (detectArg==EnumCommand.NO_COMMAND) {
+	public EnumCommand detectCommand (String[] args) {
+		if (args.length==0) {
 			ScannerCommand saisie = new ScannerCommand();
 			saisie.afficheCommandes();
 			try {
 				saisie.saisie();
 			}
 			catch(SaisieException e) {
-				System.out.println(e.getMessage());
+				System.out.println("prout prout" + e);
 			}
-			
+			return EnumCommand.NO_COMMAND;
 		}
-		// si l'utilisateur tape un argument. 
 		else {
-			try {
-				if (detectArg==EnumCommand.EDIT) {
-					command = new Edit(function).setArgument(args);
-					 storeAndExecute(command);
-				}
-				else if (detectArg==EnumCommand.LIST) {
-					command = new Listing(function);
-					 storeAndExecute(command);
-				}
-				else if (detectArg==EnumCommand.DELETE) {
-					command = new Delete(function).setArgument(args);
-					 storeAndExecute(command);
-				}
-				else if (detectArg==EnumCommand.VIEW) {
-					command = new View(function).setArgument(args);
-					 storeAndExecute(command);
-				}
-				else if (detectArg==EnumCommand.SEARCH) {
-					command = new Search(function).setArgument(args);
-					 storeAndExecute(command);
-				}
-				else if (detectArg ==EnumCommand.PARAM) {
-					command=new Param(function).setArgument(args);
-					storeAndExecute(command);
-				}
-				else if (detectArg ==EnumCommand.INDEX) {
-					command=new Index(function);
-					storeAndExecute(command);
-				}
-				else throw new CommandeInconnuException();
+			String sargs=args[0];
+			if (sargs.equals("test")){
+				return EnumCommand.NO_COMMAND;
 			}
-			catch(CommandeInconnuException e) {
-				System.out.println(e.getMessage());
+			if ((sargs.equals("edit"))||(sargs.equals("e"))) {
+				command = new Edit(function).setArgument(args);
+				storeAndExecute(command);
+				return EnumCommand.EDIT;
 			}
+			else if ((sargs.equals("list"))||(sargs.equals("ls"))) {
+				command = new Listing(function);
+				storeAndExecute(command);
+				return EnumCommand.LIST;
+			}
+			else if ((sargs.equals("delete"))||(sargs.equals("d"))) {
+				command = new Delete(function).setArgument(args);
+				storeAndExecute(command);
+				return EnumCommand.DELETE;
+			}
+			else if ((sargs.equals("view"))||(sargs.equals("v"))) {
+				command = new View(function).setArgument(args);
+				storeAndExecute(command);
+				return EnumCommand.VIEW;
+			}
+			else if ((sargs.equals("search"))||(sargs.equals("s"))) {
+				command = new Search(function).setArgument(args);
+				storeAndExecute(command);
+				return EnumCommand.SEARCH;
+			}
+			else if ((sargs.equals("param"))||(sargs.equals("p"))) {
+				command=new Param(function).setArgument(args);
+				storeAndExecute(command);
+				return EnumCommand.PARAM;
+			}
+			else if ((sargs.equals("index"))||(sargs.equals("i"))) {
+				command=new Index(function);
+				storeAndExecute(command);
+				return EnumCommand.INDEX;
+			} 
+			return EnumCommand.COMMAND_INVALIDE;
 		}
 	}
 	   /**

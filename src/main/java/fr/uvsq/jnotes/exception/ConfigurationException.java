@@ -11,11 +11,8 @@ public class ConfigurationException extends RuntimeException{
     public ConfigurationException(){
         super("Impossible de lire le fichier de configuration. ");
     }
-    
-    /**
-     * Accesseur du message a afficher.
-     */
-    public String getMessage() {
-    	return "Impossible de lire le fichier de configuration. ";
-    }
+
+	public ConfigurationException(String message) {
+		super("Impossible de lire le fichier de configuration \n"+message);
+	}
 }

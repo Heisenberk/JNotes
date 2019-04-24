@@ -9,13 +9,7 @@ public class ArgumentException extends RuntimeException{
      * Constructeur de SearchException.
      */
     public ArgumentException(){
-        super("Manque des arguments a cette commande. ");
+        super("ArgumentException : pas assez d'arguments");
     }
     
-    /**
-     * Accesseur du message a afficher.
-     */
-    public String getMessage() {
-    	return "Manque des arguments a cette commande. ";
-    }
 }
