@@ -163,7 +163,7 @@ public class Function extends Observable {
 						
 		File fichier=new File(c.getPathStockage()+"notes/"+args[1]);
 		if(fichier.exists()) {
-			s+="Suppression de la note AsciiDoctor "+c.getPathStockage()+"notes/"+args[1]+"\n";
+			s+="Suppression de la note AsciiDoctor "+c.getPathStockage()+"notes/"+args[1];
 		}
 		else throw new DeleteException();
 							
