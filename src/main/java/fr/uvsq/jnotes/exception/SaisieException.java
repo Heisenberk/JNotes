@@ -2,7 +2,7 @@
 package fr.uvsq.jnotes.exception;
 
 /**
- * Classe SaisieException.
+ * Classe SaisieException lors d'un probleme lors de la saisie.
  */
 public class SaisieException extends RuntimeException{
 	

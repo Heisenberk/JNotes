@@ -1,15 +1,21 @@
 package fr.uvsq.jnotes.command;
 
 /**
- * Interface permettant de réaliser le pattern Command pour la 
+ * Interface permettant de realiser le pattern Command pour la 
  * gestion des commandes de l'application. 
  */
 public interface ICommand {
 	
 	/**
-	 * Methode execute qui sera implémentée par toutes les commandes. 
+	 * Methode execute qui sera implementee par toutes les commandes. 
 	 */
 	void execute();
 	
-	ICommand setArgument(String[] args);
+	/**
+	 * Methode qui mettra a jour les arguments. 
+	 * @param args
+	 * @return ICommand
+	 */
+	public ICommand setArgument(String[] args);
+	
 }

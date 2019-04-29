@@ -28,9 +28,10 @@ public class Listing implements ICommand {
 	}
 
 	/**
-	 * Donne à la commande les arguments auxquelles elle devra répondre;
-	 * Ne sert à rien dans ce cas là;
+	 * Donne a la commande les arguments auxquelles elle devra repondre.
+	 * Ne sert à rien dans ce cas là.
 	 */
+	@Override
 	public ICommand setArgument(String[] args) {
 		return null;
 	}

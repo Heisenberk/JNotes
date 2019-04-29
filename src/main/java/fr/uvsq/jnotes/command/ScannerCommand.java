@@ -6,11 +6,15 @@ import java.io.InputStreamReader;
 
 import fr.uvsq.jnotes.exception.SaisieException;
 
-
 /**
  * Classe ScannerCommand qui va lire les commandes de l'utilisateur qui n'a pas mis d'arguments au depart. 
  */
 public class ScannerCommand {
+	
+	/**
+	 * separator represente le separateur entre les mots des arguments. 
+	 */
+	private static String separator = "\" \"";
 	
 	/**
 	 * Constructeur de ScannerCommand qui initialise le scanner. 
@@ -27,23 +31,22 @@ public class ScannerCommand {
 		System.out.println("- list/ls : lister les notes existantes. ");
 		System.out.println("- delete/d [nom de la note]: supprimer une note. ");
 		System.out.println("- view/v [nom de la note]: voir une note. ");
-		System.out.println("- search/s [mot a rechercher] : rechercher dans les notes d'un mot cle. ");	
-		System.out.println("- param/p : visualiser les paramètres de configuration (application d'edition de note et le chemin du dossier des notes). ");
-		System.out.println("- param/p path [chemin] : modifier les paramètres de configuration (chemin du dossier des notes). ");
-		System.out.println("- param/p app [nom de l'application externe] : modifier les paramètres de configuration (app : application d'édition de note). ");
+		System.out.println("- search/s [mot a rechercher] : rechercher dans les notes d'un mot clef. ");	
+		System.out.println("- param/p : visualiser les parametres de configuration (application d'edition de note et le chemin du dossier des notes). ");
+		System.out.println("- param/p path [chemin] : modifier les parametres de configuration (chemin du dossier des notes). ");
+		System.out.println("- param/p app [nom de l'application externe] : modifier les parametres de configuration (app : application d'edition de note). ");
 		System.out.println("- index/i : afficher les differentes notes");
-		System.out.println("- quit : quitter l'interpréteur de JNotes. \n");
+		System.out.println("- quit : quitter l'interpreteur de JNotes. \n");
 	}
 	
 	/**
 	 * Methode saisie qui va interpreter les commandes de l'utilisateur qui n'a pas mis d'arguments au depart. 
 	 */
-
-	private static String separator = "\" \"";
 	public void saisie() throws SaisieException {
 		boolean arret = false;
 		String commande;
 		
+		// tant que l'utilisateur n'a pas ecrit quit, on continue a interpreter. 
 		while (!arret) {
 			commande = "";
 			try {
@@ -51,8 +54,7 @@ public class ScannerCommand {
 				BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 				commande = in.readLine();
 				
-				//-1
-			    String[] arguments = commande.split(separator); //dangereux
+			    String[] arguments = commande.split(separator); 
 			    String[] command = arguments[0].split(" ");
 			    String[] args = new String[arguments.length + 1];
 			    
@@ -67,9 +69,7 @@ public class ScannerCommand {
 					    }
 			    	}
 			    }
-			    for (int i = 0; i < args.length;i++) {
-			    	System.out.println(args[i] + " ");
-			    }
+			    
 			    if (command[0].equals("quit")) 
 			    	arret = true;
 			    else {
@@ -80,8 +80,6 @@ public class ScannerCommand {
 			catch(IOException e) {
 				throw new SaisieException();
 			}
-			
-			
 		}
 	}
 }

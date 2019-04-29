@@ -8,9 +8,9 @@ import fr.uvsq.jnotes.exception.*;
  */
 public class Search implements ICommand{
 	/**
-	 * arguments entrés par l'utilisateur
+	 * arguments entres par l'utilisateur
 	 */
-	private String[]args;
+	private String[] args;
 	/**
 	 * function representant ce qui va appeler la commande. 
 	 */
@@ -32,11 +32,14 @@ public class Search implements ICommand{
 			function.search(this.args);
 		}
 		catch(SearchException | ArgumentException e) {
-			System.out.println(/*e*/e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	}
 	
 
+	/**
+	 * Donne a la commande les arguments auxquelles elle devra répondre;
+	 */
 	public ICommand setArgument(String[] args) {
 		this.args = args;
 		return this;

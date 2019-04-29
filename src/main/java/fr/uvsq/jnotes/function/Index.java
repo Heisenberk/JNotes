@@ -27,9 +27,12 @@ public class Index implements ICommand {
 		function.index();
 	}
 
+	/**
+	 * Renvoie null car la commande n'a pas besoin d'arguments. 
+	 */
 	@Override
 	public ICommand setArgument(String[] args) {
-		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

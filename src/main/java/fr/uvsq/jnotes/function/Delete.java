@@ -9,9 +9,9 @@ import fr.uvsq.jnotes.exception.DeleteException;
 public class Delete implements ICommand {
 	
 	/**
-	 * arguments entrés par l'utilisateur
+	 * arguments entres par l'utilisateur
 	 */
-	private String[]args;
+	private String[] args;
 	
 	/**
 	 * function representant ce qui va appeler la commande. 
@@ -39,8 +39,9 @@ public class Delete implements ICommand {
 	}
 	
 	/**
-	 * Donne à la commande les arguments auxquelles elle devra répondre;
+	 * Donne a la commande les arguments auxquelles elle devra repondre;
 	 */
+	@Override
 	public ICommand setArgument(String[] args) {
 		this.args = args;
 		return this;

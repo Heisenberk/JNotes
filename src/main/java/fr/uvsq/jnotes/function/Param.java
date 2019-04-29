@@ -9,10 +9,10 @@ import fr.uvsq.jnotes.exception.*;
 public class Param implements ICommand{
 	
 	/**
-	 * arguments entrés par l'utilisateur
+	 * arguments entres par l'utilisateur
 	 */
+	private String[] args;
 	
-	private String[]args;
 	/**
 	 * function representant ce qui va appeler la commande. 
 	 */
@@ -39,7 +39,7 @@ public class Param implements ICommand{
 	}
 
 	/**
-	 * Donne à la commande les arguments auxquelles elle devra répondre;
+	 * Donne a la commande les arguments auxquelles elle devra répondre;
 	 */
 	public ICommand setArgument(String[] args) {
 		this.args = args;

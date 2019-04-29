@@ -9,7 +9,7 @@ import fr.uvsq.jnotes.exception.EditException;
 public class Edit implements ICommand {
 	
 	/**
-	 * arguments entrés par l'utilisateur
+	 * arguments entres par l'utilisateur
 	 */
 	private String[]args;
 	
@@ -41,7 +41,7 @@ public class Edit implements ICommand {
 	}
 
 	/**
-	 * Donne à la commande les arguments auxquelles elle devra répondre;
+	 * Donne à la commande les arguments auxquelles elle devra repondre;
 	 */
 	public ICommand setArgument(String[] args) {
 		this.args = args;

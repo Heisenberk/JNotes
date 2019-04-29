@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Observable;
-import java.util.Observer;
 
 import fr.uvsq.jnotes.exception.*;
 import fr.uvsq.jnotes.index.Searcher;
@@ -14,8 +13,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-
-import org.apache.lucene.queryParser.ParseException;
 
 import fr.uvsq.jnotes.note.Note;
 import fr.uvsq.jnotes.config.Config;

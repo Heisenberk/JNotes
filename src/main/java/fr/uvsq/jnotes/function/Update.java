@@ -7,14 +7,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -27,8 +24,16 @@ import fr.uvsq.jnotes.note.ComparatorDate;
 import fr.uvsq.jnotes.note.ComparatorProject;
 import fr.uvsq.jnotes.note.Note;
 
+/**
+ * Classe permettant de mettre a jour l'index a chaque modification des notes. 
+ */
 public class Update implements Observer{
 	
+	/**
+	 * Methode qui lit une note. 
+	 * @param path chemin de la note. 
+	 * @return renvoie une note. 
+	 */
 	public Note readNote(String path){
 		String line, sub, title = "", author = "", date = "", context = "work", project = "project";
 		Path inPath = Paths.get(path);
@@ -39,7 +44,6 @@ public class Update implements Observer{
 			line=in.readLine(); //lecture de l'auteur
 			author=line;
 			
-//<<<<<<< HEAD
 			line=in.readLine(); //lecture de la date
 			
 			try{
@@ -51,7 +55,6 @@ public class Update implements Observer{
 			}
 			date=line;
 
-			
 			while ((line = in.readLine()) != null) {
 				if (line.length() >= 10) {
 					sub = line.substring(0, 10);
@@ -78,6 +81,11 @@ public class Update implements Observer{
 		return n;
 	}
 
+	/**
+	 * Obtient la liste des notes. 
+	 * @param c configuration actuelle de l'application. 
+	 * @return chaines de caracteres representant les noms des notes. 
+	 */
 	public String[] getListNotes(Config c) {
 		File dossier=new File(c.getPathStockage()+"notes/");
 		String[] s = null;
@@ -90,11 +98,12 @@ public class Update implements Observer{
 		return s;
 	}
 	
-	/*public void writeAllNotes(String path, List<Note> listeNotes) {
-		Path outPath=Paths.get(path);
-		
-	}*/
-	//affiche les differents champs d'une note
+	/**
+	 * Fait l'affichage global dans l'index. 
+	 * @param lines
+	 * @param listeNotes
+	 * @param nameNotes
+	 */
 	private List<String> getAffichageGlobal(List<String> lines, List<Note> listeNotes, String[] nameNotes){
 		lines.add("[options=\"header\",width=\"60%\",align=\"center\",cols=\"^,^,^,^,^\"]");
 		lines.add("|====================================");
@@ -109,6 +118,12 @@ public class Update implements Observer{
 		return lines;
 	}
 	
+	/**
+	 * Fait l'affichage tries en fonction du context. 
+	 * @param lines
+	 * @param listeNotes
+	 * @param nameNotes
+	 */
 	private List<String> getAffichageContext(List<String> lines, List<Note> listeNotes, String[] nameNotes){
 		lines.add("[options=\"header\",width=\"60%\",align=\"center\",cols=\"^,^,^,^,^\"]");
 		lines.add("|====================================");
@@ -133,6 +148,13 @@ public class Update implements Observer{
 		return lines;
 	}
 	
+	/**
+	 * Fait l'affichage tries en fonction du projet. 
+	 * @param lines
+	 * @param listeNotes
+	 * @param nameNotes
+	 * @return
+	 */
 	private List<String> getAffichageProject(List<String> lines, List<Note> listeNotes, String[] nameNotes){
 		lines.add("[options=\"header\",width=\"60%\",align=\"center\",cols=\"^,^,^,^,^\"]");
 		lines.add("|====================================");
@@ -156,6 +178,10 @@ public class Update implements Observer{
 		return lines;
 	}
 	
+	/**
+	 * Construit l'index. 
+	 * @param configuration
+	 */
 	@SuppressWarnings("unchecked")
 	public void makeIndex(Config configuration) {
 		String[] nameNotes = getListNotes(configuration);
@@ -225,13 +251,15 @@ public class Update implements Observer{
 		
 	}
 	
+	/**
+	 * Fonction de mise a jour a chaque fois rappellee.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o instanceof Function){       
 			Function f = (Function) o;
 			System.out.println("Modification de l'index effectuee. ");
 			makeIndex(f.getConfig());
-			// faire la lecture et l'analyse des notes
         } 
 		
 	}

@@ -1,7 +1,7 @@
 package fr.uvsq.jnotes.exception;
 
 /**
- * Classe EditException.
+ * Classe IndexException appelee lors d'un probleme de visualisation de l'index.
  */
 public class IndexException extends RuntimeException{
 	
