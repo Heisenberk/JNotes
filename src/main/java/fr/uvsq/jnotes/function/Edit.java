@@ -41,7 +41,7 @@ public class Edit implements ICommand {
 	}
 
 	/**
-	 * Donne à la commande les arguments auxquelles elle devra repondre;
+	 * Donne à la commande les arguments auxquelles elle devra repondre.
 	 */
 	public ICommand setArgument(String[] args) {
 		this.args = args;

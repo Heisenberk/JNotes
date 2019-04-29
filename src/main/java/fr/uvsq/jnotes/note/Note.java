@@ -1,14 +1,9 @@
 package fr.uvsq.jnotes.note;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * Classe Note qui permet de générer une note. 
@@ -94,8 +89,8 @@ public class Note implements Comparable{
 		
 		/**
 		 * Méthode de création pour l'auteur de Note.
-		 * @param author auteur qui est un paramètre optionnel de Note.
-		 * @return Builder avec author initialisé.
+		 * @param author auteur qui est un parametre optionnel de Note.
+		 * @return Builder avec author initialise.
 		 */
 		public Builder author(String author){
 			this.author=author;
@@ -104,8 +99,8 @@ public class Note implements Comparable{
 		
 		/**
 		 * Méthode de création pour le projet de Note.
-		 * @param project projet qui est un paramètre optionnel de Note.
-		 * @return Builder avec project initialisé.
+		 * @param project projet qui est un parametre optionnel de Note.
+		 * @return Builder avec project initialise.
 		 */
 		public Builder project(String project){
 			this.project=project;
@@ -114,7 +109,7 @@ public class Note implements Comparable{
 		
 		/**
 		 * Méthode de création pour le contexte de Note.
-		 * @param context contexte qui est un paramètre optionnel de Note.
+		 * @param context contexte qui est un parametre optionnel de Note.
 		 * @return Builder avec context initialisé.
 		 */
 		public Builder context(String context) {
@@ -133,7 +128,7 @@ public class Note implements Comparable{
 	
 	/**
 	 * Constructeur de Note. 
-	 * @param builder ayant les mêmes paramètres que Note et ayant ses paramètres
+	 * @param builder ayant les mêmes paramètres que Note et ayant ses parametres
 	 * initialisés. 
 	 */
 	private Note(Builder builder){
@@ -189,7 +184,7 @@ public class Note implements Comparable{
 	}
 	
 	/**
-	 * Méthode qui va créer la note à partir des paramètres de celle-ci. 
+	 * Méthode qui va creer la note à partir des paramètres de celle-ci. 
 	 * @throws IOException 
 	 */
 	public void create(BufferedWriter out) throws IOException {
@@ -205,7 +200,9 @@ public class Note implements Comparable{
 		out.newLine();
 	}
 
-
+	/**
+	 * Methode permettant de trier par defaut selon le titre des notes. 
+	 */
 	@Override
 	public int compareTo(Object o) {
 		Note n=(Note)o;

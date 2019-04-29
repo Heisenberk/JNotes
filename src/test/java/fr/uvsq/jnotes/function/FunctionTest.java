@@ -34,7 +34,7 @@ public class FunctionTest {
 	@Test
 	public void testListingPathInconnu() {
 		Function f = new Function(c);
-		assertEquals(f.listingString(), "Aucune note trouvÃ©e. "+"\n");
+		assertEquals(f.listingString(), "Aucune note trouvee. "+"\n");
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class FunctionTest {
 		File file =new File("target/notes-test/");
 		file.mkdir();
 		Function f = new Function(c);
-		assertEquals(f.listingString(), "Aucune note trouvÃ©e. "+"\n");
+		assertEquals(f.listingString(), "Aucune note trouvee. "+"\n");
 		file.delete();
 	}
 	

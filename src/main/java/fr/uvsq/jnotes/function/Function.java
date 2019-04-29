@@ -19,9 +19,13 @@ import fr.uvsq.jnotes.config.Config;
 
 /**
  * Classe qui va etre appelle par toutes les fonctionnalitees de l'application : edit, delete, search, listing, param et view. 
- * Elle contient toutes les methodes necessaires au bon fonctionement des ces fonctionalitees.
+ * Elle contient toutes les methodes necessaires au bon fonctionement des ces fonctionalites.
  */
 public class Function extends Observable {
+	
+	/**
+	 * Configuration associee aux fonctionnalites. 
+	 */
 	private Config c;
 	
 	
@@ -46,6 +50,10 @@ public class Function extends Observable {
 		this.c=c;
 	}
 	
+	/**
+	 * Accesseur de Config. 
+	 * @return Configuration. 
+	 */
 	public Config getConfig() {
 		return c;
 	}
@@ -72,19 +80,9 @@ public class Function extends Observable {
 		// si le fichier n'existe pas
 		else {
 			//convertit "ma premiere note" en "ma_premiere_note.adoc"
-/*<<<<<<< HEAD
-			String absolutePath1=null;
-			String name=""; String nameWithout="";
-			for(int i=1;i<args.length;i++) {
-				if (i!=1) name+="_";
-				if (i!=1) nameWithout+=" ";
-=======
-			System.out.println("Fichier non existant");*/
 			String name = "";
 			for(int i = 1 ; i < args.length ; i++) {
-				if (i != 1) 
-					name += " ";
-//>>>>>>> lucene
+				if (i != 1) name += " ";
 				name+=args[i];
 			}
 			System.out.println("Initialisation de la note " + name +".");
@@ -92,7 +90,7 @@ public class Function extends Observable {
 			Note note=new Note.Builder(name).build();
 			name = name.replace(" ", "_");
 			name += ".adoc";
-			System.out.println("Création du fichier " + name + " dans "+ c.getPathStockage() +".");
+			System.out.println("Creation du fichier " + name + " dans "+ c.getPathStockage() +".");
 			String outPath = c.getPathStockage()+"notes/"+name;
 			System.out.println("out path : " + outPath);
 			try (BufferedWriter out = new BufferedWriter(new FileWriter(outPath))) {
@@ -126,25 +124,27 @@ public class Function extends Observable {
 	                s+="- "+liste[i]+"\n";
 	            }
 	        }
-	        if (liste.length==0) return "Aucune note trouvÃ©e. "+"\n";
+	        if (liste.length==0) return "Aucune note trouvee. "+"\n";
 		}
 		else {
-			 return "Aucune note trouvÃ©e. "+"\n";
+			 return "Aucune note trouvee. "+"\n";
 		}
 		return s;
 	}
 	
 	/**
-	 * Methode affichant le string produit par listingString.
+	 * Methode de Listing des notes, affichant le string produit par listingString.
 	 */
 	public void listing() {
 		System.out.println(listingString());
 
 	}
 	
+	/**
+	 * Methode de lecture de l'index des notes. 
+	 */
 	public void index() {
 		try {
-			
 			Process p=Runtime.getRuntime().exec("firefox config/index.adoc");
 			p.waitFor();
 			System.out.println("Visualisation de l'index JNotes ");
@@ -158,7 +158,7 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * Methodes creant une liste contenant le chemin et le nom de la note supprime
+	 * Methodes creant une liste contenant le chemin et le nom de la note supprimee
 	 * @return string s
 	 */
 	public String deleteString(String[] args) throws DeleteException{
@@ -177,7 +177,7 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * Methode affichant le string produit par deleteString.
+	 * Methode de suppression d'une note, affichant le string produit par deleteString.
 	 */
 	public void delete(String[] args) throws DeleteException{
 		System.out.println(deleteString(args));
@@ -194,7 +194,7 @@ public class Function extends Observable {
 	
 	/**
 	 * Methode de View. 
-	 * Affiche la note sur firefox
+	 * Affiche la note sur firefox.
 	 */
 	public void view(String[] args) throws ViewException {
 		
@@ -217,14 +217,12 @@ public class Function extends Observable {
 		catch(Exception e) {
 			throw new ViewException();
 		}
-		
-		
 	}
 	
 	/**
 	 * Methode de Search. 
 	 * @param un string contenant ce que recherche l'utilisateur
-	 * @return le string indiquant si la recherche est présente dans une des notes ou non.
+	 * @return le string indiquant si la recherche est presente dans une des notes ou non.
 	 * Si oui le string indique l'emplacement du mot recherche
 	 */
 	// exemple search ":project: test" test2
@@ -277,11 +275,10 @@ public class Function extends Observable {
 	 * Methode de Search. 
 	 * Permet une recherche par mot cle, date, auteur, titre etc
 	 */
-	
 	public void search(String args[]) throws SearchException {
 		if (args.length==1) throw new ArgumentException();
 		try {
-				Searcher.search(c.getPathIndex(), args);
+			Searcher.search(c.getPathIndex(), args);
 		} catch (Exception e) {
 			throw new SearchException(e.getMessage());
 		}
@@ -306,7 +303,7 @@ public class Function extends Observable {
 					out.write(args[2]);
 					out.newLine();
 					out.write(c.getNameAppExtern());
-					System.out.println("Chemin du dossier contenant les notes JNotes modifiÃ© : "+args[2]);
+					System.out.println("Chemin du dossier contenant les notes JNotes modifie : "+args[2]);
 					c.setPathStockage(args[2]);
 					setChanged(); //notification pour la modification de l'index
 					notifyObservers();
@@ -325,18 +322,15 @@ public class Function extends Observable {
 					out.newLine();
 					out.write(args[2]);
 					c.setNameAppExtern(args[2]);
-					System.out.println("Application utilisÃ©e pour l'Ã©dition des notes JNotes modifiÃ©e : "+args[2]);
+					System.out.println("Application utilisee pour l'edition des notes JNotes modifiee : "+args[2]);
 					setChanged(); //notification pour la modification de l'index
 					notifyObservers();
 				}
 				catch (IOException e) {
 					throw new ParamException();
 				}
-				
 			}
 		}
 		else throw new ParamException();
-		
 	}
-
 }

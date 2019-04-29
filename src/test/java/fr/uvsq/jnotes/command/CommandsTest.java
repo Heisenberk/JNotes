@@ -70,7 +70,7 @@ public class CommandsTest {
     /**
      * Test sur l'appel à la commande Search.
      */
-    
+    @Test
     public void testSearch(){
     	String args1[]= {"search"};
     	String args2[]= {"s"};
@@ -79,6 +79,20 @@ public class CommandsTest {
     	EnumCommand test2=a1.detectCommand(args2);
     	assertEquals(test1, EnumCommand.SEARCH);
     	assertEquals(test2, EnumCommand.SEARCH);
+    }
+    
+    /**
+     * Test sur l'appel à la commande Param.
+     */
+    @Test
+    public void testParam(){
+    	String args1[]= {"param"};
+    	String args2[]= {"p"};
+    	Interpretor a1 = new Interpretor();
+    	EnumCommand test1=a1.detectCommand(args1);
+    	EnumCommand test2=a1.detectCommand(args2);
+    	assertEquals(test1, EnumCommand.PARAM);
+    	assertEquals(test2, EnumCommand.PARAM);
     }
     
     /**
@@ -92,15 +106,6 @@ public class CommandsTest {
     	assertEquals(test1, EnumCommand.COMMAND_INVALIDE);
     }
     
-    /**
-     * Test sur un appel a aucune commande. 
-     */
-    /*@Test
-    public void testSansArg(){
-		String args1[]= {};
-    	Interpretor a1 = new Interpretor();
-    	EnumCommand test1=a1.detectCommand(args1);
-    	assertEquals(test1, EnumCommand.NO_COMMAND);
-    }*/
+
     
 }

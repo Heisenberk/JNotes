@@ -1,6 +1,7 @@
 package fr.uvsq.jnotes.function;
 
 import fr.uvsq.jnotes.command.ICommand;
+import fr.uvsq.jnotes.exception.ViewException;
 
 public class View implements ICommand {
 	
@@ -25,13 +26,13 @@ public class View implements ICommand {
 		try {
 			function.view(this.args);
 		}
-		catch(Exception e) {
-			System.out.println(e.getMessage()); //A MODIFIER AVEC UNE EXCEPTION PERSO
+		catch(ViewException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
 	/**
-	 * Donne à la commande les arguments auxquelles elle devra répondre;
+	 * Donne à la commande les arguments auxquelles elle devra répondre.
 	 */
 	public ICommand setArgument(String[] args) {
 		this.args = args;

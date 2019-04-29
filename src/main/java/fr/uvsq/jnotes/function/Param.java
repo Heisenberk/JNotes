@@ -39,7 +39,7 @@ public class Param implements ICommand{
 	}
 
 	/**
-	 * Donne a la commande les arguments auxquelles elle devra répondre;
+	 * Donne a la commande les arguments auxquelles elle devra répondre.
 	 */
 	public ICommand setArgument(String[] args) {
 		this.args = args;

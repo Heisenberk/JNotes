@@ -39,7 +39,7 @@ public class Delete implements ICommand {
 	}
 	
 	/**
-	 * Donne a la commande les arguments auxquelles elle devra repondre;
+	 * Donne a la commande les arguments auxquelles elle devra repondre.
 	 */
 	@Override
 	public ICommand setArgument(String[] args) {
