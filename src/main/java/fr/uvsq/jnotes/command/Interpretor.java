@@ -7,7 +7,7 @@ import fr.uvsq.jnotes.function.*;
  * Enumeration regroupant toutes les commandes possibles de l'application. 
  */
 enum EnumCommand {
-	NO_COMMAND ,EDIT, LIST, DELETE, VIEW, SEARCH, PARAM, INDEX, COMMAND_INVALIDE;
+	NO_COMMAND ,EDIT, LIST, DELETE, VIEW, SEARCH, PARAM, INDEX, COMMAND_INVALIDE, HELP;
 }
 
 /**
@@ -50,12 +50,12 @@ public class Interpretor {
 		// S'il n'y a pas d'arguments on utilise le scanner. 
 		if (args.length==0) {
 			ScannerCommand saisie = new ScannerCommand();
-			saisie.afficheCommandes();
+			//saisie.afficheCommandes();
 			try {
 				saisie.saisie();
 			}
 			catch(SaisieException e) {
-				System.out.println("prout prout" + e);
+				System.out.println(e);
 			}
 			return EnumCommand.NO_COMMAND;
 		}
@@ -67,6 +67,7 @@ public class Interpretor {
 				return EnumCommand.NO_COMMAND;
 			}
 			if ((sargs.equals("edit"))||(sargs.equals("e"))) {
+				System.out.println("edit");
 				command = new Edit(function).setArgument(args);
 				storeAndExecute(command);
 				return EnumCommand.EDIT;
@@ -100,7 +101,12 @@ public class Interpretor {
 				command=new Index(function);
 				storeAndExecute(command);
 				return EnumCommand.INDEX;
+			} else if ((sargs.equals("help"))||(sargs.equals("h"))) {
+				command=new Help(function);
+				storeAndExecute(command);
+				return EnumCommand.HELP;
 			} 
+			System.out.println("Commande non reconnue");
 			return EnumCommand.COMMAND_INVALIDE;
 		}
 	}

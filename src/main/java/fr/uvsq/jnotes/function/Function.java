@@ -346,5 +346,24 @@ public class Function extends Observable {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Methode qui affiche les differentes commandes de l'application. 
+	 */
+	public void help() {
+		System.out.println("Commandes de Jnotes: ");
+		System.out.println(" ");
+		System.out.println("- help/h : affiche les commandes.");
+		System.out.println("- edit/e [note] : cree ou modifie une note. ");
+		System.out.println("- list/ls : liste les notes existantes. ");
+		System.out.println("- delete/d [note]: supprime une note. ");
+		System.out.println("- view/v [note]: affiche le contenu d'une note. ");
+		System.out.println("- search/s [condition] ..: rechercher des notes. ");	
+		System.out.println("- param/p : affiche les parametres de configuration. ");
+		System.out.println("- param/p path [chemin] : modifie le chemin du dossier des notes. ");
+		System.out.println("- param/p app [appli] : modifie l'application d'edition de note. ");
+		System.out.println("- index/i : affiche les notes triees");
+		System.out.println("- quit : quitte l'interpreteur JNotes. \n");
+	}
 
 }

@@ -13,7 +13,7 @@ public class UnknownCommandException extends RuntimeException{
     }
     
     /**
-     * Constructeur de UnknownCommandException.
+     * Constructeur de UnknownCommandException avec message.
      * @param message a afficher. 
      */
     public UnknownCommandException(String message){

@@ -34,6 +34,12 @@ java -jar target/jnotes-1.0.0-jar-with-dependencies.jar execute le programme.
 			
 Une fois l'application lancé l'utilisateurs a acces à différentes fonctionnalitées décrite si dessous.
 
+Help
+--
+En tapant help ou h le terminal affiche la liste des commandes supportées par l'application jnotes.
+    
+![alternativetext](report/manuel_utilisateur/Captures/help.png)  
+
 Edit
 --
 En tapant edit [nom de la note] ou e [nom de la note] un écran apparait affichant la note.  
@@ -44,14 +50,14 @@ Si la note n'existait pas elle est créer et pré remplis.
 
 Liste
 --
-  
+En tapant list ou ls le terminal affiche la liste des notes contenues dans le dossier de note configuré dans lapplication.
     
 ![alternativetext](report/manuel_utilisateur/Captures/list.png)  
 
 Delete
 --
 En tapant delete [nom de la note] ou d [nom de la note] le programme supprime la note et affiche un message.
-  
+
     
 ![alternativetext](report/manuel_utilisateur/Captures/delete.png)
 

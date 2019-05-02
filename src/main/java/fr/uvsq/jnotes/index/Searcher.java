@@ -37,8 +37,8 @@ public class Searcher {
 	
 	/**
 	 * Methode se chargeant de la recherche de notes.
-	 * Elle affiche le nom de fichier des notes qui repondent aux criteres 
-	 * entres en parametre.
+	 * Elle affiche le nom de fichier de dix notes qui repondent aux 
+	 * criteres entres en parametre.
 	 * @param indexDir l'adresse relative de l'index lucene. C'est dans ce 
 	 * 			dossier que se situent les documents que lucene interrogera 
 	 * 			pour effectuer des recherches.
@@ -52,18 +52,16 @@ public class Searcher {
 			throws IOException, ParseException, SearchException {
 		
         String q = join(args, " ; ", 1);
-        System.out.println("Query : " + q);
+        System.out.println("Requete : " + q);
         
 		Directory dir = FSDirectory.open(new File(indexDir));
         IndexSearcher is = new IndexSearcher(dir);
         
         Query query = createQuery(args);
         
-        long start = System.currentTimeMillis();
         TopDocs hits = is.search(query, 10);
-        long end = System.currentTimeMillis();
         
-        System.err.println("Found " + hits.totalHits + " document(s) (in " + (end - start) + " milliseconds) that matched query '" + q + "':");
+        System.err.println(hits.totalHits + " repondent a la requete " + q + " :");
         for(ScoreDoc scoreDoc : hits.scoreDocs) {
             Document doc = is.doc(scoreDoc.doc); 
             System.out.println(doc.get("filename")); 

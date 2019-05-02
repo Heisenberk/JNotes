@@ -13,7 +13,7 @@ public class SearchException extends RuntimeException{
     }
     
     /**
-     * Constructeur de SearchException.
+     * Constructeur de SearchException avec message.
      * @param message a afficher. 
      */
     public SearchException(String message){

@@ -5,6 +5,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.NumericField;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Version;
@@ -58,7 +59,6 @@ public class Indexer {
 	 */
 	public static void indexer(String indexDir, String dataDir) throws Exception {
 		dataDir += "notes";
-		long start = System.currentTimeMillis();
 		Indexer indexer = new Indexer(indexDir);
 		int numIndexed;
 		try {
@@ -66,8 +66,7 @@ public class Indexer {
 		} finally {
 			indexer.close();
 		}
-		long end = System.currentTimeMillis();
-		System.out.println("Indexing " + numIndexed + " files took " + (end - start) + " milliseconds");
+		System.out.println("Indexing " + numIndexed + " files");
 	}
 
 	/**
@@ -122,7 +121,7 @@ public class Indexer {
 	 * @return le document à stocker
 	 * @throws Exception
 	 */
-	private Document getDocument(File f) throws Exception {
+	private static Document getDocument(File f) throws Exception {
 		Document doc = new Document();
 		//*********************************************************
 		//	Champs contenant un Reader sur le corps uniquement de la note uniquement
@@ -146,7 +145,7 @@ public class Indexer {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	private void addTags(File f, Document doc) throws IOException, ParseException {
+	private static void addTags(File f, Document doc) throws IOException, ParseException {
 		
 		// On va lire le contenu de la note f et dispatcher son contenu
 		// dans les differents champs du document
@@ -200,7 +199,7 @@ public class Indexer {
 	 * @param tag le champs a fournir
 	 * @param value la valeur du champs a fournir
 	 */
-	private void addTags(Document doc, String tag, String value) {
+	private static void addTags(Document doc, String tag, String value) {
 		
 		doc.add(new Field(tag, value.toLowerCase(),     			// tokenized
 				Field.Store.YES, Field.Index.ANALYZED));
@@ -209,5 +208,47 @@ public class Indexer {
 				Field.Store.YES, Field.Index.NOT_ANALYZED));
 	}
 
+	
+	/**
+	 * Supprime de l'index le fichier dont le nom est passe en parametre
+	 * @param indexDir emplacement de l'index
+	 * @param fileName nom de la note supprimee
+	 * @throws Exception
+	 */
+	public static void delete(String indexDir, String fileName) throws Exception {
+		Indexer indexer = new Indexer(indexDir);
+		try {
+			indexer.writer.deleteDocuments(new Term("filename", fileName));
+		} finally {
+			indexer.close();
+		}
+		System.out.println("Suppression de " + fileName + " de l'index");
+	}
+	
+	/**
+	 * Met a jour dans l'index les informations de la note passee en 
+	 * parametre
+	 * @param indexDir emplacement de l'index lucene
+	 * @param dataDir emplacement des notes
+	 * @param fileName nom de la note
+	 * @throws Exception
+	 */
+	public static void update(String indexDir, String dataDir, String fileName) throws Exception {
+		Indexer indexer = new Indexer(indexDir);
+		
+		String fullFileName = dataDir+"/"+fileName;
+		System.out.println("Debut suppression de " + fullFileName);
+		
+		File f = new File(fullFileName);
+		
+		Document doc = 	getDocument(f);
+
+		try {
+			indexer.writer.updateDocument(new Term("filename", fileName), doc);
+		} finally {
+			indexer.close();
+		}
+		System.out.println("Mise a jour de " + fileName + " de l'index");
+	}
 }
 
