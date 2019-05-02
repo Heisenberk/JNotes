@@ -18,6 +18,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.util.Version;
 
 import fr.uvsq.jnotes.exception.SearchException;
+import fr.uvsq.jnotes.note.utils.Helper;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class Searcher {
 	public static void search(String indexDir, String[] args) 
 			throws IOException, ParseException, SearchException {
 		
-        String q = join(args, " ; ", 1);
+        String q = Helper.join(args, " ; ", 1);
         System.out.println("Requete : " + q);
         
 		Directory dir = FSDirectory.open(new File(indexDir));
@@ -107,7 +108,7 @@ public class Searcher {
     				} else {
     					
         				// on reconstitue les value dans le cas ou ils contiennent un ':'
-        				String value = join(pair, ":", 2);
+        				String value = Helper.join(pair, ":", 2);
         				
     					Term t;
     					// recherche exacte
@@ -187,24 +188,6 @@ public class Searcher {
     		}
     	}
 		return false;
-	}
-    
-    /**
-     * Concatene les chaines du tableau de chaines de caracteres
-     * en les separant avec un delimiteur.
-     * @param args les arguments a concatener
-     * @param delimiter le delimiteur entre chaque element
-     * @param start l'indice du premier element a concatener
-     * @return
-     */
-    public static String join(String[] args, String delimiter, int start) {
-		String prefix = "";
-		StringBuilder sb = new StringBuilder();
-		for (int i = start ; i < args.length ; i++){
-			sb.append(prefix + args[i]);
-			prefix = delimiter;
-		}
-		return sb.toString();
 	}
 }
 

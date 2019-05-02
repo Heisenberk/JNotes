@@ -11,4 +11,11 @@ public class DeleteException extends RuntimeException{
     public DeleteException(){
         super("Impossible de supprimer une note. ");
     }
+
+	/**Constructeur de DeleteException avec message.
+	 * @param message message à afficher
+	 */
+	public DeleteException(String message) {
+		super("Impossible de supprimer une note : " + message);
+	}
 }

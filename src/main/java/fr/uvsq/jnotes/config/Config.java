@@ -34,6 +34,7 @@ public class Config {
 	 * @throws IOException
 	 */
 	public Config() throws ConfigurationException {
+		System.out.println("Instanciation de config sans argument");
 		this.pathIndex = "index";
 		init();
 	}
@@ -44,6 +45,8 @@ public class Config {
 	 * @throws ConfigurationException si il y a un probleme de lecture du fichier de configuration.
 	 */
 	public Config(String pathFile)  throws ConfigurationException  {
+		System.out.println("Instanciation de config avec 1 argument");
+
 		this.pathIndex = "index";
 		init(pathFile);
 	}
@@ -54,6 +57,8 @@ public class Config {
 	 * @param nameAppExtern nom de l'application qui va editer les notes. 
 	 */
 	public Config(String pathStockage, String nameAppExtern) {
+		System.out.println("Instanciation de config avec 2 arguments");
+
 		this.pathStockage = pathStockage;
 		this.nameAppExtern = nameAppExtern;
 		this.pathIndex = "index";
@@ -95,8 +100,8 @@ public class Config {
 			
 			nameAppExtern = in.readLine();
 			
-			//ne pas indexer à chaque fois
-			Indexer.indexer(pathIndex, pathStockage);
+			//ne pas indexer à chaque fois, sert uniquement au debogage
+			//Indexer.indexer(pathIndex, pathStockage);
 		}
 		
 		catch(Exception e) {
