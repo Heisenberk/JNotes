@@ -44,6 +44,8 @@ public class ScannerCommand {
 	 */
 	public void saisie() throws SaisieException {
 		boolean arret = false;
+
+    	Interpretor interpretor = new Interpretor();
 		String commande;
 		try(BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
 		// tant que l'utilisateur n'a pas ecrit quit, on continue a interpreter. 
@@ -53,27 +55,40 @@ public class ScannerCommand {
 				
 				commande = in.readLine();
 				
-			    String[] arguments = commande.split(separator); 
-			    String[] command = arguments[0].split(" ");
-			    String[] args = new String[arguments.length + 1];
-			    
-			    if (args.length > 0) {
-			    	args[0] = command[0];
-			    	if (command.length > 1) {
-					    args[1] = command[1];
-					    if (arguments.length >= 2) {
-						    for (int i = 2 ; i < arguments.length ; i++) {
-						    	args[i] = arguments[i - 1];
-						    }
-					    }
-			    	}
+//			    String[] arguments = commande.split(separator); 
+//			    String[] command = arguments[0].split(" ");
+//			    String[] args = new String[arguments.length + 1];
+//			    
+				String function = commande.split(" +")[0];
+				System.out.println("comande : "+function);
+			    String[] arguments = commande.split("(^" + function +" *$)|(^" + function + " +\")|(\" +\")|(\" *$)");//    |    (\" \")");
+
+			    String[] args = new String[arguments.length];
+			    //le premier argument est vide vv
+			    if(arguments.length > 1) {
+				    args[0] = function;
+				    for(int i = 1 ; i < arguments.length ; i++) {
+				    	args[i] = arguments[i];
+	
+				    	System.out.println("d-" + args[i] + "-f");
+				    }
 			    }
+//			    if (args.length > 0) {
+//			    	args[0] = command[0];
+//			    	if (command.length > 1) {
+//					    args[1] = command[1];
+//					    if (arguments.length >= 2) {
+//						    for (int i = 2 ; i < arguments.length ; i++) {
+//						    	args[i] = arguments[i - 1];
+//						    }
+//					    }
+//			    	}
+//			    }
 			    
-			    if (command[0].equals("quit")) 
+			    if (commande.equals("quit")) 
 			    	arret = true;
 			    else {
-			    	Interpretor arg = new Interpretor();
-			        arg.detectCommand(args);
+			        interpretor.detectCommand(args);
 			    } 
 				
 			}

@@ -71,8 +71,43 @@ L'index est également consultable. Il est possible de le trier, par contexte par
 
 Search
 --
-En tapant search [condition] ou s [condition] l'application recherche les notes qui respectent 
-  
+En tapant search [condition1] [condition2] .. ou s [condition1] [condition2] .. , l'application recherche les notes qui respectent toutes les conditions.
+
+Les conditions doivent être protégées par des guillemet ".
+
+Selon leur forme elles permettent d'effectuer 3 types de recherches :
+-Recherche par tag :
+    La condition devient : 
+           --     ":tag:valeur"
+    [tag] prend les valeurs "context" ou "project".
+    
+Une condition par tag qui contient au moins un ' ' recherchera les notes dont le champ [tag] est complètement égal à [valeur].
+Dans l'autre cas, on peut effectuer une recherche par mot qui interpretera les expressions régulières.
+    
+-Recherche par date
+    Il est possible de rechercher les notes selon leur date.
+    Pour trouver une note ayant été rédigée entre [date1] et [date2], la requête est :
+           --    ":date:[date1 TO date2]"
+    Pour trouver toutes les notes ayant été écrites à partir de date1 :
+           --    ":date:[date1 TO *]"
+    Et inversement pour les notes ayant été écrites avant date2 :
+           --    ":date:[* TO date2]"
+    On peut aussi rechercher les notes écrites à toute date, même si ls est plus efficace pour cela :
+           --    ":date:[* TO *]"
+ 
+ 
+Une condition qui contient au moins un ':' sera interprétée comme une recherche par tag ou par date.
+                
+-Recherche dans le corps
+    La condition requise pour cette recherche peut s'écrire ainsi :
+           --   "regex1 regex2 ..."
+    Les espaces prennent ici le rôle de séparateur entre chaque expression régulière. 
+    La portée de la recherche dans le corps est le mot: Il n'est pas possible de rechercher des ensembles de mots séparés par des caractères spéciaux ( ex: espace, virgule, etc )
+    L'ordre dans l'argument ne donne pas d'indication sur l'ordre dans le document.
+    
+    
+Les recherches ne sont pas case sensitives à l'exception des requêtes par date.
+Il est possible de combiner les conditions, le programme cherchera alors les fichiers qui respectent chacunes des conditions en entrée. 
     
 ![alternativetext](report/manuel_utilisateur/Captures/search0.png)
   
