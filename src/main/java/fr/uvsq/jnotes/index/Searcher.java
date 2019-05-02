@@ -18,7 +18,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.util.Version;
 
 import fr.uvsq.jnotes.exception.SearchException;
-import fr.uvsq.jnotes.note.utils.Helper;
+import fr.uvsq.jnotes.utils.Helper;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,15 +45,16 @@ public class Searcher {
 	 * 			pour effectuer des recherches.
 	 * @param args tableau de chaines de caracteres contenant les criteres 
 	 * 			de selections des notes
+	 * @return 
 	 * @throws IOException
 	 * @throws ParseException
 	 * @throws SearchException
 	 */
-	public static void search(String indexDir, String[] args) 
+	public static int search(String indexDir, String[] args) 
 			throws IOException, ParseException, SearchException {
 		
         String q = Helper.join(args, " ; ", 1);
-        System.out.println("Requete : " + q);
+        //System.out.println("Requete : " + q);
         
 		Directory dir = FSDirectory.open(new File(indexDir));
         IndexSearcher is = new IndexSearcher(dir);
@@ -62,13 +63,14 @@ public class Searcher {
         
         TopDocs hits = is.search(query, 10);
         
-        System.err.println(hits.totalHits + " repondent a la requete " + q + " :");
+        System.err.println("Search : ");
         for(ScoreDoc scoreDoc : hits.scoreDocs) {
             Document doc = is.doc(scoreDoc.doc); 
-            System.out.println(doc.get("filename")); 
+            System.out.println("\t"+doc.get("filename")); 
         }
-
+        System.out.println(hits.totalHits + " resultats");
         is.close();
+        return hits.totalHits;
     }
 	
 	 /**
@@ -92,7 +94,7 @@ public class Searcher {
     			if (args[i].charAt(0) == ':') {
     				
     				String[] pair = condition.split(":");
-    				String tag = pair[1].toLowerCase();
+    				String tag = pair[1];
     				// **************************
     				// si on traite une date
     				// **************************
@@ -128,7 +130,7 @@ public class Searcher {
     				String[] words = condition.split(" ");
     				
     				for(String word:words) {
-	    				Term t = new Term("content", word.toLowerCase());
+	    				Term t = new Term("content", word);
 	    				Query newquery = new RegexQuery(t);
 	    	    		combinedQuery.add(	newquery, 
 	    	    							BooleanClause.Occur.MUST);
@@ -149,7 +151,7 @@ public class Searcher {
      * @throws ParseException
      */
     private static Query createDateQuery(String expression) throws ParseException {
-    	
+    	expression = expression.toUpperCase();
         QueryParser parser = new NumericDateRangeQueryParser(	Version.LUCENE_30, "date", 
         										new StandardAnalyzer(Version.LUCENE_30));//s
         String tmp = expression.substring(1, expression.length() - 1);

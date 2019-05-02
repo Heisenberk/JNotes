@@ -11,5 +11,13 @@ public class ArgumentException extends RuntimeException{
     public ArgumentException(){
         super("ArgumentException : pas assez d'arguments");
     }
+
+	/**
+     * Constructeur de SearchException avec message.
+	 * @param string message a afficher.
+	 */
+	public ArgumentException(String string) {
+		super("ArgumentException");
+	}
     
 }

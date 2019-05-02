@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.FileWriter;
 
 import fr.uvsq.jnotes.note.Note;
-import fr.uvsq.jnotes.note.utils.Helper;
+import fr.uvsq.jnotes.utils.Helper;
 import fr.uvsq.jnotes.config.Config;
 
 /**
@@ -152,10 +152,12 @@ public class Function extends Observable {
 	}
 	
 	/**
-	 * Methode de lecture de l'index des notes. 
+	 * Methode de lecture de l'index des notes, met a jour l'index lucene
 	 */
 	public void index() {
 		try {
+
+			Indexer.indexer(c.getPathIndex(), c.getPathStockage());
 			Process p=Runtime.getRuntime().exec("firefox config/index.adoc");
 			p.waitFor();
 			System.out.println("Visualisation de l'index JNotes ");
@@ -231,71 +233,23 @@ public class Function extends Observable {
 		}
 	}
 	
-	/**
-	 * Methode de Search. 
-	 * @param un string contenant ce que recherche l'utilisateur
-	 * @return le string indiquant si la recherche est presente dans une des notes ou non.
-	 * Si oui le string indique l'emplacement du mot recherche
-	 */
-	// exemple search ":project: test" test2
-		public String searchFile(String args[]) throws SearchException {
-			
-			File dossier=new File(c.getPathStockage()+"notes/");
-			 String s="";
-			if (dossier.exists() && dossier.isDirectory()){
-				// lire les fichiers contenus dans le dossier 
-		        String liste[] = dossier.list();      
-		       
-		        if (liste != null) {  
-		        	boolean test=false;
-		        	for (int i=0;i<liste.length;i++) {
-		        		
-		        		Path inPath = Paths.get(c.getPathStockage()+"notes/"+liste[i]);
-		        		try(
-		        				BufferedReader in = Files.newBufferedReader(inPath);
-		        		){
-		        			String line; int nbLine=1; 
-		        			while((line=in.readLine())!=null) {
-		        				for(int j=1;j<args.length;j++) {
-		        					 if (line.contains(args[j])==true){
-		        						s+="La note "+liste[i]+" contient \""+args[j]+"\" a la ligne "+nbLine+".\n";
-		        						test=true;
-		        					}
-		        				}
-		        				nbLine+=1;
-		        			}
-		        		} catch (Exception e) {
-							throw new SearchException();
-						}
-		        		if (test==false) {
-		        			s="Aucune note ne contient cette recherche. \n";
-		        			return s;
-		        		}
-		        	}
-		        	
-		        }
-		        if (liste.length==0) return "Aucune note trouvee. "+"\n";
-			}
-			else {
-				 return "Aucune note trouvee. "+"\n";
-			}
-			return s;
-			
-		}
-	
+
 	/**
 	 * Methode de Search. 
 	 * Permet une recherche par mot cle, date, auteur, titre etc
 	 * @param args la liste des arguments contenant "search" "condition1" "condition2"...
 	 * @throws SearchException quand il n'y pas de conditions
 	 */
-	public void search(String args[]) throws SearchException {
-		if (args.length == 1) throw new SearchException("vous n'avez pas entré de conditions");
+	public int search(String args[]) throws SearchException {
+		if (args.length == 1) throw new ArgumentException("Fonction search : vous n'avez pas entré de conditions");
+		int result;
 		try {
-			Searcher.search(c.getPathIndex(), args);
+			result = Searcher.search(c.getPathIndex(), args);
+
 		} catch (Exception e) {
-			throw new SearchException(e.getMessage());
+			throw new SearchException("format incorrect");
 		}
+		return result;
 	}
 	
 	/**

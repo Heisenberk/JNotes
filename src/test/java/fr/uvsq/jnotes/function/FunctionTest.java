@@ -2,15 +2,10 @@ package fr.uvsq.jnotes.function;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,13 +14,84 @@ import org.junit.Test;
 import fr.uvsq.jnotes.config.Config;
 import fr.uvsq.jnotes.exception.*;
 import fr.uvsq.jnotes.function.Function;
+import fr.uvsq.jnotes.index.Indexer;
+import fr.uvsq.jnotes.utils.Helper;
 
+/**
+ * @author dell
+ *
+ */
 public class FunctionTest {
+	/**
+	 * Configuration utilisee dans les test unitaires
+	 */
 	private Config c;
-	
+	private static String indexDir = "target/index-test";
+	/**
+	 * Fonction qui initialise la configuration c avant chaque test
+	 */
 	@Before
 	public void initialize(){
 		c = new Config("target/notes-test/", "nano");
+		c.setPathIndex(indexDir);
+	}
+	
+	@After
+	public void finish(){
+		File d3 = new File(indexDir);
+		Helper.deleteFolder(d3);
+	}
+	/**
+	 * Cree sur disque une note avec le champs passe en parametre
+	 * @param f le fichier qui contient la note
+	 * @param tag le tag du champs
+	 * @param value la valeur du champs
+	 * @throws IOException
+	 */
+	private void createNote(File f, String tag, String value) throws IOException {
+		PrintWriter out = new PrintWriter(new FileWriter(f));
+		
+		if (tag.compareTo("title") == 0)
+			out.println("= "+value);
+		else
+			out.println("= test recherche");
+		
+		if (tag.compareTo("author") == 0)
+			out.println(value);
+		else
+			out.println("Sarah Pho");
+		
+		if (tag.compareTo("date") == 0)
+			out.println(value);
+		else
+			out.println("07/12/1995");
+		
+		if (tag.compareTo("context") == 0)
+			out.println(":project: " + value);
+		else
+			out.println(":context: testContext");
+		
+		if (tag.compareTo("project") == 0)
+			out.println(":project: " + value);
+		else
+			out.println(":project: testProject");
+		
+		if (tag.compareTo("content") == 0)
+			out.println(value);
+		else
+			out.println("ceci est du contenu.");
+		
+		out.close();
+	}
+	
+	
+	/**
+	 * Cree sur disque une note standarde
+	 * @param f
+	 * @throws IOException
+	 */
+	private void createNote(File f) throws IOException {
+		createNote(f, "", "");
 	}
 	
 	/**
@@ -61,136 +127,413 @@ public class FunctionTest {
 			PrintWriter out=new PrintWriter(new FileWriter(file));
 			Function f = new Function(c);
 			assertEquals(f.listingString(), "Listing des notes : \n- test.adoc\n");
-			file.delete();
-			dossier.delete();
+			out.close();
+
+			Helper.deleteFolder(dossier);
+
 		}
 		catch(Exception e) {}
 	}
 	
-	@Test (expected=ArgumentException.class)
+	@Test (expected = ArgumentException.class)
 	public void testSearchSansArgument() {		
 		String[] args= {"search"};
 		Function f = new Function(c);
 		f.search(args);
 	}
 	
-	// si le dossier n'est pas suppr cela influe sur le resultat
-	@Test 
-	public void testSearchSansNote() {		
-		String[] args= {"search"};
-		Function f = new Function(c);
-		String s=f.searchFile(args);
-		assertEquals(s,"Aucune note trouvee. "+"\n" );
-	}
-	
+	/**
+	 * On test ici search dans le cas ou la requete ne correspond a aucune
+	 * note.
+	 * @throws Exception 
+	 */
 	@Test
-	public void testSearchAucunResultat() {
-		File dossier1 =new File("target/notes-test-search1/");
-		dossier1.mkdir();
-		File dossier2 =new File("target/notes-test-search1/notes");
-		dossier2.mkdir();
-		File file = new File("target/notes-test-search1/notes/testsearch1.adoc");
-		try {
-			PrintWriter out=new PrintWriter(new FileWriter(file));
-			out.println("=test recherche1");
-			out.println("sarah pho");
-			out.println("7 decembre 1995");
-			out.println("* test search 1\n");
-			out.close();
-		}
-		catch(Exception e) {
-			System.out.println(e);
-		}
+	public void testSearchAucunResultat() throws Exception {
+		File d1 =new File("target/notes-test-search1/");
+		File d2 =new File("target/notes-test-search1/notes");
 
-		String[] args= {"search", "valeur_inconnue"};
+		d1.mkdir();
+		d2.mkdir();
+		
+		File file = new File("target/notes-test-search1/notes/testsearch1.adoc");
+		
+
 		Function fu = new Function(c);
 		c.setPathStockage("target/notes-test-search1/");
-		String s=fu.searchFile(args);
-		assertEquals(s, "Aucune note ne contient cette recherche. \n");
-		file.delete();
-		dossier2.delete();
-		dossier1.delete();
+
+		createNote(file);
+		Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+
+		String[] args= {"search", "valeur_inconnue"};
+		
+		int res =fu.search(args);
+		
+		Helper.deleteFolder(d1);
+
+		assertEquals(res, 0);
+
 	}
 	
 	
-//	@Test
-//	public void testSearchValue() {
-//		File dossier1 =new File("target/notes-test-search2/");
-//		dossier1.mkdir();
-//		File dossier2 =new File("target/notes-test-search2/notes");
-//		dossier2.mkdir();
-//		File file1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
-//		File file2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
-//		try {
-//			PrintWriter out1=new PrintWriter(new FileWriter(file1));
-//			out1.println("=test recherche1");
-//			out1.println("sarah pho");
-//			out1.println(":project: test");
-//			out1.println("7 decembre 1995");
-//			out1.println("* test search 1\n");
-//			out1.close();
-//			PrintWriter out2=new PrintWriter(new FileWriter(file2));
-//			out2.println("=test recherche2");
-//			out2.println("sarah pho");
-//			out2.println("7 decembre 1995");
-//			out2.println("* test search 2\n");
-//			out2.close();
-//		}
-//		catch(Exception e) {
-//			System.out.println(e);
-//		}
-//		
-//		// search ":project: test"
-//		String[] args= {"search", ":project: test"};
-//		Function fu = new Function(c);
-//		c.setPathStockage("target/notes-test-search2/");
-//		String s=fu.searchFile(args);
-//		assertEquals(s, "La note testsearch1.adoc contient \":project: test\" a la ligne 3.\n");
-//		file1.delete();
-//		file2.delete();
-//		dossier2.delete();
-//		dossier1.delete();
-//	}
+	/**
+	 * On teste ici que la recherche exacte sur tout le champs fonctionne bien, 
+	 * les deux notes temporaires contiennent un champs :project: différent "t 1"
+	 * et "t 2". On veut que la recherche ":project:t 1" ne renvoie qu'un seul 
+	 * resultat
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSearchValueComplete() throws Exception {
+		File d1 =new File("target/notes-test-search2/");
+		File d2 =new File("target/notes-test-search2/notes");
+
+		d1.mkdir();
+		d2.mkdir();
+		;
+		
+		File f1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+		File f2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
+		
+		Function f = new Function(c);
+		c.setPathStockage("target/notes-test-search2/");
+		
+		createNote(f1, "project", "test 1");
+		createNote(f2, "project", "test 2");
+		Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+
+		String[] args= {"search", ":project:test 1"};
+		int res = f.search(args);
+
+		Helper.deleteFolder(d1);
+		
+		assertEquals(res, 1);
+	}
 	
-//	@Test
-//	public void testSearch2Values() {
-//		File dossier1 =new File("target/notes-test-search2/");
-//		dossier1.mkdir();
-//		File dossier2 =new File("target/notes-test-search2/notes");
-//		dossier2.mkdir();
-//		File file1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
-//		File file2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
-//		try {
-//			PrintWriter out1=new PrintWriter(new FileWriter(file1));
-//			out1.println("=test recherche1");
-//			out1.println("sarah pho");
-//			out1.println(":project: test");
-//			out1.println("7 decembre 1995");
-//			out1.println("* test search 1\n");
-//			out1.close();
-//			PrintWriter out2=new PrintWriter(new FileWriter(file2));
-//			out2.println("=test recherche2");
-//			out2.println("sarah pho");
-//			out2.println("7 decembre 1995");
-//			out2.println("* test search 2\n");
-//			out2.close();
-//		}
-//		catch(Exception e) {
-//			System.out.println(e);
-//		}
-//		
-//		// search "test search"
-//		String[] args= {"search", "test search"};
-//		Function fu = new Function(c);
-//		c.setPathStockage("target/notes-test-search2/");
-//		String s=fu.searchFile(args);
-//		assertEquals(s, "La note testsearch1.adoc contient \"test search\" a la ligne 5.\nLa note testsearch2.adoc contient \"test search\" a la ligne 4.\n");
-//		file1.delete();
-//		file2.delete();
-//		dossier2.delete();
-//		dossier1.delete();
-//	}
+	/**
+	 * On teste ici que la recherche mot par mot fonctionne bien.
+	 * les deux notes temporaires contiennent un champs :project: différent "test 1"
+	 * et "test 2". On veut que la recherche ":project:test" renvoie deux puisque les
+	 * notes ont un champs ":project:" contenant le mot "test".
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSearchValueWordByWord() throws Exception {
+		File d1 =new File("target/notes-test-search2/");
+		File d2 =new File("target/notes-test-search2/notes");
+
+		d1.mkdir();
+		d2.mkdir();
+		;
+		
+		File f1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+		File f2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
+		
+		Function f = new Function(c);
+		c.setPathStockage("target/notes-test-search2/");
+		
+		createNote(f1, "project", "test 1");
+		createNote(f2, "project", "test 2");
+		Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+
+		String[] args= {"search", ":project:test 1"};
+		int res = f.search(args);
+		
+
+		Helper.deleteFolder(d1);
 	
+		assertEquals(res, 1);
+	}
+	
+	/**
+	 * On teste ici que la recherche mot par mot et regex fonctionne bien.
+	 * les deux notes temporaires contiennent un champs :project: différent "test 1"
+	 * et "test 2". On veut que la recherche ":project:test" renvoie deux puisque les
+	 * notes ont un champs ":project:" contenant le mot "test".
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSearchValueWordByWordRegex() throws Exception {
+		File d1 = new File("target/notes-test-search2/");
+		File d2 = new File("target/notes-test-search2/notes");
+
+		d1.mkdir();
+		d2.mkdir();
+		;
+		File f1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+		File f2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
+		File f3 = new File("target/notes-test-search2/notes/testsearch3.adoc");
+		
+		Function f = new Function(c);
+		c.setPathStockage("target/notes-test-search2/");
+		
+		createNote(f1, "project", "test");
+		createNote(f2, "project", "toast");
+		createNote(f3, "project", "null");
+		Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+
+		String[] args= {"search", ":project:t.+t"};
+		int res = f.search(args);
+
+		Helper.deleteFolder(d1);
+
+		assertEquals(res, 2);
+	}
+	
+	/**
+	 * On teste ici le fonctionnement de la recherche pour une date exacte.
+	 * On a pour 	f1 date1 = 01/03/2019
+	 * 				f2 date2 = 02/03/2019
+	 * 				f3 date3 = 03/03/2019
+	 * 				f4 date4 = 04/03/2019
+	 * Une recherche exacte sur 03/03/2019 renvoie les notes de dates 03/03/2019 et
+	 * de date 03/03/2019 - 1 c'est à dire 02/03/2019
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSearchDateExacte() throws Exception {
+		File d1 =new File("target/notes-test-search2/");
+		File d2 =new File("target/notes-test-search2/notes");
+
+		d1.mkdir();
+		d2.mkdir();
+		;
+		File f1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+		File f2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
+		File f3 = new File("target/notes-test-search2/notes/testsearch3.adoc");
+		File f4 = new File("target/notes-test-search2/notes/testsearch4.adoc");
+
+		Function f = new Function(c);
+		c.setPathStockage("target/notes-test-search2/");
+		
+		createNote(f1, "date", "01/03/2019");
+		createNote(f2, "date", "02/03/2019");
+		createNote(f3, "date", "03/03/2019");
+		createNote(f4, "date", "04/03/2019");
+		Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+
+		String[] args= {"search", ":date:[03/03/2019 TO 03/03/2019]"};
+		int res = f.search(args);
+		
+		Helper.deleteFolder(d1);
+
+		assertEquals(res, 2);
+	}
+	
+	/**
+	 * On teste ici le fonctionnement de la recherche pour une date exacte
+	 * en faisant varier les mois.
+	 * Une recherche exacte sur 03/03/2019 renvoie les notes de dates 03/03/2019 et
+	 * de date 03/03/2019 - 1 c'est à dire 02/03/2019
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSearchDateExacteMois() throws Exception {
+		File d1 =new File("target/notes-test-search2/");
+		File d2 =new File("target/notes-test-search2/notes");
+
+		d1.mkdir();
+		d2.mkdir();
+		;
+		File f1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+		File f2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
+
+		Function f = new Function(c);
+		c.setPathStockage("target/notes-test-search2/");
+		
+		createNote(f1, "date", "02/02/2019");
+		createNote(f2, "date", "02/03/2019");
+		Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+
+		String[] args= {"search", ":date:[02/03/2019 TO 02/03/2019]"};
+		int res = f.search(args);
+
+		Helper.deleteFolder(d1);
+		
+		assertEquals(res, 1);
+	}
+	
+	/**
+	 * On teste ici le fonctionnement de la recherche par date 
+	 * avec intervalle ouvert : [date to max]
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSearchDateApres() throws Exception {
+		File d1 =new File("target/notes-test-search2/");
+		File d2 =new File("target/notes-test-search2/notes");
+		
+		d1.mkdir();
+		d2.mkdir();
+		
+		File f1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+		File f2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
+		File f3 = new File("target/notes-test-search2/notes/testsearch3.adoc");
+		File f4 = new File("target/notes-test-search2/notes/testsearch4.adoc");
+
+		Function f = new Function(c);
+		c.setPathStockage("target/notes-test-search2/");
+		
+		createNote(f1, "date", "01/03/2019");
+		createNote(f2, "date", "02/03/2019");
+		createNote(f3, "date", "03/03/2019");
+		createNote(f4, "date", "04/04/2019");
+		Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+
+		String[] args= {"search", ":date:[03/03/2019 TO *]"};
+		int res = f.search(args);
+		
+		Helper.deleteFolder(d1);
+		
+		assertEquals(res, 3);
+	}
+	
+	/**
+	 * On teste ici le fonctionnement de la recherche par date 
+	 * avec intervalle ouvert : [min to date]
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSearchDateAvant() throws Exception {
+		File d1 =new File("target/notes-test-search2/");
+		File d2 =new File("target/notes-test-search2/notes");
+		
+		d1.mkdir();
+		d2.mkdir();
+		;
+		
+		File f1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+		File f2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
+		File f3 = new File("target/notes-test-search2/notes/testsearch3.adoc");
+		File f4 = new File("target/notes-test-search2/notes/testsearch4.adoc");
+
+		Function f = new Function(c);
+		c.setPathStockage("target/notes-test-search2/");
+		
+		createNote(f1, "date", "03/02/2019");
+		createNote(f2, "date", "02/03/2019");
+		createNote(f3, "date", "03/03/2019");
+		createNote(f4, "date", "04/03/2019");
+		Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+
+		String[] args= {"search", ":date:[* TO 03/03/2019]"};
+		int res = f.search(args);
+		
+		Helper.deleteFolder(d1);
+		
+		assertEquals(res, 3);
+	}
+	
+	/**
+	 * On teste ici le fonctionnement de la recherche par date 
+	 * avec intervalle ferme.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSearchDateInterval() throws Exception {
+		File d1 =new File("target/notes-test-search2/");
+		File d2 =new File("target/notes-test-search2/notes");
+		
+		d1.mkdir();
+		d2.mkdir();
+		
+		File f1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+		File f2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
+		File f3 = new File("target/notes-test-search2/notes/testsearch3.adoc");
+		File f4 = new File("target/notes-test-search2/notes/testsearch4.adoc");
+		File f5 = new File("target/notes-test-search2/notes/testsearch5.adoc");
+
+		Function f = new Function(c);
+		c.setPathStockage("target/notes-test-search2/");
+		
+		createNote(f1, "date", "01/03/2019");
+		createNote(f2, "date", "02/03/2019");
+		createNote(f3, "date", "03/03/2019");
+		createNote(f4, "date", "04/03/2019");
+		createNote(f5, "date", "05/03/2019");
+		
+		Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+
+		String[] args= {"search", ":date:[03/03/2019 TO 04/03/2019]"};
+		int res = f.search(args);
+		
+		Helper.deleteFolder(d1);
+
+		assertEquals(res, 3);
+	}
+	
+	/**
+	 * On teste ici le fonctionnement de la recherche par date 
+	 * avec intervalle ferme.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSearchRequetesCombinees() throws Exception {
+		File d1 =new File("target/notes-test-search2/");
+		File d2 =new File("target/notes-test-search2/notes");
+		
+		d1.mkdir();
+		d2.mkdir();
+		
+		File f1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+		File f2 = new File("target/notes-test-search2/notes/testsearch2.adoc");
+
+		Function f = new Function(c);
+		c.setPathStockage("target/notes-test-search2/");
+		
+		createNote(f1, "author", "Mister Dummy");
+
+		PrintWriter out = new PrintWriter(new FileWriter(f2));
+		
+		out.println("= test recherche");
+		out.println("Mister Dummy");
+		out.println("07/12/1995");
+		out.println(":context: SpecialContent");
+		out.println(":project: testProject");
+		out.println("ceci est du contenu.");
+		
+		out.close();
+		
+		Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+
+		String[] args= {"search", ":author:mister dummy", ":context:special.*"};
+		
+		int res = f.search(args);
+
+		Helper.deleteFolder(d1);
+
+		assertEquals(res, 1);
+	}
+	
+	/**
+	 * On teste ici que l'indexation est bien insensible aux majuscules
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSearchRequetesCaseSensitive() throws Exception {
+		File d1 =new File("target/notes-test-search2/");
+		File d2 =new File("target/notes-test-search2/notes");
+		
+		d1.mkdir();
+		d2.mkdir();
+		
+		File f1 = new File("target/notes-test-search2/notes/testsearch1.adoc");
+
+		Function f = new Function(c);
+		c.setPathStockage("target/notes-test-search2/");
+		
+		createNote(f1, "author", "Sarah");
+		
+		Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+
+		String[] args= {"search", ":author:sarah"};
+		
+		int res = f.search(args);
+
+		Helper.deleteFolder(d1);
+
+		assertEquals(res, 1);
+	}
+
 	/**
 	 * Test pour le delete avec une note inexistante. 
 	 */
@@ -201,7 +544,9 @@ public class FunctionTest {
 		Function f = new Function(c);
 		String[] args= {"delete", "inconnu.adoc"};
 		f.delete(args);
+		
 		dossier.delete();
+
 	}
 	
 	/**
@@ -214,17 +559,24 @@ public class FunctionTest {
 			dossier.mkdir();
 			File file = new File("target/notes-test/notes/test.adoc");
 			PrintWriter out=new PrintWriter(new FileWriter(file));
+			
 			Function f = new Function(c);
+			
 			String[] args= {"delete", "test.adoc"};
 			assertEquals(f.deleteString(args), "Suppression de la note AsciiDoctor target/notes-test/notes/test.adoc\n");
-			f.delete(args);
-			dossier.delete();
+			
+			Helper.deleteFolder(dossier);
+
 		}
 		catch(Exception e) {}
 	}
 	
+	/**
+	 * Verifie qu'une commande demandant a voir un fichier non existant 
+	 * renvoie bien une exception.
+	 */
 	@Test (expected=ViewException.class)
-	public void testViewSansDossier() {
+	public void testViewNoteInconnuSansDossier() {
 		String[] args= {"view", "fichier_inconnu.adoc"};
 		Function f = new Function(c);
 		f.view(args);
@@ -237,6 +589,7 @@ public class FunctionTest {
 		String[] args= {"view", "fichier_inconnu.adoc"};
 		Function f = new Function(c);
 		f.view(args);
+		
 		dossier.delete();
 	}
 	
@@ -249,8 +602,9 @@ public class FunctionTest {
 			PrintWriter out=new PrintWriter(new FileWriter(file));
 			Function f = new Function(c);
 			String[] args= {"view", "test.adoc"};
-			assertEquals(f.findPathView(args[1]), "target/notes-test/notes/test.adoc");
+			assertEquals(f.findPath(args[1]), "target/notes-test/notes/test.adoc");
 			f.delete(args);
+			
 			dossier.delete();
 		}
 		catch(Exception e) {}

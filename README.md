@@ -93,14 +93,16 @@ Dans l'autre cas, on peut effectuer une recherche par mot qui interpretera les e
     
 -Recherche par date
     Il est possible de rechercher les notes selon leur date.
-    Pour trouver une note ayant été rédigée entre [date1] et [date2], la requête est :
+    Pour trouver une note ayant été rédigée entre [date1] - 1 jour et [date2] inclus, la requête est :
            --    ":date:[date1 TO date2]"
-    Pour trouver toutes les notes ayant été écrites à partir de date1 :
+    Pour trouver une note a une date [date1] a un jour près ([date1] et [date1] - 1jour):
+           --    ":date:[date1 TO date1]"
+    Pour trouver toutes les notes ayant été écrites à partir de [date1] - 1 incluse :
            --    ":date:[date1 TO *]"
-    Et inversement pour les notes ayant été écrites avant date2 :
+    Et inversement pour les notes ayant été écrites jusqu'à [date2] incluse :
            --    ":date:[* TO date2]"
     On peut aussi rechercher les notes écrites à toute date, même si ls est plus efficace pour cela :
-           --    ":date:[* TO *]"
+           --    ":date:[* to *]"
  
 Une condition qui contient au moins un ':' sera interprétée comme une recherche par tag ou par date.
                 
@@ -112,7 +114,7 @@ Une condition qui contient au moins un ':' sera interprétée comme une recherche 
     L'ordre dans l'argument ne donne pas d'indication sur l'ordre dans le document.
     
     
-Les recherches ne sont pas case sensitives à l'exception des requêtes par date.
+Les recherches ne sont pas case sensitives.
 Il est possible de combiner les conditions, le programme cherchera alors les fichiers qui respectent chacunes des conditions en entrée. 
     
 ![alternativetext](report/manuel_utilisateur/Captures/search0.png)

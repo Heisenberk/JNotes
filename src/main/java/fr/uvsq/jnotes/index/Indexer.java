@@ -66,7 +66,7 @@ public class Indexer {
 		} finally {
 			indexer.close();
 		}
-		System.out.println("Indexing " + numIndexed + " files");
+		System.out.println("Indexation de " + numIndexed + " fichiers");
 	}
 
 	/**
@@ -155,19 +155,19 @@ public class Indexer {
 		//*********************************************************
 		//	Champs contenant le titre de la note
 		//********************************************************
-	  	String line = in.readLine();
+	  	String line = in.readLine().toLowerCase();
 	  	addTags(doc, "title", line.substring(2));
 	  	
 	  	//*********************************************************
 	  	//	Champs contenant le nom de l'auteur de la note
 	  	//********************************************************
-	  	line = in.readLine();
+	  	line = in.readLine().toLowerCase();
 	  	addTags(doc, "author", line);
 	  	
 	  	//*********************************************************
 	  	//	Champs contenant la date de la note
 	  	//********************************************************
-	  	line = in.readLine();	  	
+	  	line = in.readLine().toLowerCase();	  	
 	  	String date = LocalDate.parse(line, dtf1).format(dtf2);
 	  	doc.add(new NumericField("date")
 	  			.setIntValue(Integer.parseInt(date))); 
@@ -175,13 +175,13 @@ public class Indexer {
 	  	//*********************************************************
 	  	//	Champs contenant le tag 'context' de la note
 	  	//********************************************************
-	  	line = in.readLine();
+	  	line = in.readLine().toLowerCase();
 	  	addTags(doc, "context", line.split(":")[2].substring(1));
 	  	
 	  	//*********************************************************
 	  	//	Champs contenant le tag 'project' de la note
 	  	//********************************************************
-	  	line = in.readLine();
+	  	line = in.readLine().toLowerCase();
 	  	addTags(doc, "project", line.split(":")[2].substring(1));
 	  	
 	  	
@@ -201,10 +201,10 @@ public class Indexer {
 	 */
 	private static void addTags(Document doc, String tag, String value) {
 		
-		doc.add(new Field(tag, value.toLowerCase(),     			// tokenized
+		doc.add(new Field(tag, value,     			// tokenized
 				Field.Store.YES, Field.Index.ANALYZED));
 		
-		doc.add(new Field("stored" + tag, value.toLowerCase(),		// stored
+		doc.add(new Field("stored" + tag, value,		// stored
 				Field.Store.YES, Field.Index.NOT_ANALYZED));
 	}
 
