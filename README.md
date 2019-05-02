@@ -73,15 +73,16 @@ Search
 --
 En tapant search [condition1] [condition2] .. ou s [condition1] [condition2] .. , l'application recherche les notes qui respectent toutes les conditions.
 
-Les conditions doivent être protégées par des guillemet ".
+Les conditions doivent être protégées par des guillemets ".
 
 Selon leur forme elles permettent d'effectuer 3 types de recherches :
+
 -Recherche par tag :
     La condition devient : 
            --     ":tag:valeur"
-    [tag] prend les valeurs "context" ou "project".
+    [tag] prend les valeurs "author", "title", "context" ou "project"
     
-Une condition par tag qui contient au moins un ' ' recherchera les notes dont le champ [tag] est complètement égal à [valeur].
+Si [valeur] au moins un caractere special alors le programme recherchera les notes dont le champ [tag] est complètement égal à [valeur].
 Dans l'autre cas, on peut effectuer une recherche par mot qui interpretera les expressions régulières.
     
 -Recherche par date
@@ -94,7 +95,6 @@ Dans l'autre cas, on peut effectuer une recherche par mot qui interpretera les e
            --    ":date:[* TO date2]"
     On peut aussi rechercher les notes écrites à toute date, même si ls est plus efficace pour cela :
            --    ":date:[* TO *]"
- 
  
 Une condition qui contient au moins un ':' sera interprétée comme une recherche par tag ou par date.
                 

@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.Observable;
 
 import fr.uvsq.jnotes.exception.*;
+import fr.uvsq.jnotes.index.Indexer;
 import fr.uvsq.jnotes.index.Searcher;
 
 import java.io.BufferedReader;
@@ -335,4 +336,15 @@ public class Function extends Observable {
 		}
 		else throw new ParamException();
 	}
+	
+	@Override
+	public void notifyObservers() {
+		super.notifyObservers();
+		try {
+			Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
