@@ -2,16 +2,12 @@ package fr.uvsq.jnotes.index;
 
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.regex.RegexQuery;
 import org.apache.lucene.store.FSDirectory;
@@ -21,16 +17,17 @@ import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.util.Version;
 
+import fr.uvsq.jnotes.exception.SearchException;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
-// From chapter 1
-
 /**
- * This code was originally written for
- * Erik's Lucene intro java.net article
+ * Noyau de la fonction search : traite l'expression en entrée
+ * et cherche les notes correspondantes dans un index Lucene
  */
+
 public class Searcher {
     private static Query createDateQuery(String expression) throws ParseException {
 
@@ -53,6 +50,11 @@ public class Searcher {
     	return query;
     }
     
+    /**
+     * @param args
+     * @return
+     * @throws ParseException
+     */
     public static Query createQuery (String[] args) throws ParseException {
     	// une recherche sur la date :date:date;
     	// sur auteur :author:auteur;
@@ -65,12 +67,13 @@ public class Searcher {
     			//si l'argument commence par : on suppose que c'est un tag valide
     			if (args[i].charAt(0) == ':') {
     				String[] pair = args[i].split(":");
-    				if(pair[1].compareTo("date") == 0) {
+    				String tag = pair[1].toLowerCase();
+    				if(tag.compareTo("date") == 0) {
     					Query query = createDateQuery(pair[2]);
     			        combinedQuery.add(	query, 
     			        					BooleanClause.Occur.MUST);
     				} else {
-    					String tag = pair[1]; String value = "";
+    					String value = "";
         				if(pair.length <= 3) {
         					value = pair[2].toLowerCase();
         				} else {
@@ -81,46 +84,41 @@ public class Searcher {
         				}
     					Term t;
     					//on cherche un field tel quel sans analyzer
-    					if (value.contains(" ")) 
+    					if (value.contains(" ")) {System.out.println("contient espace");
+    					System.out.println(value);
     						t = new Term("stored"+tag, value);
     					//on cherche en analysant 
+    					}
     					else 
     						t= new Term(tag, value);
 	    	    		combinedQuery.add(	new RegexQuery(t), 
 	    	    							BooleanClause.Occur.MUST);
     				}
     			} else {
-    				System.out.println(args[i]);
-    				Term t = new Term("content", args[i].toLowerCase());
-    				Query newquery = new RegexQuery(t);
-    	    		combinedQuery.add(	newquery, 
-    	    							BooleanClause.Occur.MUST);
+    				System.out.println("search by content");
+    				String[] words = args[i].split(" ");
+    				for(String word:words) {
+    					System.out.println(word);
+	    				System.out.println(args[i]);
+	    				Term t = new Term("content", word.toLowerCase());
+	    				Query newquery = new RegexQuery(t);
+	    	    		combinedQuery.add(	newquery, 
+	    	    							BooleanClause.Occur.MUST);
+    				}
     			}
     		}
     	}
     	return combinedQuery;
     }
     
-    private static void displayValuesFromField(String indexDir, String field) throws CorruptIndexException, IOException {
-    	IndexReader reader = IndexReader.open(FSDirectory.open(new File(indexDir)));
-    	
-    	for(int i = 0 ; i < reader.numDocs() ; i++) {
-    		Document doc = reader.document(i);
-    		System.out.println(i + " : " + doc);
-    		Field f = doc.getField(field);
-    		System.out.println(f);
-    	}
-    	reader.close();
-    }
-    
-    
     //args : String indexDir, String query1, OPT[String query2 ...]
-	public static void search(String indexDir, String[] args) throws IOException, ParseException {
+	public static void search(String indexDir, String[] args) throws IOException, ParseException, SearchException {
         String q = "";
         for (int i = 1 ; i < args.length ; i++ )  {
         	System.out.println("q : "+q);
         	q += args[i]+" ";
         }
+        
 		Directory dir = FSDirectory.open(new File(indexDir));
         IndexSearcher is = new IndexSearcher(dir);
         Query query = createQuery(args);

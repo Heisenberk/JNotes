@@ -45,13 +45,12 @@ public class ScannerCommand {
 	public void saisie() throws SaisieException {
 		boolean arret = false;
 		String commande;
-		
+		try(BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
 		// tant que l'utilisateur n'a pas ecrit quit, on continue a interpreter. 
-		while (!arret) {
-			commande = "";
-			try {
+			while (!arret) {
+				commande = "";
 				System.out.print(">");
-				BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+				
 				commande = in.readLine();
 				
 			    String[] arguments = commande.split(separator); 
@@ -76,10 +75,10 @@ public class ScannerCommand {
 			    	Interpretor arg = new Interpretor();
 			        arg.detectCommand(args);
 			    } 
+				
 			}
-			catch(IOException e) {
-				throw new SaisieException();
-			}
+		} catch(IOException e) {
+			throw new SaisieException();
 		}
 	}
 }

@@ -274,9 +274,11 @@ public class Function extends Observable {
 	/**
 	 * Methode de Search. 
 	 * Permet une recherche par mot cle, date, auteur, titre etc
+	 * @param args la liste des arguments contenant "search" "condition1" "condition2"...
+	 * @throws SearchException quand il n'y pas de conditions
 	 */
 	public void search(String args[]) throws SearchException {
-		if (args.length==1) throw new ArgumentException();
+		if (args.length == 1) throw new SearchException("vous n'avez pas entré de conditions");
 		try {
 			Searcher.search(c.getPathIndex(), args);
 		} catch (Exception e) {

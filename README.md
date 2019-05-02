@@ -71,7 +71,7 @@ L'index est également consultable. Il est possible de le trier, par contexte par
 
 Search
 --
-En tapant search [mot a chercher] ou s [mot a chercher] l'application recherche dans les notes le mot demandé.
+En tapant search [condition] ou s [condition] l'application recherche les notes qui respectent 
   
     
 ![alternativetext](report/manuel_utilisateur/Captures/search0.png)
