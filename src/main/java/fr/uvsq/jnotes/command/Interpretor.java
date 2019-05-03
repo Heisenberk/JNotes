@@ -105,7 +105,8 @@ public class Interpretor {
 				command=new Index(function);
 				storeAndExecute(command);
 				return EnumCommand.INDEX;
-			} else if ((sargs.equals("help"))||(sargs.equals("h"))) {
+			} 
+			else if ((sargs.equals("help"))||(sargs.equals("h"))) {
 				command=new Help(function);
 				storeAndExecute(command);
 				return EnumCommand.HELP;

@@ -1,6 +1,6 @@
-package fr.uvsq.jnotes.command;
+package fr.uvsq.jnotes.function;
 
-import fr.uvsq.jnotes.function.Function;
+import fr.uvsq.jnotes.command.ICommand;
 
 /**
  * Classe qui permet d'afficher toutes les commandes de jnotes
