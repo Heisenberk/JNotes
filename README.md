@@ -153,29 +153,52 @@ Introduction
 --
 
 Ce manuel a pour objectif de décrire les patterns utilisés lors de l'implémentation de ce projet.
-Plus précisement nous allons expliciter les raisons de leurs utilisation.
+Plus précisement, nous allons expliciter les raisons de leurs utilisations.
+
+Packages 
+--
+Nous avons une série de packages dans JNotes : 
+
+- le package "note" contient limplémentation de la note ainsi que toutes les classes nécessaires au pattern iterator. Ce patern permettra par la suite de trier ces notes selon un critère particulier.
+- le package "utils" contient les classes qui seront manipulés dans toutes les autres classes. Il contient des classes "bas niveau" permettant de manipuler plus facilement les fichiers par exemple. 
+- le package "index" contient toutes les classes relatives à la manipulation de listes à l'aide de la bibliothèque de recherche par mots-clés Lucene.
+- le package "config" contient toutes les classes relatives à la configuration de l'application (notamment le logiciel d'édition de notes ou la localisation du dossier contenant les notes de JJNotes).
+- le package "command" contient toutes les classes relatives aux classes maîtresses de la gestion des commandes.
+- le package "function" contient toutes les classes relatives aux fonctionnalités proposés par l'application. Le coeur de JNotes est la classe Function va regrouper par le biais du pattern command toutes les déclarations de méthodes pour chaque commande. 
+- le package "exception" contient toutes les exceptions lancées par l'application.
+
+Patterns
+--
 
 Singleton
---
+-
 
 Le singleton est utilisé pour la classe App.
 Le main est unique, ainsi l'utilisation du pattern singleton permet de facilement créer cette unicité. 
 
 Observer
---
+-
 
 Nous avons utilisé le pattern observer lors de l'édition, la suppression d'une note ou bien lors de la modification de paramètres puisque le fichier index.adoc doi être mis à jour. Cette fonctionnalité montre que le pattern observer est le plus approprié car on reformera index.adoc à chaque mise à jour des notes. 
 
 Command
---
+-
 
 Le pattern command est le coeur de l'application. Il permet de maintenir facilement les différentes commandes proposés par JNotes. En effet, chaque fonctionnalité (Delete, Edit, Index, Listing, Param, Search, Update, View) est déclaré dans une classe mais c'est la classe principale du pattern command (Function) qui les gère toutes. Ainsi, 
 
+Iterator
+-
+
+Afin de pouvoir trier correctement les notes selon les contextes, les projets ou même selon la date, il a été utile d'utiliser le pattern iterator. Cela a permis de trier 
+facilement les notes selon un critère. 
+
 Builder
---
+-
 
 Note.java utilise le pattern builder.  
 Une note est déterminé par son titre mais sa date, l'auteur, le projet et le contexte sont optionels.
 Ainsi le pattern builder permet d'implémenter ces attributs sous la forme d'options facilement.
 De plus il y a de nombreux paramètres, ainsi le pattern builder permet d'éviter une multiplication du nombre de 
 paramètres utilisés.
+
+
