@@ -1,5 +1,3 @@
-*Ce markdown contient un manuel utilisateur suivi d'un manuel technique*
-
 Manuel utilisateur JNotes
 ==
 Auteurs : Clément Caumes - Mehdi Merimi - Sarah Ngoc-Mai Pho - Maxime Gonthier  
@@ -19,61 +17,60 @@ Lancement de l'application
 
 mvn test lance l'ensemble des tests junit.
 	  
-	    		
-![alternativetext](report/manuel_utilisateur/Captures/test.png)
+![mvn test](report/pictures/test.png)
 			
 mvn package compile le projet et lance les tests.
 	  
 	    			
-![alternativetext](report/manuel_utilisateur/Captures/mvnpackage.png)
+![mvn package](report/pictures/mvnpackage.png)
 				
-java -jar target/jnotes-1.0.0-jar-with-dependencies.jar execute le programme.
+java -jar target/jnotes-1.0.0-jar-with-dependencies.jar exécute le programme.
 	  
 	    			
-![alternativetext](report/manuel_utilisateur/Captures/ecranacceuil.png)
+![accueil](report/pictures/ecranaccueil.png)
 			
-Une fois l'application lancé l'utilisateurs a acces à différentes fonctionnalitées décrite si dessous.
+Une fois l'application lancée, l'utilisateur a accès à différentes fonctionnalités décrites ci-dessous.
 
 Help
 --
-En tapant help ou h le terminal affiche la liste des commandes supportées par l'application jnotes.
+En tapant help ou h, le terminal affiche la liste des commandes supportées par l'application jnotes.
     
-![alternativetext](report/manuel_utilisateur/Captures/help.png)  
+![help](report/pictures/help.PNG)  
 
 Edit
 --
-En tapant edit [nom de la note] ou e [nom de la note] un écran apparait affichant la note.  
-Si la note n'existait pas elle est créer et pré remplis.  
+En tapant edit [nom de la note] ou e [nom de la note], un écran apparait affichant la note.  
+Si la note n'existait pas, elle est créée et pré-remplie.  
   
-    
-![alternativetext](report/manuel_utilisateur/Captures/edit.png)  
+![edit](report/pictures/edit.png)  
 
-Liste
+List
 --
-En tapant list ou ls le terminal affiche la liste des notes contenues dans le dossier de note configuré dans lapplication.
+En tapant list ou ls, le terminal affiche la liste des notes contenues dans le dossier de notes configuré dans l'application.
     
-![alternativetext](report/manuel_utilisateur/Captures/list.png)  
+![list](report/pictures/list.png)  
 
 Delete
 --
-En tapant delete [nom de la note] ou d [nom de la note] le programme supprime la note et affiche un message.
+En tapant delete [nom de la note] ou d [nom de la note], le programme supprime la note et affiche un message.
 
-    
-![alternativetext](report/manuel_utilisateur/Captures/delete.png)
+![delete](report/pictures/delete.png)
 
 View
 --
-En tapant view [nom de la note] ou v [nom de la note] la note est ouverte dans firefox.
-  
-    
-![alternativetext](report/manuel_utilisateur/Captures/view2.png)
+En tapant view [nom de la note] ou v [nom de la note], la note est ouverte dans firefox.
+   
+![view](report/pictures/view.PNG)
 
-L'index est également consultable. Il est possible de le trier, par contexte par exemple.
+Index
+--
+L'index est également consultable. Cet index a plusieurs tris : par ordre alphabétique de titre, selon l'attribut contexte, selon l'attribut projet et enfin par mois.
 
-![alternativetext](report/manuel_utilisateur/Captures/index_part1.png)
+![commande index](report/pictures/commandeIndex.PNG)
 
+On obtiendra donc :
 
-![alternativetext](report/manuel_utilisateur/Captures/index_part2.png)
+![index](report/pictures/index.PNG)
 
 Search
 --
@@ -81,7 +78,7 @@ En tapant search [condition1] [condition2] .. ou s [condition1] [condition2] .. 
 
 Les conditions doivent être protégées par des guillemets ".
 
-Selon leur forme elles permettent d'effectuer 3 types de recherches :
+Selon leur forme, elles permettent d'effectuer 3 types de recherches :
 
 -Recherche par tag :
     La condition devient : 
@@ -103,7 +100,7 @@ Dans l'autre cas, on peut effectuer une recherche par mot qui interpretera les e
            --    ":date:[* TO date2]"
     On peut aussi rechercher les notes écrites à toute date, même si ls est plus efficace pour cela :
            --    ":date:[* to *]"
- 
+
 Une condition qui contient au moins un ':' sera interprétée comme une recherche par tag ou par date.
                 
 -Recherche dans le corps
@@ -114,35 +111,34 @@ Une condition qui contient au moins un ':' sera interprétée comme une recherche 
     L'ordre dans l'argument ne donne pas d'indication sur l'ordre dans le document.
     
     
-Les recherches ne sont pas case sensitives.
+Les recherches ne sont pas cases sensitives.
 Il est possible de combiner les conditions, le programme cherchera alors les fichiers qui respectent chacunes des conditions en entrée. 
-    
-![alternativetext](report/manuel_utilisateur/Captures/search0.png)
-  
-    
-![alternativetext](report/manuel_utilisateur/Captures/search1.png)
-		
 
+Voici un exemple simple de recherche. Pour cela, on crée préalablement une note par exemple :
+    
+![alternativetext](report/pictures/search_note.PNG)
+  
+On fait ensuite la recherche et on remarque que 2 notes contiennent l'élément recherché (dont la note qui vient d'être créée).
+
+![alternativetext](report/pictures/search_context.PNG)
+		
 Param
 --
 En tapant param ou p, le terminal affiche les paramètres, c'ets à dire l'application d'édition des notes et le chemin du dossier contenant les notes.
-  
-    
-![alternativetext](report/manuel_utilisateur/Captures/param.png)
+     
+![alternativetext](report/pictures/param.png)
 
 Param path
 --
 En tapant param path [nouveau chemin] ou p path [nouveau chemin], le chemin du dossier contenant les notes est modifié.
-  
-    
-![alternativetext](report/manuel_utilisateur/Captures/parampath.png)
+     
+![alternativetext](report/pictures/parampath.png)
 
 Param app
 --
 En tapant param app [nom de l'application] ou p app [nom de l'application], l'application de modification des notes est modifié.
-  
-    
-![alternativetext](report/manuel_utilisateur/Captures/paramapp.png)
+      
+![alternativetext](report/pictures/paramapp.png)
 
 Quit
 --
@@ -156,26 +152,24 @@ Manuel technique JNotes
 Introduction
 --
 
-Ce manuel a pour objectif de décrire les pattern utilisés lors de l'implémentation de ce projet.
+Ce manuel a pour objectif de décrire les patterns utilisés lors de l'implémentation de ce projet.
 Plus précisement nous allons expliciter les raisons de leurs utilisation.
 
 Singleton
 --
 
-Le singleton est utilisé dans App.java.
-Le main est unique, ainsi l'utilisation du pattern singleton permet de facilement créer cette unicité.
+Le singleton est utilisé pour la classe App.
+Le main est unique, ainsi l'utilisation du pattern singleton permet de facilement créer cette unicité. 
 
 Observer
 --
 
-Function.java utilise le pattern observer.
-L'objectif est de modifier l'index directement lors de la création ou la suppresion d'une note.
-Ainsi lorsqu'une note change d'état, l'index en est averti et il se met automatiquement a jour.
+Nous avons utilisé le pattern observer lors de l'édition, la suppression d'une note ou bien lors de la modification de paramètres puisque le fichier index.adoc doi être mis à jour. Cette fonctionnalité montre que le pattern observer est le plus approprié car on reformera index.adoc à chaque mise à jour des notes. 
 
 Command
 --
 
-Le pattern command est utilisé dans ICommand.java, Interpretor.java et ScannerCommand.java
+Le pattern command est le coeur de l'application. Il permet de maintenir facilement les différentes commandes proposés par JNotes. En effet, chaque fonctionnalité (Delete, Edit, Index, Listing, Param, Search, Update, View) est déclaré dans une classe mais c'est la classe principale du pattern command (Function) qui les gère toutes. Ainsi, 
 
 Builder
 --
