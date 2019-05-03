@@ -2,6 +2,7 @@ package fr.uvsq.jnotes.command;
 
 import fr.uvsq.jnotes.exception.*;
 import fr.uvsq.jnotes.function.*;
+import fr.uvsq.jnotes.utils.Helper;
 
 /**
  * Enumeration regroupant toutes les commandes possibles de l'application. 
@@ -46,9 +47,10 @@ public class Interpretor {
 	 * @return EnumCommand representant la commande. 
 	 */
 	public EnumCommand detectCommand (String[] args) {
-		
+		//***************************************************
 		// S'il n'y a pas d'arguments on utilise le scanner. 
-		if (args.length==0) {
+		//***************************************************
+		if (args.length == 0) {
 			ScannerCommand saisie = new ScannerCommand();
 			//saisie.afficheCommandes();
 			try {
@@ -59,9 +61,11 @@ public class Interpretor {
 			}
 			return EnumCommand.NO_COMMAND;
 		}
-		
+		//*************************************************
 		// Sinon on interprète la commande directement. 
+		//***************************************************
 		else {
+			Helper.toLowerCase(args);
 			String sargs=args[0];
 			if (sargs.equals("test")){
 				return EnumCommand.NO_COMMAND;
