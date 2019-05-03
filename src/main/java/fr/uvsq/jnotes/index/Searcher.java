@@ -2,6 +2,7 @@ package fr.uvsq.jnotes.index;
 
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
@@ -50,26 +51,59 @@ public class Searcher {
 	 * @throws ParseException
 	 * @throws SearchException
 	 */
-	public static int search(String indexDir, String[] args) 
-			throws IOException, ParseException, SearchException {
+	public static int search(String indexDir, String[] args) {
 		
         String q = Helper.join(args, " ; ", 1);
         //System.out.println("Requete : " + q);
         
-		Directory dir = FSDirectory.open(new File(indexDir));
-        IndexSearcher is = new IndexSearcher(dir);
+		Directory dir;
+		try {
+			dir = FSDirectory.open(new File(indexDir));
+		} catch (IOException e) {
+			throw new SearchException("erreur a l'ouverture de index.");
+		}
+        IndexSearcher is = null;
+		try {
+			is = new IndexSearcher(dir);
+		} catch (CorruptIndexException e) {
+			throw new SearchException("index corrompu.");
+		} catch (IOException e) {
+			throw new SearchException("index inexistant ou corrompu, ou requete incorrecte");
+		}
+		
+        Query query;
+		try {
+			query = createQuery(args);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw new SearchException("format incorrect.");
+		}
         
-        Query query = createQuery(args);
-        
-        TopDocs hits = is.search(query, 10);
+        TopDocs hits;
+		try {
+			hits = is.search(query, 10);
+		} catch (IOException e) {
+			throw new SearchException("recherche interrompue.");
+		}
         
         System.err.println("Search : ");
         for(ScoreDoc scoreDoc : hits.scoreDocs) {
-            Document doc = is.doc(scoreDoc.doc); 
+            Document doc;
+			try {
+				doc = is.doc(scoreDoc.doc);
+			} catch (CorruptIndexException e) {
+				throw new SearchException("index corrompu.");
+			} catch (IOException e) {
+				throw new SearchException("affichage du résultat interrompu.");
+			} 
             System.out.println("\t"+doc.get("filename")); 
         }
         System.out.println(hits.totalHits + " resultats");
-        is.close();
+        try {
+			is.close();
+		} catch (IOException e) {
+			throw new SearchException("fermeture du seacher interrompue.");
+		}
         return hits.totalHits;
     }
 	

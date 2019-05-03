@@ -10,6 +10,8 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Version;
 
+import fr.uvsq.jnotes.utils.Helper;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
@@ -59,6 +61,7 @@ public class Indexer {
 	 */
 	public static void indexer(String indexDir, String dataDir) throws Exception {
 		dataDir += "notes";
+		Helper.deleteFolder(new File(indexDir));
 		Indexer indexer = new Indexer(indexDir);
 		int numIndexed;
 		try {

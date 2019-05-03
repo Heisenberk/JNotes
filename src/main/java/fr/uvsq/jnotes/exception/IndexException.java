@@ -1,14 +1,23 @@
 package fr.uvsq.jnotes.exception;
 
 /**
- * Classe IndexException appelee lors d'un probleme de visualisation de l'index.
+ * Classe IndexException.
  */
 public class IndexException extends RuntimeException{
 	
 	/**
-     * Constructeur de EditException.
+     * Constructeur de IndexException.
      */
     public IndexException(){
-        super("IndexException : Impossible de visualiser l'index JNotes. ");
+        super("Impossible d'indexer");
     }
+
+	/**
+     * Constructeur de IndexException avec message.
+     * @param message le message a afficher
+     */
+    public IndexException(String message){
+        super("Impossible d'indexer : " + message);
+    }
+        
 }
