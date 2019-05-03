@@ -243,12 +243,7 @@ public class Function extends Observable {
 	public int search(String args[]) throws SearchException {
 		if (args.length == 1) throw new ArgumentException("Fonction search : vous n'avez pas entré de conditions");
 		int result;
-		try {
-			result = Searcher.search(c.getPathIndex(), args);
-
-		} catch (Exception e) {
-			throw new SearchException("format incorrect");
-		}
+		result = Searcher.search(c.getPathIndex(), args);
 		return result;
 	}
 	
