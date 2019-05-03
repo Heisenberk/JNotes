@@ -9,7 +9,7 @@ public class ArgumentException extends RuntimeException{
      * Constructeur de SearchException.
      */
     public ArgumentException(){
-        super("ArgumentException : pas assez d'arguments");
+        super("Erreur d'arguments");
     }
 
 	/**
@@ -17,7 +17,7 @@ public class ArgumentException extends RuntimeException{
 	 * @param string message a afficher.
 	 */
 	public ArgumentException(String string) {
-		super("ArgumentException");
+		super("Erreur d'arguments : " + string);
 	}
     
 }

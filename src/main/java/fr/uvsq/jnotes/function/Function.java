@@ -68,7 +68,7 @@ public class Function extends Observable {
 	public void edit(String[] args) throws EditException, IOException, InterruptedException {
 		
 		// si on tape "jnotes edit/e" sans autre argument
-		if (args.length<=1) throw new EditException(); 
+		if (args.length == 1) throw new ArgumentException("vous n'avez pas entré d'argument");
 		
 		// si le fichier existe
 		String fileName = this.findPath(args[1]);
@@ -155,18 +155,24 @@ public class Function extends Observable {
 	 * Methode de lecture de l'index des notes, met a jour l'index lucene
 	 */
 	public void index() {
+		
+		try {
+			Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+		} catch (Exception e1) {
+			throw new IndexException("erreur pendant l'indexation.");
+		}
 		try {
 
-			Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+			
 			Process p=Runtime.getRuntime().exec("firefox config/index.adoc");
 			p.waitFor();
 			System.out.println("Visualisation de l'index JNotes ");
 		}
 		catch(IOException e) {
-			throw new IndexException();
+			throw new IndexException("Impossible de visualiser l'index JNotes. ");
 		}
 		catch(Exception e) {
-			throw new IndexException();
+			throw new IndexException("Impossible de visualiser l'index JNotes. ");
 		}
 	}
 	
@@ -201,6 +207,7 @@ public class Function extends Observable {
 	 * Methode de suppression d'une note, affichant le string produit par deleteString.
 	 */
 	public void delete(String[] args) throws DeleteException{
+		if (args.length == 1) throw new ArgumentException("vous n'avez pas entré d'argument");
 		System.out.println(deleteString(args));
 		setChanged(); //notification pour la modification de l'index
 		notifyObservers();
@@ -213,7 +220,7 @@ public class Function extends Observable {
 	public void view(String[] args) throws ViewException {
 		
 		// si on tape "jnotes view/v" sans autre argument
-		if (args.length <= 1) throw new ViewException(); //creer une exception personnelle ArgumentException
+		if (args.length == 1) throw new ArgumentException("vous n'avez pas entré d'argument");
 		try {
 			String absolutePath=null;
 			File fichier = new File(this.findPath(args[1]));
@@ -241,7 +248,7 @@ public class Function extends Observable {
 	 * @throws SearchException quand il n'y pas de conditions
 	 */
 	public int search(String args[]) throws SearchException {
-		if (args.length == 1) throw new ArgumentException("Fonction search : vous n'avez pas entré de conditions");
+		if (args.length == 1) throw new ArgumentException("veuillez entrer un argument ou plus");
 		int result;
 		result = Searcher.search(c.getPathIndex(), args);
 		return result;

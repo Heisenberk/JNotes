@@ -42,7 +42,7 @@ public class CommandsTest {
     /**
      * Test sur l'appel à la commande Delete. 
      */
-    @Test
+    @Test (expected=ArgumentException.class)
     public void testDelete(){
     	String args1[]= {"delete"};
     	String args2[]= {"d"};
@@ -58,8 +58,8 @@ public class CommandsTest {
      */
     @Test
     public void testView(){
-    	String args1[]= {"view"};
-    	String args2[]= {"v"};
+    	String args1[]= {"view", "note"};
+    	String args2[]= {"v", "note"};
     	Interpretor a1 = new Interpretor();
     	EnumCommand test1=a1.detectCommand(args1);
     	EnumCommand test2=a1.detectCommand(args2);
