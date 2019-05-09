@@ -3,4 +3,19 @@ Mehdi Merimi
 29/12/2019
 :context: SeCReTs
 :project: gr 3
-* Voici la note de Mehdi Merimi
+
+Voici la liste des cours de Mehdi Merimi : 
+
+* Programmation GL et Preuve
+
+* Anglais
+
+* TER
+
+* Calcul Securise
+
+* Applications Web et Securite
+
+* Reseaux Etendus
+
+* Protocoles IP

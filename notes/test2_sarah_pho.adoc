@@ -3,4 +3,19 @@ Sarah Pho
 22/02/2018
 :context: AMIS
 :project: gr 2
-* Voici la note de Sarah Pho
+
+Voici la liste des cours de Sarah Pho : 
+
+* Programmation GL et Preuve
+
+* Anglais
+
+* TER
+
+* Tuning de Bases de donnees
+
+* Applications Web et Securite
+
+* Ranking
+
+* Simulation

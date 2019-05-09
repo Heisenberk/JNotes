@@ -3,4 +3,19 @@ Maxime Gonthier
 23/02/2018
 :context: AMIS
 :project: gr 1
-* Voici la note de Maxime Gonthier
+
+Voici la liste des cours de Maxime Gonthier : 
+
+* Programmation GL et Preuve
+
+* Anglais
+
+* TER
+
+* Reseaux Etendus
+
+* Conception de Bases de donnees
+
+* Ranking
+
+* Simulation

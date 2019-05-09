@@ -3,4 +3,19 @@ Clement Caumes
 02/01/2018
 :context: SeCReTs
 :project: gr 3
-* voici la notes de Clement Caumes
+
+Voici la liste des cours de Clément Caumes : 
+
+* Programmation GL et Preuve
+
+* Anglais
+
+* TER
+
+* Calcul Securise
+
+* Applications Web et Securite
+
+* Reseaux Etendus
+
+* Protocoles IP
