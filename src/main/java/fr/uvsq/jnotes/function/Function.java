@@ -109,11 +109,11 @@ public class Function extends Observable {
 					
 		}
 		
-		try {
-			Indexer.update(c.getPathIndex(), c.getPathStockage(), fileName);
-		} catch (Exception e) {
-			throw new EditException(e.getMessage());
-		}
+//		try {
+//			Indexer.update(c.getPathIndex(), c.getPathStockage(), fileName);
+//		} catch (Exception e) {
+//			throw new EditException(e.getMessage());
+//		}
 		setChanged(); //notification pour modifier l'index
 		notifyObservers();
 	}
@@ -194,11 +194,11 @@ public class Function extends Observable {
 							
 		fichier.delete();
 		
-		try {
-			Indexer.delete(c.getPathIndex(), fileName);
-		} catch (Exception e) {
-			throw new DeleteException(e.getMessage());
-		}
+//		try {
+//			Indexer.delete(c.getPathIndex(), fileName);
+//		} catch (Exception e) {
+//			throw new DeleteException(e.getMessage());
+//		}
 		
 		return s;
 	}
@@ -328,5 +328,14 @@ public class Function extends Observable {
 	 */
 	public String findPath(String args) {
 		return c.getPathStockage() + "notes/" + args;
+	}
+	
+	@Override
+	public void notifyObservers() {
+		try {
+			Indexer.indexer(c.getPathIndex(), c.getPathStockage());
+		} catch (Exception e1) {
+		}
+		
 	}
 }

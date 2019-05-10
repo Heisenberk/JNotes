@@ -35,7 +35,8 @@ public class Searcher {
 	/**
 	 * Liste non exhaustive des caracteres speciaux a traiter par le Searcher.
 	 */
-	private static String delimiters = " &\"#'-|^@=+£$¨*µ%;:,!§<>()[]{}\\/\"";
+	//private static String delimiters = " &\"#'-|^@=+£$¨*µ%;:,!§<>()[]{}\\/\"";
+	private static String delimiters = " ";
 	
 	/**
 	 * Methode se chargeant de la recherche de notes.
@@ -151,9 +152,10 @@ public class Searcher {
     					if (containsStopWords(value)) 
     						t = new Term("stored"+tag, value);
     					// sinon, recherche par mot
-    					else 
+    					else  {
+    						System.out.println("contains stop wrods");
     						t= new Term(tag, value);
-    					
+    					}
 	    	    		combinedQuery.add(	new RegexQuery(t), 
 	    	    							BooleanClause.Occur.MUST);
     				}

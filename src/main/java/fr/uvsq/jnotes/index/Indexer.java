@@ -69,7 +69,8 @@ public class Indexer {
 		} finally {
 			indexer.close();
 		}
-		System.out.println("Indexation de " + numIndexed + " fichiers");
+		//System.out.println("Indexation de " + numIndexed + " fichiers");
+		System.out.println("Mise a jour de l'index.");
 	}
 
 	/**
